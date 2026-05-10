@@ -1,0 +1,425 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-color: #0A0A0A;
+    --text-primary: #F5F5F5;
+    --text-secondary: #888888;
+    --border-color: #333333;
+    --hover-bg: #1a1a1a;
+    --accent: #ffffff;
+    --font-stack: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+main {
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.view {
+    transition: opacity 0.5s ease;
+}
+
+.view.hidden {
+    display: none;
+}
+
+.logo {
+    max-width: 100px;
+    margin-bottom: 1.5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: clamp(3rem, 12vw, 5rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: var(--text-secondary);
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+.philosophy-link {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    opacity: 0.5;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: opacity 0.3s;
+}
+
+.philosophy-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    min-width: 160px;
+}
+
+button:hover {
+    background-color: var(--hover-bg);
+    border-color: var(--text-secondary);
+}
+
+button.primary {
+    border-color: var(--accent);
+    font-weight: 700;
+}
+
+button.secondary {
+    border-color: var(--border-color);
+    margin-top: 1rem;
+}
+
+button.control-btn {
+    min-width: 120px;
+    padding: 0.75rem 1.5rem;
+}
+
+button.preset {
+    min-width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-color: var(--border-color);
+    opacity: 0.7;
+}
+
+button.preset:hover {
+    opacity: 1;
+}
+
+button.text-btn {
+    border: none;
+    color: var(--text-secondary);
+    text-decoration: underline;
+    font-size: 0.9rem;
+    min-width: auto;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+button.text-btn:hover {
+    color: var(--text-primary);
+    background: none;
+}
+
+.setup-hint {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+input[type="number"] {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    padding: 0.75rem 1rem;
+    width: 120px;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+label {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.preset-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.error {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    min-height: 1.5rem;
+}
+
+.error.visible {
+    color: #aa4444;
+}
+
+.timer-circle {
+    width: 250px;
+    height: 250px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1.5rem;
+}
+
+#timer-display {
+    font-size: clamp(3rem, 10vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+#timer-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.progress-bar {
+    width: 100%;
+    max-width: 300px;
+    height: 4px;
+    background: var(--border-color);
+    margin: 0 auto 1.5rem;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+#progress-fill {
+    height: 100%;
+    background: var(--text-primary);
+    width: 0%;
+    transition: width 1s linear;
+}
+
+.status-msg {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.timer-controls button.secondary {
+    margin-top: 0;
+}
+
+.complete-icon, .paused-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+#complete-msg {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.paused-time {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.paused-msg {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.about-content, .philosophy-content {
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+}
+
+.about-content p, .philosophy-content p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.about-content p strong, .philosophy-content p strong {
+    color: var(--text-primary);
+}
+
+.about-content ul {
+    list-style: none;
+    margin: 1rem 0 1.5rem 0;
+    padding-left: 0;
+}
+
+.about-content ul li {
+    color: var(--text-secondary);
+    padding: 0.25rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.about-content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--text-primary);
+}
+
+.philosophy-content {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.prelude {
+    font-size: 0.9rem;
+    opacity: 0.5;
+    margin-bottom: 1.5rem !important;
+}
+
+.quote {
+    background: var(--hover-bg);
+    border-left: 3px solid var(--text-primary);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--text-primary);
+}
+
+.mystic {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 1.5rem 0;
+}
+
+.final {
+    font-size: 0.95rem;
+    margin-top: 1.5rem !important;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.signature {
+    margin-top: 1.5rem !important;
+    font-size: 0.85rem;
+    opacity: 0.4;
+}
+
+.philosophy-section {
+    padding: 2rem 1rem;
+}
+
+.philosophy-section .secondary {
+    margin-top: 1.5rem;
+}
+
+.philosophy-section .text-btn {
+    display: block;
+    margin: 1rem auto 0;
+}
+
+@media (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .timer-circle {
+        width: 200px;
+        height: 200px;
+    }
+
+    .preset-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .preset-buttons button {
+        width: auto;
+    }
+
+    .philosophy-section {
+        padding: 1.5rem 0.5rem;
+    }
+}
