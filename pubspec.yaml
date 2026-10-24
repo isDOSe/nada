@@ -1,0 +1,35 @@
+name: nada
+description: "nada! — el contador del tiempo que no le debes a nadie."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_local_notifications: ^22.3.2
+  path_provider: ^2.1.5
+  timezone: ^0.11.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: InstrumentSerif
+      fonts:
+        - asset: assets/fonts/InstrumentSerif-Regular.ttf
+        - asset: assets/fonts/InstrumentSerif-Italic.ttf
+          style: italic
+    - family: CrimsonText
+      fonts:
+        - asset: assets/fonts/CrimsonText-Regular.ttf
+        - asset: assets/fonts/CrimsonText-Italic.ttf
+          style: italic
+        - asset: assets/fonts/CrimsonText-SemiBold.ttf
+          weight: 600
