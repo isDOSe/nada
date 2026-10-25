@@ -6,6 +6,7 @@ import '../data/nada_models.dart';
 import '../data/session_repository.dart';
 import '../data/sync_service.dart';
 import '../services/nada_notifications.dart';
+import '../services/nada_widget_service.dart';
 
 /// The single brain of nada!
 ///
@@ -17,13 +18,16 @@ class NadaController extends ChangeNotifier {
     required SessionRepository repository,
     SyncService sync = const NoopSyncService(),
     SessionNotifications? notifications,
+    WidgetService? widgets,
   }) : _repository = repository,
        _sync = sync,
-       _notifications = notifications ?? NadaNotifications.instance;
+       _notifications = notifications ?? NadaNotifications.instance,
+       _widgets = widgets ?? AndroidWidgetService();
 
   final SessionRepository _repository;
   final SyncService _sync;
   final SessionNotifications _notifications;
+  final WidgetService _widgets;
 
   List<NadaSession> _sessions = const [];
   ActiveSession? _active;
@@ -91,6 +95,7 @@ class NadaController extends ChangeNotifier {
     }
 
     notifyListeners();
+    _syncWidgets();
     unawaited(
       _sync.pull().then((remote) {
         if (remote != null) {
@@ -193,6 +198,7 @@ class NadaController extends ChangeNotifier {
     _persist();
     unawaited(_notifications.cancelSession());
     _notify();
+    _syncWidgets();
   }
 
   void dismissSummary() {
@@ -207,10 +213,12 @@ class NadaController extends ChangeNotifier {
     _stats = NadaStats.fromSessions(_sessions);
     _persist();
     _notify();
+    _syncWidgets();
   }
 
   void updateSettings(NadaSettings next) {
     final notificationsChanged = next.notifications != _settings.notifications;
+    final widgetThemeChanged = next.widgetTheme != _settings.widgetTheme;
     _settings = next;
     _persist();
     if (notificationsChanged && !next.notifications) {
@@ -220,6 +228,13 @@ class NadaController extends ChangeNotifier {
       _notifySystem();
     }
     _notify();
+    if (widgetThemeChanged) _syncWidgets();
+  }
+
+  Future<bool> requestWidgetPin() => _widgets.requestPin();
+
+  void _syncWidgets() {
+    unawaited(_widgets.update(stats: _stats, theme: _settings.widgetTheme));
   }
 
   /// Edit one of the three home presets.

@@ -4,6 +4,7 @@ import 'package:nada/app.dart';
 import 'package:nada/data/nada_models.dart';
 import 'package:nada/data/session_repository.dart';
 import 'package:nada/services/nada_notifications.dart';
+import 'package:nada/services/nada_widget_service.dart';
 import 'package:nada/state/nada_controller.dart';
 
 class MemoryRepository implements SessionRepository {
@@ -77,6 +78,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
 
@@ -100,6 +102,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
       controller.updateSettings(
@@ -130,6 +133,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
       controller.updateSettings(
@@ -148,6 +152,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
       controller.updateSettings(
@@ -166,6 +171,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
 
@@ -181,6 +187,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
 
@@ -199,6 +206,7 @@ void main() {
       final controller = NadaController(
         repository: repository,
         notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
       );
       await controller.init();
 
@@ -272,7 +280,11 @@ void main() {
 
     final repository = MemoryRepository();
     await tester.pumpWidget(
-      NadaApp(repository: repository, notifications: SilentNotifications()),
+      NadaApp(
+        repository: repository,
+        notifications: SilentNotifications(),
+        widgets: const NoopWidgetService(),
+      ),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

@@ -40,6 +40,18 @@
             android:name="com.isdose.nada.NOTIFICATION_ICON"
             android:resource="@drawable/ic_nada" />
 
+        <receiver
+            android:name=".NadaWidgetProvider"
+            android:exported="true"
+            android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/nada_widget_info" />
+        </receiver>
+
         <!-- Keeps a goal notification alive across reboots and app upgrades. -->
         <receiver
             android:exported="false"

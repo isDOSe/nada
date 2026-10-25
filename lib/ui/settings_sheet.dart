@@ -31,6 +31,7 @@ class _SettingsSheet extends StatefulWidget {
 
 class _SettingsSheetState extends State<_SettingsSheet> {
   bool _asking = false;
+  String? _widgetMessage;
   late final List<int> _times;
   late final List<TextEditingController> _timeControllers;
 
@@ -264,6 +265,67 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                             color: NadaColors.ash,
                           ),
                         ),
+                    ],
+                    if (android) ...[
+                      const SizedBox(height: 22),
+                      const NadaHairline(),
+                      const SizedBox(height: 20),
+                      Text(
+                        'widget de inicio',
+                        style: NadaType.body.copyWith(fontSize: 18),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        '2×2 en tu pantalla de inicio. muestra tu nada acumulada.',
+                        style: NadaType.label.copyWith(fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        children: [
+                          NadaChoice(
+                            label: 'negro',
+                            selected:
+                                settings.widgetTheme == NadaWidgetTheme.dark,
+                            onTap: () => controller.updateSettings(
+                              settings.copyWith(
+                                widgetTheme: NadaWidgetTheme.dark,
+                              ),
+                            ),
+                          ),
+                          NadaChoice(
+                            label: 'blanco',
+                            selected:
+                                settings.widgetTheme == NadaWidgetTheme.light,
+                            onTap: () => controller.updateSettings(
+                              settings.copyWith(
+                                widgetTheme: NadaWidgetTheme.light,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      NadaFootnote(
+                        label: 'añadir widget',
+                        onTap: () async {
+                          final pinned = await controller.requestWidgetPin();
+                          if (!mounted) return;
+                          setState(() {
+                            _widgetMessage = pinned
+                                ? null
+                                : 'tu launcher no permite añadirlo desde aquí. búscalo en el menú de widgets.';
+                          });
+                        },
+                      ),
+                      if (_widgetMessage != null) ...[
+                        const SizedBox(height: 6),
+                        Text(
+                          _widgetMessage!,
+                          style: NadaType.label.copyWith(
+                            fontSize: 15,
+                            color: NadaColors.ash,
+                          ),
+                        ),
+                      ],
                     ],
                     const SizedBox(height: 24),
                     const NadaHairline(),

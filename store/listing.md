@@ -32,6 +32,8 @@ agrupa por día y puedes copiar un resumen para compartirlo.
 - Sin permiso de internet en la versión gratuita.
 - Notificación persistente con cronómetro nativo, para que el tiempo siga
   contando aunque cierres la app.
+- Widget 2×2 para la pantalla de inicio, en negro o en blanco, con tu tiempo
+  acumulado en grande.
 - Si el proceso muere, al volver el total se reconstruye con la hora real.
 - Diseño negro, tipografía serif y cero gamificación que te haga sentir mal.
 
@@ -86,6 +88,7 @@ Primera versión.
 - Tres tiempos rápidos editables (15, 25 y 45 min por defecto).
 - Registro local, racha y total acumulado.
 - Notificación persistente con cronómetro nativo.
+- Widget 2×2 en negro o blanco.
 - Sin cuentas, sin nube y sin anuncios.
 
 ## Capturas para la ficha
@@ -94,6 +97,7 @@ Primera versión.
 2. `screenshots/phone-02-session.png` — una sesión en curso.
 3. `screenshots/phone-03-history.png` — el registro acumulado.
 4. `screenshots/phone-04-settings.png` — tiempos editables.
+5. `screenshots/phone-05-widget.png` — el widget 2×2 en negro y blanco.
 
 ## Gráfico destacado
 

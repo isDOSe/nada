@@ -16,6 +16,19 @@ enum NadaMode {
   }
 }
 
+/// The two faces of the home-screen widget.
+enum NadaWidgetTheme {
+  dark,
+  light;
+
+  static NadaWidgetTheme fromName(String? value) {
+    return NadaWidgetTheme.values.firstWhere(
+      (theme) => theme.name == value,
+      orElse: () => NadaWidgetTheme.dark,
+    );
+  }
+}
+
 /// A finished stretch of nothing.
 class NadaSession {
   const NadaSession({
@@ -158,6 +171,7 @@ class NadaSettings {
     this.goalMinutes = 25,
     this.quickMinutes = const [15, 25, 45],
     this.notifications = true,
+    this.widgetTheme = NadaWidgetTheme.dark,
   });
 
   final NadaMode mode;
@@ -167,6 +181,9 @@ class NadaSettings {
   final List<int> quickMinutes;
   final bool notifications;
 
+  /// Dark or bone background for the home-screen widget.
+  final NadaWidgetTheme widgetTheme;
+
   Duration get goal => Duration(minutes: goalMinutes);
 
   NadaSettings copyWith({
@@ -174,11 +191,13 @@ class NadaSettings {
     int? goalMinutes,
     List<int>? quickMinutes,
     bool? notifications,
+    NadaWidgetTheme? widgetTheme,
   }) => NadaSettings(
     mode: mode ?? this.mode,
     goalMinutes: goalMinutes ?? this.goalMinutes,
     quickMinutes: quickMinutes ?? this.quickMinutes,
     notifications: notifications ?? this.notifications,
+    widgetTheme: widgetTheme ?? this.widgetTheme,
   );
 
   Map<String, Object?> toJson() => {
@@ -186,6 +205,7 @@ class NadaSettings {
     'goalMinutes': goalMinutes,
     'quickMinutes': quickMinutes,
     'notifications': notifications,
+    'widgetTheme': widgetTheme.name,
   };
 
   static NadaSettings fromJson(Map<String, Object?>? json) {
@@ -207,6 +227,7 @@ class NadaSettings {
       goalMinutes: (json['goalMinutes'] as num?)?.toInt() ?? 25,
       quickMinutes: quick.length == 3 ? quick : const [15, 25, 45],
       notifications: json['notifications'] as bool? ?? true,
+      widgetTheme: NadaWidgetTheme.fromName(json['widgetTheme'] as String?),
     );
   }
 }

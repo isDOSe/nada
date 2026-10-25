@@ -35,6 +35,8 @@ No mide productividad. Mide presencia sin propósito.
 - **Notificación persistente.** Mientras no haces nada, el cronómetro vive en la
   barra de notificaciones de Android y sigue contando aunque la app esté en
   segundo plano.
+- **Widget 2×2.** Tu nada acumulada en la pantalla de inicio, en negro o en
+  blanco, con el tiempo en grande. Se actualiza al terminar una sesión.
 - **Cero fricción.** Abres, tocas una vez, ya estás haciendo nada. El botón de
   empezar queda fijo abajo: nunca hay que buscarlo.
 - **Claro sin onboarding.** La pantalla pregunta literalmente cuánto tiempo
@@ -47,8 +49,8 @@ No mide productividad. Mide presencia sin propósito.
 ## Capturas
 
 Todas las capturas viven en [`docs/screenshots/`](docs/screenshots): inicio,
-sesión libre, resumen, registro, ajustes, manifiesto, acerca de y la
-notificación persistente.
+sesión libre, resumen, registro, ajustes, manifiesto, acerca de, la
+notificación persistente y el widget en sus dos temas.
 
 ## Cómo se ve
 
@@ -90,8 +92,9 @@ legibilidad a tamaño pequeño.
 
 - `store/brand/nada-wordmark.svg` — logo vectorial oficial.
 - `store/brand/icon-play-512.png` — icono de Play Store y launcher.
+- `store/brand/widget-dark.png` y `widget-light.png` — previsualizaciones del widget.
 - `store/feature-graphic-1024x500.png` — gráfico destacado.
-- `store/screenshots/` — cuatro capturas 1080×1920.
+- `store/screenshots/` — cinco capturas 1080×1920, incluida la del widget.
 - `store/listing.md` — título, descripciones y notas de versión.
 - `store/web/` — hero 1920×1080 y Open Graph 1200×630.
 
@@ -109,7 +112,8 @@ lib/
 │   ├── session_repository.dart   # contrato + implementación local JSON
 │   └── sync_service.dart         # contrato de sync + no-op + fila Supabase
 ├── services/
-│   └── nada_notifications.dart   # notificación nativa con cronómetro
+│   ├── nada_notifications.dart   # notificación nativa con cronómetro
+│   └── nada_widget_service.dart  # puente Flutter ↔ widget de Android
 ├── state/
 │   ├── nada_controller.dart      # cerebro: tiempo, ledger, persistencia
 │   └── nada_scope.dart           # InheritedNotifier, sin dependencias

@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'core/nada_theme.dart';
 import 'data/session_repository.dart';
 import 'services/nada_notifications.dart';
+import 'services/nada_widget_service.dart';
 import 'state/nada_controller.dart';
 import 'state/nada_scope.dart';
 import 'ui/nada_shell.dart';
 
 class NadaApp extends StatefulWidget {
-  const NadaApp({super.key, this.repository, this.notifications});
+  const NadaApp({super.key, this.repository, this.notifications, this.widgets});
 
   /// Injection points for tests and for the future premium build.
   final SessionRepository? repository;
   final SessionNotifications? notifications;
+  final WidgetService? widgets;
 
   @override
   State<NadaApp> createState() => _NadaAppState();
@@ -27,6 +29,7 @@ class _NadaAppState extends State<NadaApp> with WidgetsBindingObserver {
     _controller = NadaController(
       repository: widget.repository ?? LocalSessionRepository(),
       notifications: widget.notifications,
+      widgets: widget.widgets,
     );
     WidgetsBinding.instance.addObserver(this);
     _controller.init();

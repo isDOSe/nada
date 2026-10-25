@@ -36,6 +36,8 @@ contraste, hueso sobre negro. No lleva icono, tagline ni textura.
 | `brand/icon-play-512.png` | **Icono recomendado para Google Play y launcher**: monograma `n!`, 512×512, PNG 32-bit con alfa opaco (sin transparencia). |
 | `brand/icon-play-1024.png` | Master del monograma. |
 | `brand/icon-wordmark-512.png` | Alternativa con el wordmark completo, para contextos grandes. |
+| `brand/widget-dark.png` | Previsualización del widget 2×2 en negro. |
+| `brand/widget-light.png` | Previsualización del widget 2×2 en blanco. |
 
 El launcher de Android ya usa el monograma `n!`, así que el icono de Play y el
 del teléfono coinciden. Un wordmark horizontal completo pierde legibilidad a
@@ -48,7 +50,7 @@ icono**.
 |---|---|---|
 | Icono | `brand/icon-play-512.png` | 512×512, PNG 32-bit, sin transparencia |
 | Gráfico destacado | `feature-graphic-1024x500.png` | 1024×500, PNG/JPEG, sin alfa |
-| Capturas | `screenshots/phone-01…04.png` | 1080×1920, 9:16 |
+| Capturas | `screenshots/phone-01…05.png` | 1080×1920, 9:16 |
 | Título | ver `listing.md` | ≤ 30 caracteres |
 | Descripción corta | ver `listing.md` | ≤ 80 caracteres |
 | Descripción completa | ver `listing.md` | ≤ 4000 caracteres |
@@ -62,10 +64,25 @@ Checklist antes de publicar:
 
 1. Reemplazar el icono de la app en Play Console por `icon-play-512.png`.
 2. Subir `feature-graphic-1024x500.png`.
-3. Subir las cuatro capturas en el orden `01 → 04`.
+3. Subir las cinco capturas en el orden `01 → 05`.
 4. Configurar la ficha de `listing.md`.
 5. Añadir una URL de política de privacidad, aunque la app no recopile datos.
 6. Firmar el AAB con un keystore propio (el APK de prueba usa la firma debug).
+
+## Widget 2×2
+
+El widget nativo está en `android/app/src/main/kotlin/com/isdose/nada/` y se
+sincroniza desde la app a través de `lib/services/nada_widget_service.dart`.
+
+- Muestra el total acumulado y el número de sesiones.
+- Dos temas: negro (hueso sobre negro) y blanco (negro sobre hueso).
+- Se agrega desde **ajustes → widget de inicio → añadir widget** o desde el
+  selector de widgets del launcher.
+- Se actualiza al terminar o borrar una sesión, y al cambiar de tema.
+- El launcher puede redondear las esquinas del fondo; la composición interna
+  está pensada para el recorte de 2×2.
+
+La captura `screenshots/phone-05-widget.png` muestra ambos temas.
 
 ## Web y publicidad
 
