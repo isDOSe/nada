@@ -271,6 +271,47 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       const SizedBox(height: 22),
                       const NadaHairline(),
                       const SizedBox(height: 20),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'sonido al terminar',
+                                  style: NadaType.body.copyWith(fontSize: 18),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  'un tono corto cuando se guarda la sesión.',
+                                  style: NadaType.label.copyWith(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2),
+                            child: NadaToggle(
+                              value: settings.soundEnabled,
+                              label: 'Sonido al terminar',
+                              onChanged: (value) => controller.updateSettings(
+                                settings.copyWith(soundEnabled: value),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      NadaFootnote(
+                        label: 'probar sonido',
+                        onTap: () {
+                          controller.previewEndSound();
+                        },
+                      ),
+                      const SizedBox(height: 22),
+                      const NadaHairline(),
+                      const SizedBox(height: 20),
                       Text(
                         'widget de inicio',
                         style: NadaType.body.copyWith(fontSize: 18),

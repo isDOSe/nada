@@ -6,6 +6,7 @@ import '../data/nada_models.dart';
 import '../data/session_repository.dart';
 import '../data/sync_service.dart';
 import '../services/nada_notifications.dart';
+import '../services/nada_sound.dart';
 import '../services/nada_widget_service.dart';
 
 /// The single brain of nada!
@@ -19,15 +20,18 @@ class NadaController extends ChangeNotifier {
     SyncService sync = const NoopSyncService(),
     SessionNotifications? notifications,
     WidgetService? widgets,
+    EndSound? sound,
   }) : _repository = repository,
        _sync = sync,
        _notifications = notifications ?? NadaNotifications.instance,
-       _widgets = widgets ?? AndroidWidgetService();
+       _widgets = widgets ?? AndroidWidgetService(),
+       _sound = sound ?? AndroidEndSound();
 
   final SessionRepository _repository;
   final SyncService _sync;
   final SessionNotifications _notifications;
   final WidgetService _widgets;
+  final EndSound _sound;
 
   List<NadaSession> _sessions = const [];
   ActiveSession? _active;
@@ -77,7 +81,7 @@ class NadaController extends ChangeNotifier {
           currentElapsed >= current.goal!) {
         // The goal was reached while the app was away. Close it at its own
         // finish line, not at the arbitrary time you came back.
-        finishSession(reachedGoal: true, now: now);
+        finishSession(reachedGoal: true, now: now, playSound: false);
       } else {
         _syncTicker();
         if (current.running) {
@@ -150,7 +154,11 @@ class NadaController extends ChangeNotifier {
     _notifySystem();
   }
 
-  void finishSession({bool reachedGoal = false, DateTime? now}) {
+  void finishSession({
+    bool reachedGoal = false,
+    DateTime? now,
+    bool playSound = true,
+  }) {
     final current = _active;
     if (current == null) return;
     final endedAt = now ?? DateTime.now();
@@ -199,7 +207,12 @@ class NadaController extends ChangeNotifier {
     unawaited(_notifications.cancelSession());
     _notify();
     _syncWidgets();
+    if (session != null && playSound && _settings.soundEnabled) {
+      unawaited(_sound.play());
+    }
   }
+
+  Future<void> previewEndSound() => _sound.play();
 
   void dismissSummary() {
     _lastFinished = null;
@@ -287,6 +300,7 @@ class NadaController extends ChangeNotifier {
             endAt: now.add(remaining),
             goal: goal,
             notificationsEnabled: _settings.notifications,
+            soundEnabled: _settings.soundEnabled,
           ),
         );
       }
@@ -305,7 +319,7 @@ class NadaController extends ChangeNotifier {
     final value = current.elapsedAt(now);
 
     if (current.running && current.goal != null && value >= current.goal!) {
-      finishSession(reachedGoal: true, now: now);
+      finishSession(reachedGoal: true, now: now, playSound: false);
       return;
     }
 

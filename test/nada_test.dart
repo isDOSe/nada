@@ -41,6 +41,7 @@ class SilentNotifications implements SessionNotifications {
     required DateTime endAt,
     required Duration goal,
     required bool notificationsEnabled,
+    required bool soundEnabled,
   }) async {}
 
   @override

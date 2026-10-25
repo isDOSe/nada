@@ -26,6 +26,8 @@ Emulador: Pixel 8 (`sdk gphone16k`, Android 16 / API 36), APK de **release**.
 | Persistencia de ajustes | Al cambiar un tiempo, se guarda al instante y la pantalla principal muestra el nuevo valor. |
 | Relieve del CTA | El botón sólido se hunde 2 px y reduce su sombra dura al pulsarlo. |
 | Fondo en running | Dos glows radiales muy suaves se mueven en curvas lentas; solo se repinta el fondo, sin blur ni imágenes. |
+| Sonido al terminar | Chime WAV de 1.15 s mediante SoundPool nativo; toggle “sonido al terminar” y botón “probar sonido”. |
+| Notificación de meta | Usa el mismo chime en el canal de avisos; canal silencioso cuando el sonido está desactivado. |
 | Estado de sesión | La pantalla en curso no muestra etiqueta; “en pausa” aparece únicamente al pausar. |
 | Widget 2×2 | Se añade desde ajustes o desde el selector de widgets; muestra el total y el número de sesiones. |
 | Tema del widget | Negro con letras hueso y blanco hueso con letras negras; cambia al instante desde ajustes. |

@@ -30,6 +30,7 @@ abstract interface class SessionNotifications {
     required DateTime endAt,
     required Duration goal,
     required bool notificationsEnabled,
+    required bool soundEnabled,
   });
 
   Future<void> cancelSession();
@@ -50,7 +51,8 @@ class NadaNotifications implements SessionNotifications {
   static const int _ongoingId = 41;
   static const int _goalId = 42;
   static const String _ongoingChannel = 'nada_sesion';
-  static const String _alertsChannel = 'nada_avisos';
+  static const String _alertsChannel = 'nada_avisos_v2';
+  static const String _silentAlertsChannel = 'nada_avisos_silencio';
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
@@ -98,6 +100,17 @@ class NadaNotifications implements SessionNotifications {
           description: 'Cuando una meta de nada se cumple.',
           importance: Importance.defaultImportance,
           playSound: true,
+          sound: RawResourceAndroidNotificationSound('nada_chime'),
+          showBadge: false,
+        ),
+      );
+      await android?.createNotificationChannel(
+        const AndroidNotificationChannel(
+          _silentAlertsChannel,
+          'avisos de nada (silencio)',
+          description: 'Cuando una meta de nada se cumple, sin sonido.',
+          importance: Importance.low,
+          playSound: false,
           showBadge: false,
         ),
       );
@@ -214,24 +227,32 @@ class NadaNotifications implements SessionNotifications {
     required DateTime endAt,
     required Duration goal,
     required bool notificationsEnabled,
+    required bool soundEnabled,
   }) async {
     if (!isSupported || !notificationsEnabled) return;
     if (!_ready) await init();
     if (!_ready) return;
     final body = '${compactDuration(goal)} de nada. ya está.';
+    final channel = soundEnabled ? _alertsChannel : _silentAlertsChannel;
     try {
       await _plugin.zonedSchedule(
         id: _goalId,
         title: 'nada!',
         body: body,
         scheduledDate: tz.TZDateTime.from(endAt.toUtc(), tz.UTC),
-        notificationDetails: const NotificationDetails(
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
-            _alertsChannel,
-            'avisos de nada',
+            channel,
+            soundEnabled ? 'avisos de nada' : 'avisos de nada (silencio)',
             channelDescription: 'Cuando una meta de nada se cumple.',
-            importance: Importance.defaultImportance,
-            priority: Priority.defaultPriority,
+            importance: soundEnabled
+                ? Importance.defaultImportance
+                : Importance.low,
+            priority: soundEnabled ? Priority.defaultPriority : Priority.low,
+            playSound: soundEnabled,
+            sound: soundEnabled
+                ? const RawResourceAndroidNotificationSound('nada_chime')
+                : null,
             category: AndroidNotificationCategory.reminder,
           ),
         ),

@@ -34,6 +34,8 @@ agrupa por día y puedes copiar un resumen para compartirlo.
   contando aunque cierres la app.
 - Widget 2×2 para la pantalla de inicio, en negro o en blanco, con tu tiempo
   acumulado en grande.
+- Un chime corto y característico al terminar cada sesión. Se puede
+  desactivar; la notificación de meta usa el mismo tono.
 - Si el proceso muere, al volver el total se reconstruye con la hora real.
 - Diseño negro, tipografía serif y cero gamificación que te haga sentir mal.
 
@@ -80,7 +82,7 @@ Completar antes de publicar.
 Completar con una URL pública antes de publicar. Aunque la app no recopila
 datos, Google Play la exige para la ficha.
 
-## Notas de la versión 1.0.1
+## Notas de la versión 1.0.2
 
 - Cronómetro libre y metas.
 - Tres tiempos rápidos editables (15, 25 y 45 min por defecto).
@@ -89,6 +91,7 @@ datos, Google Play la exige para la ficha.
 - Widget 2×2 en negro o blanco.
 - Luz de fondo sutil en la pantalla de sesión.
 - Botón principal más grande, con estado de pausa visible.
+- Chime corto al terminar, con opción de desactivarlo.
 - Sin cuentas, sin nube y sin anuncios.
 
 ## Capturas para la ficha

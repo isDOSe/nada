@@ -5,4 +5,4 @@
 -->
 <resources
     xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@drawable/ic_nada,@mipmap/ic_launcher,@mipmap/ic_launcher_foreground" />
+    tools:keep="@drawable/ic_nada,@mipmap/ic_launcher,@mipmap/ic_launcher_foreground,@raw/nada_chime" />

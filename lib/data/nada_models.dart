@@ -171,6 +171,7 @@ class NadaSettings {
     this.goalMinutes = 25,
     this.quickMinutes = const [15, 25, 45],
     this.notifications = true,
+    this.soundEnabled = true,
     this.widgetTheme = NadaWidgetTheme.dark,
   });
 
@@ -180,6 +181,9 @@ class NadaSettings {
   /// The three editable durations shown on the home screen.
   final List<int> quickMinutes;
   final bool notifications;
+
+  /// A short chime when a session is saved.
+  final bool soundEnabled;
 
   /// Dark or bone background for the home-screen widget.
   final NadaWidgetTheme widgetTheme;
@@ -191,12 +195,14 @@ class NadaSettings {
     int? goalMinutes,
     List<int>? quickMinutes,
     bool? notifications,
+    bool? soundEnabled,
     NadaWidgetTheme? widgetTheme,
   }) => NadaSettings(
     mode: mode ?? this.mode,
     goalMinutes: goalMinutes ?? this.goalMinutes,
     quickMinutes: quickMinutes ?? this.quickMinutes,
     notifications: notifications ?? this.notifications,
+    soundEnabled: soundEnabled ?? this.soundEnabled,
     widgetTheme: widgetTheme ?? this.widgetTheme,
   );
 
@@ -205,6 +211,7 @@ class NadaSettings {
     'goalMinutes': goalMinutes,
     'quickMinutes': quickMinutes,
     'notifications': notifications,
+    'soundEnabled': soundEnabled,
     'widgetTheme': widgetTheme.name,
   };
 
@@ -227,6 +234,7 @@ class NadaSettings {
       goalMinutes: (json['goalMinutes'] as num?)?.toInt() ?? 25,
       quickMinutes: quick.length == 3 ? quick : const [15, 25, 45],
       notifications: json['notifications'] as bool? ?? true,
+      soundEnabled: json['soundEnabled'] as bool? ?? true,
       widgetTheme: NadaWidgetTheme.fromName(json['widgetTheme'] as String?),
     );
   }

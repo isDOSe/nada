@@ -40,6 +40,9 @@ No mide productividad. Mide presencia sin propósito.
 - **Luz en movimiento.** Durante una sesión, dos haces de luz hueso se mueven
   muy despacio detrás del reloj. Se congelan al pausar y respetan “reducir
   movimiento”.
+- **Sonido al terminar.** Un chime corto de dos notas cierra la sesión. Se
+  puede desactivar en ajustes o probar desde ahí; la notificación de meta usa
+  el mismo sonido.
 - **Cero fricción.** Abres, tocas una vez, ya estás haciendo nada. El botón de
   empezar queda fijo abajo: nunca hay que buscarlo.
 - **Claro sin onboarding.** La pantalla pregunta literalmente cuánto tiempo
