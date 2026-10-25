@@ -68,12 +68,6 @@ def main() -> None:
     for index, (card, name) in enumerate(((dark, "negro"), (light, "blanco"))):
         x = left + index * (card.width + gap)
         canvas.alpha_composite(card, (x, top))
-        draw.rounded_rectangle(
-            (x, top, x + card.width - 1, top + card.height - 1),
-            radius=42,
-            outline=EDGE,
-            width=2,
-        )
         draw.text(
             (x + card.width // 2, top + card.height + 42),
             name,

@@ -1,4 +1,4 @@
-"""Generate the widget preview image used by older launchers and docs."""
+"""Generate the widget preview image used by older launchers and store art."""
 
 from pathlib import Path
 
@@ -31,23 +31,22 @@ def make(theme: str, out: Path) -> None:
     draw = ImageDraw.Draw(image)
     draw.rectangle((1, 1, size - 2, size - 2), outline=edge, width=2)
 
-    padding = 46
-    wordmark = ImageFont.truetype(str(FONT_TEXT_SEMI), 40)
-    phrase = ImageFont.truetype(str(FONT_TEXT), 34)
-    phrase_line = ImageFont.truetype(str(FONT_TEXT), 34)
-    time_font = ImageFont.truetype(str(FONT_DISPLAY), 88)
-    sessions = ImageFont.truetype(str(FONT_TEXT), 28)
+    padding = 44
+    wordmark = ImageFont.truetype(str(FONT_TEXT_SEMI), 44)
+    phrase = ImageFont.truetype(str(FONT_TEXT), 36)
+    time_font = ImageFont.truetype(str(FONT_DISPLAY), 122)
+    sessions = ImageFont.truetype(str(FONT_TEXT), 34)
 
-    draw.text((padding, 54), "nada!", font=wordmark, fill=primary)
+    draw.text((padding, 46), "nada!", font=wordmark, fill=primary)
     draw.multiline_text(
-        (padding, 126),
+        (padding, 182),
         "Has hecho nada\ndurante",
         font=phrase,
         fill=secondary,
         spacing=6,
     )
-    draw.text((padding, 242), "3 h 12 min", font=time_font, fill=primary)
-    draw.text((padding, 395), "9 sesiones", font=sessions, fill=secondary)
+    draw.text((padding, 278), "3 h 12 min", font=time_font, fill=primary)
+    draw.text((padding, 430), "9 sesiones", font=sessions, fill=secondary)
 
     out.parent.mkdir(parents=True, exist_ok=True)
     image.convert("RGB").save(out)
