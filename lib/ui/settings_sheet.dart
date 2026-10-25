@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../core/app_info.dart';
 import '../core/nada_theme.dart';
 import '../data/nada_models.dart';
 import '../state/nada_scope.dart';
@@ -377,7 +378,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'versión 1.0 · sin cuentas, sin nube, sin prisa',
+                      'versión $nadaVersion · sin cuentas, sin nube, sin prisa',
                       style: NadaType.label.copyWith(
                         fontSize: 15,
                         color: NadaColors.faint,

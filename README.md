@@ -186,6 +186,23 @@ flutter analyze       # limpio
 flutter build apk --release
 ```
 
+### Versión y build
+
+Cada release sube el último número de la versión (`1.0.1`, `1.0.2`…) y el
+build code de Android. Para no olvidarlo, usa el wrapper:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tool/release.ps1
+```
+
+El script incrementa `pubspec.yaml`, sincroniza `lib/core/app_info.dart`,
+compila el release y deja copias de `nada-<versión>.apk` en el Escritorio y en
+Descargas, con su SHA-256. Para un cambio de minor o major:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tool/release.ps1 -Part minor
+```
+
 El APK queda en `build/app/outputs/flutter-apk/app-release.apk`.
 
 ## Cómo activar el premium (sync en la nube)

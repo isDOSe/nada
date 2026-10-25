@@ -24,7 +24,7 @@ class _NadaAuroraState extends State<NadaAurora>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 54),
+    duration: const Duration(seconds: 24),
   );
   bool _reduceMotion = false;
 
@@ -90,19 +90,19 @@ class _NadaAuroraPainter extends CustomPainter {
     final paint = Paint()..style = PaintingStyle.fill;
 
     final centerA = Offset(
-      width * (0.30 + 0.08 * math.sin(phase * 0.80)),
-      height * (0.38 + 0.06 * math.cos(phase * 0.65 + 0.7)),
+      width * (0.31 + 0.12 * math.sin(phase * 0.90)),
+      height * (0.38 + 0.09 * math.cos(phase * 0.70 + 0.7)),
     );
-    final radiusA = width * (0.66 + 0.05 * math.sin(phase * 0.55 + 0.3));
-    final alphaA = 0.052 + 0.012 * math.sin(phase * 0.40 + 1.1);
+    final radiusA = width * (0.67 + 0.10 * math.sin(phase * 0.60 + 0.3));
+    final alphaA = 0.075 + 0.025 * math.sin(phase * 3.0 + 1.1);
     _glow(canvas, size, centerA, radiusA, alphaA, paint);
 
     final centerB = Offset(
-      width * (0.72 + 0.06 * math.cos(phase * 0.60 + 2.1)),
-      height * (0.62 + 0.05 * math.sin(phase * 0.70 + 1.2)),
+      width * (0.70 + 0.10 * math.cos(phase * 0.80 + 2.1)),
+      height * (0.60 + 0.08 * math.sin(phase * 0.90 + 1.2)),
     );
-    final radiusB = width * (0.50 + 0.04 * math.cos(phase * 0.50 + 0.5));
-    final alphaB = 0.030 + 0.008 * math.cos(phase * 0.45 + 0.2);
+    final radiusB = width * (0.52 + 0.08 * math.cos(phase * 0.70 + 0.5));
+    final alphaB = 0.045 + 0.015 * math.cos(phase * 2.5 + 0.2);
     _glow(canvas, size, centerB, radiusB, alphaB, paint);
   }
 

@@ -132,6 +132,7 @@ class SessionView extends StatelessWidget {
               const SizedBox(height: 14),
               NadaButton(
                 label: running ? 'pausar' : 'continuar',
+                depressed: !running,
                 semanticLabel: running
                     ? 'Pausar esta sesión de nada'
                     : 'Continuar esta sesión de nada',

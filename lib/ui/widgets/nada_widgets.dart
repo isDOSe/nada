@@ -55,6 +55,7 @@ class NadaButton extends StatefulWidget {
     this.kind = NadaButtonKind.solid,
     this.expand = true,
     this.semanticLabel,
+    this.depressed = false,
   });
 
   final String label;
@@ -62,6 +63,10 @@ class NadaButton extends StatefulWidget {
   final NadaButtonKind kind;
   final bool expand;
   final String? semanticLabel;
+
+  /// Keeps a solid button visually sunken at rest. Used while a session is
+  /// paused, so the button itself communicates the state.
+  final bool depressed;
 
   @override
   State<NadaButton> createState() => _NadaButtonState();
@@ -81,13 +86,14 @@ class _NadaButtonState extends State<NadaButton> {
   Widget build(BuildContext context) {
     final isSolid = widget.kind == NadaButtonKind.solid;
     final isQuiet = widget.kind == NadaButtonKind.quiet;
+    final isDown = isSolid && (_pressed || widget.depressed);
 
     final foreground = isSolid ? NadaColors.voidBlack : NadaColors.bone;
     final background = isSolid
         ? (_pressed ? NadaColors.ash : NadaColors.bone)
         : (_pressed ? NadaColors.pressed : Colors.transparent);
     final borderColor = isSolid
-        ? Colors.transparent
+        ? (isDown ? NadaColors.edge : Colors.transparent)
         : (_pressed ? NadaColors.ash : NadaColors.edge);
 
     final content = Padding(
@@ -99,7 +105,7 @@ class _NadaButtonState extends State<NadaButton> {
         textAlign: TextAlign.center,
         style: NadaType.button.copyWith(
           color: _enabled ? foreground : NadaColors.faint,
-          fontSize: isQuiet ? 17 : 19,
+          fontSize: isQuiet ? 18 : 23,
           fontWeight: isSolid ? FontWeight.w600 : FontWeight.w400,
         ),
       ),
@@ -118,7 +124,7 @@ class _NadaButtonState extends State<NadaButton> {
         child: AnimatedSlide(
           duration: const Duration(milliseconds: 140),
           curve: Curves.easeOut,
-          offset: isSolid && _pressed ? const Offset(0, 0.035) : Offset.zero,
+          offset: isDown ? const Offset(0, 0.06) : Offset.zero,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 140),
             curve: Curves.easeOut,
@@ -126,11 +132,11 @@ class _NadaButtonState extends State<NadaButton> {
             decoration: BoxDecoration(
               color: background,
               border: Border.all(color: borderColor, width: 1),
-              boxShadow: isSolid && _enabled
+              boxShadow: isSolid && _enabled && !isDown
                   ? [
                       BoxShadow(
                         color: NadaColors.relief,
-                        offset: Offset(0, _pressed ? 1 : 4),
+                        offset: const Offset(0, 4),
                         blurRadius: 0,
                       ),
                     ]
