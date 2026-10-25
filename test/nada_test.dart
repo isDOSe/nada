@@ -296,7 +296,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('en curso'), findsOneWidget);
+    expect(find.text('en curso'), findsNothing);
     expect(find.text('pausar'), findsOneWidget);
 
     await tester.pumpWidget(const SizedBox.shrink());

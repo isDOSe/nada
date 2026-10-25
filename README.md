@@ -37,6 +37,9 @@ No mide productividad. Mide presencia sin propósito.
   segundo plano.
 - **Widget 2×2.** Tu nada acumulada en la pantalla de inicio, en negro o en
   blanco, con el tiempo en grande. Se actualiza al terminar una sesión.
+- **Luz en movimiento.** Durante una sesión, dos haces de luz hueso se mueven
+  muy despacio detrás del reloj. Se congelan al pausar y respetan “reducir
+  movimiento”.
 - **Cero fricción.** Abres, tocas una vez, ya estás haciendo nada. El botón de
   empezar queda fijo abajo: nunca hay que buscarlo.
 - **Claro sin onboarding.** La pantalla pregunta literalmente cuánto tiempo
@@ -67,6 +70,7 @@ mercado:
 | Un solo elemento sólido | El botón principal es la única superficie blanca, con un relieve duro de 4 px para que se sienta pulsable. Todo lo demás es aire. |
 | Acciones secundarias con borde | Registro, volver, ajustes, manifiesto, copiar y borrar son botones cuadrados de 1 px, no enlaces subrayados. |
 | Duración en texto | `sin límite` y los minutos comparten una sola línea, sin cajas ni etiqueta “meta”; el activo se marca con subrayado. Los botones se reservan para las acciones. |
+| Luz de fondo en sesión | Dos degradados radiales lentos, casi imperceptibles, pintados en una capa aparte del resto de la UI. |
 | Cero emojis, cero mayúsculas gritadas | El humor está en el copy, no en un icono. |
 | El estado vacío dice **nada!**, no `00:00` | La firma de la app: el cero también es una palabra. |
 | La pregunta antes que los botones | “¿Cuánto tiempo?” + las opciones en texto + una línea que explica el modo. |

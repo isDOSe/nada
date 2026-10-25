@@ -25,6 +25,8 @@ Emulador: Pixel 8 (`sdk gphone16k`, Android 16 / API 36), APK de **release**.
 | Ajustes | Tres tiempos rápidos editables con teclado y steppers, toggle de notificación, enlaces y versión. |
 | Persistencia de ajustes | Al cambiar un tiempo, se guarda al instante y la pantalla principal muestra el nuevo valor. |
 | Relieve del CTA | El botón sólido se hunde 2 px y reduce su sombra dura al pulsarlo. |
+| Fondo en running | Dos glows radiales muy suaves se mueven en curvas lentas; solo se repinta el fondo, sin blur ni imágenes. |
+| Estado de sesión | La pantalla en curso no muestra etiqueta; “en pausa” aparece únicamente al pausar. |
 | Widget 2×2 | Se añade desde ajustes o desde el selector de widgets; muestra el total y el número de sesiones. |
 | Tema del widget | Negro con letras hueso y blanco hueso con letras negras; cambia al instante desde ajustes. |
 | Permiso de notificaciones | Solicitud en el primer inicio de sesión; si se niega, la app sigue funcionando. |
