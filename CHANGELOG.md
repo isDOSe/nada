@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+- La notificación persistente ya no se congela en “quedan 46 s”: muestra la
+  meta y la hora de fin, y el cronómetro nativo hace la cuenta atrás.
+- Prueba de regresión del texto de la notificación.
+
 ## 1.0.2
 
 - Chime corto de dos notas al guardar una sesión.
@@ -13,7 +19,10 @@
 
 - Widget nativo 2×2 con el total acumulado y las sesiones.
 - Widget en tema negro y en tema blanco hueso.
+- El widget llena la celda con tipografía más grande y el contenido distribuido.
 - Luz de fondo en movimiento, muy lenta, en la pantalla de sesión.
+- La pantalla en curso deja de mostrar la etiqueta “en curso”; “en pausa” solo
+  aparece al pausar.
 - Botón principal más grande y con estado físico: se hunde al pausar y se eleva al continuar.
 - Tiempos rápidos editables con teclado y steppers.
 - Selector de duración en una sola línea, sin etiqueta “meta”.

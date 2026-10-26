@@ -184,7 +184,7 @@ Requisitos: Flutter 3.38+ (probado en 3.47.7), Android SDK 37 para compilar por
 `flutter_local_notifications` 22.
 
 ```bash
-flutter test          # 18 tests: formato, stats, controlador, presets, widget
+flutter test          # 20 tests: formato, stats, controlador, presets, widget, aviso
 flutter analyze       # limpio
 flutter build apk --release
 ```
@@ -269,6 +269,53 @@ uso casi nula. La retención viene del total, no de una racha que te castiga.
 - Live Activities / Dynamic Island en iOS.
 - Versión Apple Watch: un botón, nada más.
 - Modo "silencio": bloquear apps durante una sesión (Android).
+
+## Changelog
+
+Este README es la bitácora del producto: cada cambio u opción nueva se anota
+aquí al implementarla. [`CHANGELOG.md`](CHANGELOG.md) repite el resumen en el
+momento de publicar la versión. Lo más reciente va arriba.
+
+### 1.0.3
+
+- La notificación persistente ya no se queda diciendo “quedan 46 s”: el texto
+  muestra la meta y la hora de fin (`meta de 25 min · hasta las 14:32`) y el
+  cronómetro nativo hace la cuenta atrás. El aviso deja de congelarse en el
+  segundo en que se publicó.
+- Prueba de regresión para el texto de la notificación: la cuenta atrás no
+  puede volver a incrustarse en el cuerpo.
+
+### 1.0.2
+
+- Chime corto de dos notas al guardar una sesión.
+- Sonido también en la notificación de meta.
+- Toggle de sonido y botón “probar sonido” en ajustes.
+- Luz de fondo más perceptible en la pantalla de sesión.
+- Botón principal más grande; en pausa queda hundido y al continuar se eleva.
+- Releases versionadas automáticamente con `tool/release.ps1`.
+
+### 1.0.1
+
+- Widget nativo 2×2 con el total acumulado y las sesiones.
+- Widget en tema negro y en tema blanco hueso.
+- El widget llena la celda con tipografía más grande y el contenido distribuido.
+- Luz de fondo en movimiento, muy lenta, en la pantalla de sesión.
+- La pantalla en curso deja de mostrar la etiqueta “en curso”; “en pausa” solo
+  aparece al pausar.
+- Botón principal más grande y con estado físico: se hunde al pausar y se eleva
+  al continuar.
+- Tiempos rápidos editables con teclado y steppers.
+- Selector de duración en una sola línea, sin etiqueta “meta”.
+- Logo oficial, icono de Play Store y kit de tienda.
+- El botón principal ahora tiene relieve de 4 px.
+
+### 1.0.0
+
+- Cronómetro libre y metas.
+- Registro local, racha y total acumulado.
+- Notificación persistente con cronómetro nativo.
+- Historial, resumen, ajustes y manifiesto.
+- Sin cuentas, sin nube y sin anuncios.
 
 ## Créditos
 

@@ -14,6 +14,7 @@ Emulador: Pixel 8 (`sdk gphone16k`, Android 16 / API 36), APK de **release**.
 | Selector de duración | Texto con subrayado, sin caja. `sin límite` y las metas comparten una sola línea, sin etiqueta “meta”. |
 | Inicio de sesión libre | Un toque, cronómetro visible, notificación persistente con cronómetro nativo. |
 | Notificación en segundo plano | Sigue visible en la sección Silencio, `ongoing`, con cronómetro que avanza solo. |
+| Texto de la notificación | No incrusta segundos restantes: en meta dice `meta de 25 min · hasta las HH:MM`; el cronómetro nativo hace la cuenta atrás. |
 | Pausa | El cronómetro se congela, la notificación desaparece, el estado dice "en pausa". |
 | Reanudar | El tiempo continúa desde el acumulado, no desde cero. |
 | Muerte de proceso | Force-stop con sesión activa; al relanzar, el tiempo incluye los segundos en que la app estuvo muerta. |

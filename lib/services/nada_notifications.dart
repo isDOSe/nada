@@ -40,6 +40,29 @@ abstract interface class SessionNotifications {
   Future<void> openSystemSettings();
 }
 
+/// The line under the notification title.
+///
+/// It only carries facts that do not change while the session runs: the goal
+/// and the wall-clock end time. The live countdown belongs to Android's native
+/// chronometer; baking "quedan 46 s" into the text would leave that number
+/// frozen at whatever second the notification was last posted.
+@visibleForTesting
+String ongoingNotificationBody({
+  required NadaMode mode,
+  required Duration elapsed,
+  Duration? goal,
+  required DateTime startedAt,
+  required DateTime now,
+}) {
+  if (mode == NadaMode.goal && goal != null) {
+    final left = goal - elapsed;
+    final remaining = left.isNegative ? Duration.zero : left;
+    final endAt = now.add(remaining);
+    return 'meta de ${compactDuration(goal)} · hasta las ${clockTime(endAt)}';
+  }
+  return 'sin hacer nada desde las ${clockTime(startedAt)}';
+}
+
 /// The persistent notification is deliberately native: Android renders the
 /// chronometer itself, so it keeps ticking even when the Dart isolate is
 /// frozen or killed. We never write a notification update every second.
@@ -184,9 +207,13 @@ class NadaNotifications implements SessionNotifications {
         ? now.add(remaining!.isNegative ? Duration.zero : remaining)
         : now.subtract(elapsed);
 
-    final body = isGoal
-        ? 'quedan ${compactDuration(remaining!.isNegative ? Duration.zero : remaining)} de nada'
-        : 'sin hacer nada desde las ${clockTime(startedAt)}';
+    final body = ongoingNotificationBody(
+      mode: mode,
+      elapsed: elapsed,
+      goal: goal,
+      startedAt: startedAt,
+      now: now,
+    );
 
     try {
       await _plugin.show(

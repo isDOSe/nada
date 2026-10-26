@@ -82,12 +82,13 @@ Completar antes de publicar.
 Completar con una URL pública antes de publicar. Aunque la app no recopila
 datos, Google Play la exige para la ficha.
 
-## Notas de la versión 1.0.2
+## Notas de la versión 1.0.3
 
 - Cronómetro libre y metas.
 - Tres tiempos rápidos editables (15, 25 y 45 min por defecto).
 - Registro local, racha y total acumulado.
-- Notificación persistente con cronómetro nativo.
+- Notificación persistente con cronómetro nativo; el texto muestra la meta y
+  la hora de fin, sin segundos congelados.
 - Widget 2×2 en negro o blanco.
 - Luz de fondo sutil en la pantalla de sesión.
 - Botón principal más grande, con estado de pausa visible.
