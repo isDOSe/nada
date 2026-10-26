@@ -33,6 +33,7 @@ Emulador: Pixel 8 (`sdk gphone16k`, Android 16 / API 36), APK de **release**.
 | Widget 2×2 | Se añade desde ajustes o desde el selector de widgets; muestra el total y el número de sesiones. |
 | Tema del widget | Negro con letras hueso y blanco hueso con letras negras; cambia al instante desde ajustes. |
 | Permiso de notificaciones | Solicitud en el primer inicio de sesión; si se niega, la app sigue funcionando. |
+| Enlace a la web | En “acerca de nada!” el botón “abrir nada.isdose.com” lanza el navegador; la app sigue sin permiso de internet. |
 | Arranque sin red | La app no declara `INTERNET`; todo funciona offline. |
 | Rutas empujadas | Registro y manifiesto sin el texto amarillo de fallback (Material propio). |
 | Tipografía | Instrument Serif + Crimson Text empaquetadas; sin descargas en runtime. |

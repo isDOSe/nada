@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../core/app_info.dart';
 import '../core/nada_theme.dart';
 import '../data/nada_models.dart';
+import '../services/nada_site.dart';
 import '../state/nada_scope.dart';
 import 'layout.dart';
 import 'manifesto_screen.dart';
@@ -474,6 +477,11 @@ Future<void> showAboutNada(BuildContext context) {
                   Text(
                     'ernesto flames (dose) · licencia mit',
                     style: NadaType.label,
+                  ),
+                  const SizedBox(height: 18),
+                  NadaFootnote(
+                    label: 'abrir nada.isdose.com',
+                    onTap: () => unawaited(NadaSite.open()),
                   ),
                   const SizedBox(height: 24),
                   Align(

@@ -8,6 +8,10 @@ notificaciones que te pidan hacer más. Negro, serif y en silencio.
 
 No mide productividad. Mide presencia sin propósito.
 
+La versión web vive en [nada.isdose.com](https://nada.isdose.com) y comparte
+marca, tipografías, flujo y registro con la app. La app añade la notificación
+persistente, el widget 2×2 y el aviso de meta en segundo plano.
+
 <p align="center">
   <img src="docs/screenshots/01-home.png" width="235" alt="nada! — inicio">
   <img src="docs/screenshots/02-running.png" width="235" alt="nada! — sesión en curso">
@@ -40,6 +44,9 @@ No mide productividad. Mide presencia sin propósito.
 - **Luz en movimiento.** Durante una sesión, dos haces de luz hueso se mueven
   muy despacio detrás del reloj. Se congelan al pausar y respetan “reducir
   movimiento”.
+- **La misma nada en el navegador.** [nada.isdose.com](https://nada.isdose.com)
+  replica el contador, el registro, los ajustes y el manifiesto. La app añade
+  la notificación persistente, el widget y el aviso de meta.
 - **Sonido al terminar.** Un chime corto de dos notas cierra la sesión. Se
   puede desactivar en ajustes o probar desde ahí; la notificación de meta usa
   el mismo sonido.
@@ -120,6 +127,7 @@ lib/
 │   └── sync_service.dart         # contrato de sync + no-op + fila Supabase
 ├── services/
 │   ├── nada_notifications.dart   # notificación nativa con cronómetro
+│   ├── nada_site.dart            # abre la versión web en el navegador
 │   └── nada_widget_service.dart  # puente Flutter ↔ widget de Android
 ├── state/
 │   ├── nada_controller.dart      # cerebro: tiempo, ledger, persistencia
@@ -160,7 +168,9 @@ lib/
 - **Fuentes empaquetadas.** Instrument Serif y Crimson Text viven en
   `assets/fonts/`; no hay descarga en runtime ni primer frame con fuente
   equivocada.
-- **Cero red.** La app no declara `INTERNET` en el manifiesto.
+- **Cero red.** La app no declara `INTERNET` en el manifiesto. El enlace a
+  [nada.isdose.com](https://nada.isdose.com) abre el navegador del sistema; la
+  descarga la hace el navegador, no la app.
 - **El ícono de la notificación sobrevive a R8.** Android lo resuelve por
   nombre en runtime, así que el optimizador de recursos lo eliminaría. Está
   referenciado estáticamente en el manifiesto (`NOTIFICATION_ICON`) y en
@@ -275,6 +285,14 @@ uso casi nula. La retención viene del total, no de una racha que te castiga.
 Este README es la bitácora del producto: cada cambio u opción nueva se anota
 aquí al implementarla. [`CHANGELOG.md`](CHANGELOG.md) repite el resumen en el
 momento de publicar la versión. Lo más reciente va arriba.
+
+### 1.0.4
+
+- Enlace a la versión web [nada.isdose.com](https://nada.isdose.com) desde
+  “acerca de nada!”.
+- La web comparte marca, tipografías, flujo y registro con la app: modo libre,
+  metas, total acumulado, historial, ajustes y manifiesto.
+- La app sigue sin permiso de internet: el enlace abre el navegador del sistema.
 
 ### 1.0.3
 

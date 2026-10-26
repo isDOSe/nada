@@ -82,7 +82,7 @@ Completar antes de publicar.
 Completar con una URL pública antes de publicar. Aunque la app no recopila
 datos, Google Play la exige para la ficha.
 
-## Notas de la versión 1.0.3
+## Notas de la versión 1.0.4
 
 - Cronómetro libre y metas.
 - Tres tiempos rápidos editables (15, 25 y 45 min por defecto).
@@ -93,6 +93,7 @@ datos, Google Play la exige para la ficha.
 - Luz de fondo sutil en la pantalla de sesión.
 - Botón principal más grande, con estado de pausa visible.
 - Chime corto al terminar, con opción de desactivarlo.
+- Acceso a la versión web desde “acerca de nada!”.
 - Sin cuentas, sin nube y sin anuncios.
 
 ## Capturas para la ficha

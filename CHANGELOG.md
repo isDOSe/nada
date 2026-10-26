@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+- Enlace a la versión web (nada.isdose.com) desde “acerca de nada!”.
+- La web comparte marca, tipografías, flujo y registro con la app.
+- La app sigue sin permiso de internet: el enlace abre el navegador.
+
 ## 1.0.3
 
 - La notificación persistente ya no se congela en “quedan 46 s”: muestra la

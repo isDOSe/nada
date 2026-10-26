@@ -2,8 +2,10 @@ package com.isdose.nada
 
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
@@ -61,6 +63,27 @@ class MainActivity : FlutterActivity() {
                                 result.success(false)
                             }
                         } else {
+                            result.success(false)
+                        }
+                    }
+
+                    else -> result.notImplemented()
+                }
+            }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "nada/site")
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "open" -> {
+                        try {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://nada.isdose.com")
+                            )
+                            startActivity(intent)
+                            result.success(true)
+                        } catch (error: Exception) {
+                            Log.w("nada", "could not open site", error)
                             result.success(false)
                         }
                     }
