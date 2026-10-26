@@ -1,167 +1,136 @@
-# NADA! 🚫
+# nada!
 
-### *La app para hacer absolutamente nada... o algo. Depende de cómo lo veas.*
+> el contador de lo que no hiciste.
 
----
+**nada!** es la versión web de la app de Android. Un botón, un número que crece
+y un registro que se acumula. Sin cuentas, sin nube y sin notificaciones que te
+pidan hacer más.
 
-<p align="center">
-  <img src="images/logo.png" alt="NADA! Logo" width="150">
-</p>
+No mide productividad. Mide presencia sin propósito.
 
-<p align="center">
-  <a href="https://nada.isdose.com">🌐 nada.isdose.com</a>
-</p>
-
----
-
-## ¿Qué demonios es esto?
-
-**NADA!** es un contador de enfoque. Pon un número, presiona iniciar, y cuenta hacia abajo.
-
-¿Suena aburrido? Tal vez. Pero aquí está el twist:
-
-> *Pero oficialmente, no estás haciendo nada.*
-
-Es la app para:
-- 📚 Estudiar sin distracciones
-- 💼 Trabajar en sesiones de enfoque profundo
-- 🍅 Pomodoro tradicional (25 min trabajo, 5 min descanso)
-- 🧘 Meditación guiada por tiempo
-- 👀 Simular estar ocupado sin hacer absolutamente nada
+**Web:** [nada.isdose.com](https://nada.isdose.com)
+**App de Android:** [github.com/isDOSe/nada-flutter](https://github.com/isDOSe/nada-flutter)
 
 ---
 
-## La Filosofía del Vacío
+## Qué hace
 
-*Despliega pergamino místico...*
+- **Cronómetro libre.** Empieza en cero y cuenta hacia arriba. Tú decides
+  cuándo parar.
+- **Metas de nada.** Tres tiempos rápidos editables, 15, 25 y 45 minutos por
+  defecto. Al llegar, la sesión se cierra sola y queda guardada.
+- **Un registro real.** Cada sesión se guarda con duración, hora de inicio,
+  hora de fin y modalidad. El registro vive en tu navegador y sobrevive a un
+  recargado o a cerrar la pestaña.
+- **El total de tu vida.** Cuánto tiempo llevas sin hacer nada, cuántas
+  sesiones, racha de días y detalle agrupado por día.
+- **Pausa física.** El cronómetro se congela, la luz de fondo se detiene y el
+  botón principal se hunde hasta que continúas.
+- **Sonido al terminar.** Un chime corto de dos notas, generado con Web Audio.
+  Se puede desactivar en ajustes o probar desde ahí.
+- **La misma voz que la app.** Misma tipografía, mismos colores, mismas
+  palabras y el mismo manifiesto. La app y la web se leen como el mismo
+  producto.
 
-Había una vez, en un universo que literalmente no tenía nada mejor que hacer, una pequeña app que nació con un propósito profundamente absurdo: contar el tiempo de aquellos que pretendían no hacer nada.
+## Capturas
 
-Pero aquí está lo interesante, querido buscador de vacío: **cuando te sientas a no hacer nada durante 25 minutos**, ¿qué estás realmente haciendo?
+Las capturas de la app viven en
+[`nada-flutter/docs/screenshots`](https://github.com/isDOSe/nada-flutter/tree/main/docs/screenshots).
+La web usa la misma dirección visual en el navegador.
 
-Estás haciendo algo. Estás:
-- • Ignorando 47 notificaciones
-- • Resistiendo el impulso de revisar el teléfono
-- • Sentado. Respirando. Existiendo.
-- • Practicando el arte perdido de simplemente *estar*.
+## Cómo se ve
 
-> *"La tensión más extrema no es hacer algo. Es hacer algo mientras finges que no haces nada. Eso, amigo mío, es donde nace la verdadera productividad."*
+| Decisión | Por qué |
+|---|---|
+| Negro puro `#000000` | El vacío no es gris corporativo. En OLED, el fondo desaparece. |
+| Hueso `#F2EFE6` | Un blanco cálido, de tinta y papel. |
+| **Instrument Serif** | El número es el protagonista. Una serif editorial de alto contraste, con cursiva propia. |
+| **Crimson Text** | Texto de libro, legible desde 16 px, con cursivas que susurran. |
+| Sin radios, sin sombras suaves, sin gradientes de relleno | La jerarquía se construye con tipografía, espacio y líneas de 1 px. |
+| Un solo elemento sólido | El botón principal es la única superficie blanca, con un relieve duro de 4 px. |
+| Acciones secundarias con borde | Registro, volver, ajustes, manifiesto, copiar y borrar son botones cuadrados de 1 px. |
+| Luz en movimiento | Dos haces hueso se mueven muy despacio detrás del reloj durante la sesión y se congelan al pausar. |
+| Cero emojis, cero mayúsculas gritadas | El humor está en el copy, no en un icono. |
+| Cero red | Las fuentes y las imágenes se sirven desde el proyecto; no hay analytics, ni cuentas, ni llamadas a terceros. |
 
-El antiguo filósofo Diógenes vivía en un barril. Nadie le decía "tienes que ser productivo". Y sin embargo, su impacto en la filosofía duró milenios.
+El cronómetro usa ranuras de ancho fijo para que los dígitos no tiemblen al
+cambiar de segundo. El tiempo se calcula con marcas de tiempo, no restando un
+segundo por tick: una pestaña dormida o un recargado no alteran el total.
 
-Así que la próxima vez que alguien te pregunte qué haces, mírales a los ojos y di:
+## Cómo correrla
 
-**"Nada. Literalmente nada. Estoy corriendo un temporizador."**
-
----
-
-## Características ✨
-
-- ⏱️ **Temporizador configurable** - Desde 1 minuto hasta lo que tu paciencia aguante
-- 🍅 **Presets rápidos** - Pomodoro (25), Maratón (45), Jornada (90)
-- ⏸️ **Pausar/Continuar** - Porque hasta el vacío necesita un respiro
-- 📱 **Responsive** - Funciona en desktop, mobile, tablet, o en tu calculadora inteligente
-- 🌙 **Dark mode por defecto** - Porque hacer nada se ve mejor en negro
-- 🎨 **Diseño minimalista** - Pocas cosas, bien hechas
-- 🔥 **Sin frameworks** - Vanilla HTML, CSS y JS. Como los viejos tiempos.
-
----
-
-## Instalación 🛠️
-
-No necesitas instalar nada. Solo abre `index.html` en tu navegador favorito.
+No hay build ni dependencias. Abre `index.html` en el navegador o sirve el
+directorio:
 
 ```bash
-# Clona el repositorio
-git clone https://github.com/isdose/nada.git
-
-# Entra al directorio
-cd nada
-
-# Abre en tu navegador
-# En macOS:
-open index.html
-# En Linux:
-xdg-open index.html
-# En Windows:
-start index.html
+python -m http.server 8080
 ```
 
----
+Luego visita `http://localhost:8080`. El servidor local es recomendable para
+que el portapapeles funcione en todos los navegadores.
 
-## Estructura del Proyecto 📁
+## Estructura
 
 ```
 nada/
-├── index.html        # La aplicación completa
-├── style.css         # Estilos (oscuros, elegantes, minimalistas)
-├── script.js         # Lógica del temporizador
-├── images/
-│   ├── logo.png      # Logo de la app
-│   ├── splash.png    # Imagen para redes sociales
-│   └── favicon.ico   # Icono del navegador
-└── README.md         # Este archivo épico
+├── index.html        # vistas, diálogos y contenido
+├── style.css         # el sistema visual completo
+├── script.js         # estado, cronómetro, registro y persistencia
+├── fonts/            # Instrument Serif + Crimson Text (SIL OFL)
+├── images/           # icono, wordmark y Open Graph
+└── README.md
 ```
 
+No hay frameworks, bundler, `node_modules` ni paso de compilación. Es HTML,
+CSS y JavaScript del navegador.
+
+## Cómo se guarda
+
+Todo vive en `localStorage` bajo la clave `nada.web.v1`:
+
+- `sessions`: lista de sesiones terminadas.
+- `active`: sesión en curso, con `startedAt`, `lastResumedAt` y `accumulatedMs`.
+- `settings`: los tres tiempos rápidos, el modo, la meta y el sonido.
+
+El cronómetro se apoya en marcas de tiempo. Si cierras la pestaña con una
+sesión corriendo, al volver se calcula el tiempo real transcurrido. Si la meta
+se cumplió mientras estabas fuera, la sesión se cierra exactamente en la meta,
+no cuando vuelves.
+
+Nada sale de tu navegador. No hay cuentas, analytics ni peticiones de red.
+
+## Diferencias con la app
+
+La app de Android añade lo que el navegador no puede prometer: notificación
+persistente con cronómetro nativo, widget 2×2 en la pantalla de inicio y aviso
+de meta en segundo plano. El contador, el registro, los ajustes y la voz son
+los mismos.
+
+## Changelog
+
+### 2026-10-26
+
+- Reescritura completa para que la web sea la versión web de la app 1.0.4.
+- Misma marca: wordmark `nada!`, negro `#000000`, hueso `#F2EFE6`, Instrument
+  Serif y Crimson Text empaquetadas.
+- Modo libre y metas con los mismos tres tiempos editables.
+- Registro local con total, sesiones, racha, promedio, agrupación por día y
+  detalle de cada sesión.
+- Persistencia de la sesión activa y recuperación por marca de tiempo.
+- Luz de fondo en movimiento, pausa física, resumen de cierre y manifiesto.
+- Chime de dos notas con Web Audio y ajuste de sonido.
+- Copiar resumen, borrar sesiones y diseño responsive.
+- Sin frameworks: HTML, CSS y JavaScript.
+
+## Créditos
+
+- Tipografías: [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif)
+  y [Crimson Text](https://fonts.google.com/specimen/Crimson+Text), SIL Open
+  Font License.
+- Hecho con Flutter en Android y con HTML, CSS y JavaScript en la web. Sin
+  frameworks, sin analytics, sin prisa.
+- Ernesto Flames (DOSe) · MIT.
+
 ---
 
-## Inspiración 🌟
-
-Esta app está inspirada en [usenothing.com](https://usenothing.com), pero con un enfoque diferente:
-
-- Pensado para uso real: estudio, trabajo, productividad
-- Con un toque filosófico-humorístico que hace la experiencia más memorable
-
----
-
-## Tecnologías Utilizadas 💻
-
-| Tecnología | Propósito |
-|-------------|-----------|
-| HTML5 | Estructura semántica |
-| CSS3 | Estilos y animaciones |
-| JavaScript (ES6) | Lógica del temporizador |
-| Google Fonts | Tipografía elegante (Playfair Display) |
-
-*Sin frameworks. Sin dependencias. Sin complejidad.*
-
----
-
-## Contributing 🤝
-
-¿Quieres contribuir? ¿Encontraste un bug? ¿Tienes una idea para hacerlo aún más épico?
-
-1. Fork el proyecto
-2. Crea una nueva rama (`git checkout -b feature/idea-genial`)
-3. Commit tus cambios (`git commit -m 'Agregada idea genial'`)
-4. Push a la rama (`git push origin feature/idea-genial`)
-5. Abre un Pull Request
-
----
-
-## License 📜
-
-MIT License - Haz lo que quieras con esto. Aunque oficialmente no estarás haciendo nada.
-
----
-
-## Autor ✍️
-
-**Ernesto Flames (DOSe)**
-
-- 🌐 [nada.isdose.com](https://nada.isdose.com)
-- 💼 Portfolio: [isdose.com](https://isdose.com)
-
----
-
-<p align="center">
-  <sub>Creado con (mucho) mate 🧉 y (poco) esfuerzo.</sub>
-</p>
-
-<p align="center">
-  <sub>"No hacer nada es hacer algo. Es la paradoja del vacío productivo."</sub>
-</p>
-
-<p align="center">
-  🚫
-</p>
+<p align="center"><sub>no hacer nada también es una forma de estar completo.</sub></p>
