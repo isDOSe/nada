@@ -1,266 +1,323 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>nada! — el contador de lo que no hiciste</title>
-  <meta name="description" content="nada! es un cronómetro para el tiempo que no le debes a nadie. Sin cuentas, sin nube y sin notificaciones que te pidan hacer más.">
   <meta name="theme-color" content="#000000">
   <meta name="color-scheme" content="dark">
+  <meta name="description" content="nada! es un contador para hacer algo productivo o no. Estudia, trabaja, pomodoro. Oficialmente, no estás haciendo nada.">
   <meta name="author" content="Ernesto Flames (DOSe)">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://nada.isdose.com/">
   <link rel="icon" type="image/png" sizes="512x512" href="images/icon.png">
   <link rel="apple-touch-icon" href="images/icon.png">
+  <title>nada! — Temporizador</title>
+  <link rel="stylesheet" href="style.css">
 
-  <meta property="og:title" content="nada! — el contador de lo que no hiciste">
-  <meta property="og:description" content="Un botón, un número que crece y un registro que se acumula. Sin cuentas, sin nube, sin prisa.">
+  <meta property="og:title" content="nada! — La app para hacer... nada. O algo.">
+  <meta property="og:description" content="Un contador para hacer algo productivo o no. Oficialmente, no estás haciendo nada.">
   <meta property="og:image" content="https://nada.isdose.com/images/og.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta property="og:url" content="https://nada.isdose.com/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
-
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="nada! — el contador de lo que no hiciste">
-  <meta name="twitter:description" content="Un botón, un número que crece y un registro que se acumula.">
-  <meta name="twitter:image" content="https://nada.isdose.com/images/og.png">
-
-  <link rel="stylesheet" href="style.css">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "nada!",
-    "description": "El contador del tiempo que no le debes a nadie.",
+    "description": "Un contador para hacer algo productivo o no. Oficialmente, no estás haciendo nada.",
     "url": "https://nada.isdose.com/",
-    "applicationCategory": "LifestyleApplication",
+    "applicationCategory": "ProductivityApplication",
     "operatingSystem": "Any",
     "inLanguage": "es",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "image": "https://nada.isdose.com/images/og.png"
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
 </head>
 <body>
-  <div class="aurora" id="aurora" aria-hidden="true"><span></span><span></span></div>
+  <div class="ambient" id="aurora" aria-hidden="true"><span></span><span></span></div>
 
-  <main class="shell">
-    <section class="view" id="view-home" data-view="home">
-      <header class="topbar">
-        <span class="wordmark" aria-label="nada!">nada<span class="exclaim">!</span></span>
-        <button class="footnote" id="home-history" type="button">registro</button>
-      </header>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="wordmark" type="button" data-nav="home" aria-label="Nada!, Inicio">nada<span>!</span></button>
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav-link is-current" id="nav-timer" type="button" data-nav="home">Temporizador</button>
+        <button class="nav-link" id="nav-history" type="button" data-nav="history">Registro</button>
+        <button class="nav-link" id="nav-about" type="button" data-nav="about">¿Qué es esto?</button>
+        <button class="settings-trigger" id="open-settings" type="button" aria-label="Abrir ajustes">Ajustes</button>
+      </nav>
+    </div>
+  </header>
 
-      <div class="home-body">
-        <p class="dateline" id="dateline"></p>
-
+  <main class="app-shell">
+    <section class="view home-view is-active" id="view-home" data-view="home" aria-labelledby="home-title">
+      <div class="home-layout">
         <div class="home-main">
-          <h1 class="hero">nada!</h1>
-          <p class="tagline">el contador de lo que no hiciste</p>
+          <p class="today-line" id="dateline"></p>
+          <p class="eyebrow">La app para hacer... nada. O algo. Depende.</p>
+          <h1 id="home-title">Un rato<br>para ti.</h1>
+          <p class="home-intro">El reloj corre. La productividad puede esperar.</p>
 
-          <button class="total" id="home-total-button" type="button">
-            <span class="section-label">en total</span>
+          <section class="session-picker" aria-labelledby="duration-title">
+            <div class="section-heading">
+              <h2 id="duration-title">¿Cuánto tiempo?</h2>
+              <button class="inline-link" id="edit-presets" type="button">Editar tiempos</button>
+            </div>
+            <div class="choices" id="choices" role="group" aria-label="Duración de la sesión"></div>
+            <p class="choice-hint" id="duration-hint" aria-live="polite"></p>
+          </section>
+
+          <button class="button button-primary start-button" id="start-session" type="button">Iniciar sesión</button>
+          <p class="privacy-note">Sin cuenta. Sin anuncios. Tu registro se queda aquí.</p>
+        </div>
+
+        <aside class="ledger" aria-label="Tu actividad">
+          <div class="ledger-topline">
+            <h2>Tu nada acumulada</h2>
+            <span class="ledger-date">Desde el primer minuto</span>
+          </div>
+
+          <button class="total-button" id="home-total-button" type="button" aria-label="Abrir el registro">
+            <span class="small-label">En total</span>
             <span class="total-value" id="home-total">0 min</span>
-            <span class="total-meta" id="home-meta">tu primera sesión empieza cuando quieras.</span>
+          </button>
+          <p class="ledger-meta" id="home-meta">Tu primera sesión empieza cuando quieras.</p>
+
+          <div class="ledger-rule"></div>
+
+          <button class="medal-summary" id="home-medal-open" type="button" aria-haspopup="dialog">
+            <span class="medal-mark" id="home-medal" aria-hidden="true">n!</span>
+            <span class="medal-copy">
+              <span class="medal-title" id="home-medals">Ninguna esta semana</span>
+              <span class="medal-detail" id="home-medals-copy">Cada 45 min de nada. Te faltan 45.</span>
+            </span>
+            <span class="medal-open" aria-hidden="true">Ver</span>
           </button>
 
-          <div class="duration">
-            <p class="section-label on-bone">¿cuánto tiempo?</p>
-            <div class="choices" id="choices" role="group" aria-label="Duración de la sesión"></div>
-            <p class="hint" id="duration-hint">cuenta hacia arriba. tú decides cuándo parar.</p>
+          <div class="ledger-rule"></div>
+
+          <div class="ledger-foot">
+            <span>Hoy</span>
+            <span id="home-today">0 min</span>
           </div>
-        </div>
+          <div class="ledger-foot">
+            <span>Esta semana</span>
+            <span id="home-week">0 min</span>
+          </div>
+          <button class="inline-link ledger-link" type="button" data-nav="history">Ver todo el registro</button>
+        </aside>
       </div>
 
-      <div class="dock">
-        <button class="btn solid" id="start-session" type="button">empezar a no hacer nada</button>
-        <div class="hairline"></div>
-        <div class="dock-row">
-          <button class="footnote" id="open-settings" type="button">ajustes</button>
-          <button class="footnote" id="open-manifesto" type="button">manifiesto</button>
-        </div>
-      </div>
+      <footer class="app-footer">
+        <span>nada! · Sin prisa.</span>
+        <button class="inline-link" type="button" data-nav="manifesto">El manifiesto</button>
+      </footer>
     </section>
 
-    <section class="view" id="view-session" data-view="session">
-      <header class="topbar">
-        <span class="wordmark" aria-label="nada!">nada<span class="exclaim">!</span></span>
-        <span class="status" id="session-status" hidden>en pausa</span>
-      </header>
+    <section class="view timer-view" id="view-session" data-view="session" aria-labelledby="clock">
+      <div class="timer-layout">
+        <div class="timer-heading">
+          <p class="timer-status" id="session-status">Sesión en curso</p>
+          <p class="timer-context">Oficialmente, no estás haciendo nada.</p>
+        </div>
 
-      <div class="session-body">
-        <div class="clock" id="clock" role="timer" aria-live="off">00:00</div>
-        <p class="session-line" id="session-line">acabas de dejar de hacer algo</p>
-        <p class="session-sub" id="session-sub" hidden></p>
+        <div class="timer-face">
+          <div class="clock" id="clock" role="timer" aria-live="off">00:00</div>
+          <p class="session-line" id="session-line">Acabas de dejar de hacer algo.</p>
+          <p class="session-sub" id="session-sub" hidden></p>
+        </div>
 
         <div class="goal-block" id="goal-block" hidden>
           <div class="goal-row">
             <span id="goal-label"></span>
             <span class="remaining" id="goal-remaining"></span>
           </div>
-          <div class="progress"><span id="progress-fill"></span></div>
+          <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
         </div>
-      </div>
 
-      <div class="dock">
-        <button class="btn solid" id="toggle-pause" type="button">pausar</button>
-        <button class="btn quiet" id="finish-session" type="button">terminar</button>
+        <div class="session-controls">
+          <button class="button button-primary" id="toggle-pause" type="button">Pausar</button>
+          <button class="button button-secondary" id="finish-session" type="button">Terminar y guardar</button>
+        </div>
+        <p class="session-footnote">Puedes pausar cuando quieras. El tiempo no se ofende.</p>
       </div>
     </section>
 
-    <section class="view" id="view-summary" data-view="summary">
-      <header class="topbar">
-        <span class="wordmark" aria-label="nada!">nada<span class="exclaim">!</span></span>
-        <button class="footnote" id="close-summary" type="button">cerrar</button>
-      </header>
-
-      <div class="summary-body">
-        <p class="section-label" id="summary-label"></p>
+    <section class="view summary-view" id="view-summary" data-view="summary" aria-labelledby="summary-duration">
+      <div class="summary-layout">
+        <p class="summary-kicker" id="summary-label"></p>
         <p class="summary-duration" id="summary-duration"></p>
         <p class="summary-unit">de nada.</p>
         <p class="summary-copy" id="summary-copy"></p>
-        <p class="summary-total" id="summary-total"></p>
-      </div>
-
-      <div class="dock">
-        <button class="btn solid" id="start-again" type="button">seguir sin hacer nada</button>
-        <button class="btn quiet" id="summary-home" type="button">volver al inicio</button>
-      </div>
-    </section>
-
-    <section class="view" id="view-history" data-view="history">
-      <header class="topbar">
-        <button class="footnote" id="history-back" type="button">volver</button>
-        <span class="wordmark" aria-label="nada!">nada<span class="exclaim">!</span></span>
-      </header>
-
-      <div class="history-body">
-        <p class="section-label">registro</p>
-        <p class="history-total" id="history-total">—</p>
-        <p class="history-meta" id="history-meta">ninguna sesión · sin racha</p>
-        <p class="history-since" id="history-since" hidden></p>
-        <p class="history-longest" id="history-longest" hidden></p>
-        <div class="history-actions" id="history-actions" hidden>
-          <button class="footnote" id="copy-summary" type="button">copiar resumen</button>
+        <div class="summary-stats">
+          <p class="summary-total" id="summary-total"></p>
+          <p class="summary-medal" id="summary-medal"></p>
         </div>
-
-        <div class="hairline history-rule" id="history-rule" hidden></div>
-        <div id="history-entries"></div>
-
-        <div class="empty" id="history-empty">
-          <p class="empty-title">aquí todavía<br>no hay nada.</p>
-          <p class="empty-copy">empieza con un minuto y mira cómo se acumula.</p>
-          <button class="btn solid" id="history-start" type="button">empezar a no hacer nada</button>
+        <div class="summary-actions">
+          <button class="button button-primary" id="start-again" type="button">Empezar otra</button>
+          <button class="button button-secondary" id="summary-home" type="button">Volver al inicio</button>
         </div>
       </div>
     </section>
 
-    <section class="view" id="view-manifesto" data-view="manifesto">
-      <header class="topbar">
-        <button class="footnote" id="manifesto-back" type="button">volver</button>
-        <span class="wordmark" aria-label="nada!">nada<span class="exclaim">!</span></span>
-      </header>
+    <section class="view history-view" id="view-history" data-view="history" aria-labelledby="history-title">
+      <div class="page-heading">
+        <p class="eyebrow">Lo que sí hiciste: parar un rato.</p>
+        <h1 id="history-title">Tu registro.</h1>
+        <p class="page-intro">Cada sesión cuenta. Aunque no hayas hecho nada.</p>
+      </div>
 
-      <div class="prose">
-        <h2 class="prose-title">la filosofía<br>del vacío</h2>
-        <p class="prose-lead">No hacer nada no es un error del día.<br>Es la parte del día que no le debes a nadie.</p>
-        <div class="hairline"></div>
-        <p>Nos enseñaron a medir el tiempo por lo que producimos. Cada minuto tiene que justificarse: aprender algo, resolver algo, optimizar algo. Hasta descansar se volvió una tarea pendiente.</p>
-        <p>La app propone lo contrario. Un contador que no te pide una meta, ni una racha, ni una identidad. Solo mide el rato en el que no le rendiste cuentas a nadie.</p>
-        <blockquote>La productividad te mide por lo que produces. Esto te mide por lo que te permites.</blockquote>
-        <p>Un minuto sin hacer nada no se recupera. Se gasta. Y está bien. No todo lo que cuenta se puede contar, pero este aparato lo intenta de todos modos.</p>
-        <p>Diógenes vivía en un barril y no por eso dejó de ser recordado. Tú no necesitas un barril. Necesitas veinticinco minutos y la valentía de no llenarlos.</p>
-        <p class="final">empieza. o no. el contador está aquí para cuando decidas que el vacío también merece un registro.</p>
-        <p class="signature">— nada!</p>
+      <div class="history-overview">
+        <div class="history-total-wrap">
+          <span class="small-label">Tiempo total</span>
+          <p class="history-total" id="history-total">—</p>
+        </div>
+        <div class="history-meta-block">
+          <p id="history-meta">Ninguna sesión · Sin racha</p>
+          <p id="history-since" hidden></p>
+          <p id="history-longest" hidden></p>
+        </div>
+        <button class="button button-outline" id="copy-summary" type="button">Copiar resumen</button>
+      </div>
+
+      <div class="history-rule" id="history-rule" hidden></div>
+      <div class="history-entries" id="history-entries"></div>
+
+      <div class="empty-state" id="history-empty">
+        <span class="empty-mark" aria-hidden="true">n!</span>
+        <h2>Todavía no hay nada.</h2>
+        <p>Lo cual, por ahora, es bastante coherente.</p>
+        <button class="button button-primary" id="history-start" type="button">Iniciar primera sesión</button>
+      </div>
+    </section>
+
+    <section class="view reading-view" id="view-manifesto" data-view="manifesto" aria-labelledby="manifesto-title">
+      <div class="page-heading reading-heading">
+        <p class="eyebrow">Una explicación innecesariamente larga.</p>
+        <h1 id="manifesto-title">El arte de<br>no hacer nada.</h1>
+        <p class="page-intro">La app para hacer... nada. O algo. Depende.</p>
+      </div>
+      <article class="reading-copy">
+        <p>Esto es un contador. Pones un número, presionas iniciar y esperas. No hay ranking, coach gritándote en mayúsculas ni una versión premium que te venda paz interior.</p>
+        <p>Pero cuando te sientas a no hacer nada durante 25 minutos, ¿qué estás haciendo en realidad?</p>
+        <p>Estás ignorando 47 notificaciones. Resistiendo las ganas de mirar el teléfono. Sentado. Respirando. Existiendo. Practicando el arte perdido de estar sin justificarte.</p>
+        <blockquote>«La tensión más extrema no es hacer algo. Es hacer algo mientras finges que no haces nada.»<cite>— alguien, probablemente en LinkedIn</cite></blockquote>
+        <p>Diógenes vivía en un barril. Nadie le dijo que tenía que ser productivo. Y aun así la filosofía lo recuerda. Tú no necesitas un barril: necesitas 25 minutos y la valentía de no llenarlos.</p>
+        <p>No hacer nada es hacer algo. Es contradecirte. Es la paradoja del vacío productivo. Es el yin y el yang de existir sin esforzarse.</p>
+        <p>La próxima vez que alguien te pregunte qué haces, míralo a los ojos y di: «Nada. Literalmente nada. Estoy corriendo un temporizador.»</p>
+        <p class="reading-last">Y ahora que has leído todo esto... ¿cuánto tiempo acabas de perder que pudiste haber pasado haciendo absolutamente nada?</p>
+      </article>
+      <p class="signature">— nada!</p>
+    </section>
+
+    <section class="view about-view" id="view-about" data-view="about" aria-labelledby="about-title">
+      <div class="page-heading">
+        <p class="eyebrow">En serio. Más o menos.</p>
+        <h1 id="about-title">¿Qué es nada?</h1>
+      </div>
+      <div class="about-layout">
+        <div class="about-lead-block">
+          <p class="about-lead">Es un contador. Así de simple.</p>
+          <p>Sirve para estudiar, trabajar, hacer un pomodoro, meditar o simular que estás ocupado sin hacer nada. Oficialmente, el registro no hace preguntas.</p>
+          <button class="button button-primary" type="button" data-nav="home">Iniciar sesión</button>
+        </div>
+        <div class="about-details">
+          <h2>Todo se queda en este navegador.</h2>
+          <p>Sin cuentas, sin anuncios, sin nube y sin analytics. Si borras los datos del navegador, también borras tu nada.</p>
+          <p>La app de Android añade una notificación persistente, un widget y un aviso al llegar a la meta. Aquí nos conformamos con contar bien.</p>
+        </div>
       </div>
     </section>
   </main>
 
-  <dialog class="sheet" id="settings-dialog" aria-labelledby="settings-title">
-    <div class="sheet-inner">
-      <div class="sheet-head">
-        <h2 class="sheet-title" id="settings-title">ajustes</h2>
-        <button class="footnote" data-close type="button">listo</button>
+  <dialog class="dialog" id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-inner">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">A tu manera</p>
+          <h2 id="settings-title">Ajustes</h2>
+        </div>
+        <button class="icon-close" data-close type="button" aria-label="Cerrar ajustes">×</button>
       </div>
 
-      <p class="section-label on-bone">tiempos rápidos</p>
-      <p class="caption">los tres tiempos de la pantalla principal. edítalos a tu gusto.</p>
-      <div class="time-rows" id="time-rows"></div>
+      <section class="settings-section" aria-labelledby="presets-title">
+        <h3 id="presets-title">Tiempos rápidos</h3>
+        <p class="settings-help">Cambia los minutos. Los nombres son de toda la vida y se quedan.</p>
+        <div class="time-rows" id="time-rows"></div>
+      </section>
 
-      <div class="hairline"></div>
-
-      <div class="switch-row">
+      <section class="settings-section sound-setting">
         <div>
-          <p class="switch-title">sonido al terminar</p>
-          <p class="caption">un tono corto cuando se guarda la sesión.</p>
+          <h3>Sonido al terminar</h3>
+          <p class="settings-help">Un tono corto cuando guardas la sesión.</p>
         </div>
         <button class="switch" id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="Sonido al terminar"><span></span></button>
-      </div>
-      <button class="footnote" id="test-sound" type="button">probar sonido</button>
+        <button class="inline-link test-sound" id="test-sound" type="button">Probar sonido</button>
+      </section>
 
-      <div class="hairline"></div>
-
-      <button class="footnote wide" id="open-manifesto-settings" type="button">la filosofía del vacío</button>
-      <button class="footnote wide" id="open-about" type="button">acerca de nada!</button>
-      <p class="caption">las notificaciones y el widget viven en la app de android.</p>
-      <p class="caption">todo se queda en este navegador. nada viaja a ningún lado.</p>
-      <p class="version">versión web · sin cuentas, sin nube, sin prisa</p>
+      <section class="settings-section settings-links">
+        <button class="inline-link" type="button" data-nav="manifesto">Leer el manifiesto</button>
+        <button class="inline-link" type="button" data-nav="about">¿Qué es nada?</button>
+      </section>
+      <p class="settings-footnote">Tus sesiones se guardan solo en este navegador.</p>
     </div>
   </dialog>
 
-  <dialog class="sheet confirm" id="confirm-dialog" aria-labelledby="confirm-title">
-    <div class="sheet-inner">
-      <h2 class="sheet-title" id="confirm-title">borrar esta sesión</h2>
-      <p class="confirm-copy">desaparecerá del registro. el tiempo ya lo perdiste igual.</p>
-      <div class="confirm-actions">
-        <button class="footnote" id="confirm-cancel" type="button">cancelar</button>
-        <button class="footnote" id="confirm-delete" type="button">borrar</button>
+  <dialog class="dialog dialog-small" id="session-dialog" aria-labelledby="session-dialog-label">
+    <div class="dialog-inner">
+      <div class="dialog-heading">
+        <p class="eyebrow" id="session-dialog-label"></p>
+        <button class="icon-close" data-close type="button" aria-label="Cerrar detalle">×</button>
       </div>
-    </div>
-  </dialog>
-
-  <dialog class="sheet" id="session-dialog" aria-labelledby="session-dialog-label">
-    <div class="sheet-inner">
-      <p class="section-label" id="session-dialog-label"></p>
       <p class="dialog-duration" id="session-dialog-duration"></p>
-      <p class="dialog-unit">de nada.</p>
+      <p class="summary-unit">de nada.</p>
       <p class="dialog-copy" id="session-dialog-copy"></p>
-      <button class="footnote" id="delete-session" type="button">borrar sesión</button>
-      <div class="dialog-footer">
-        <button class="footnote" data-close type="button">cerrar</button>
+      <button class="button button-danger" id="delete-session" type="button">Borrar sesión</button>
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog-small" id="confirm-dialog" aria-labelledby="confirm-title">
+    <div class="dialog-inner">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Esto no se puede deshacer</p>
+          <h2 id="confirm-title">¿Borrar esta sesión?</h2>
+        </div>
+        <button class="icon-close" id="confirm-cancel-x" type="button" aria-label="Cancelar">×</button>
+      </div>
+      <p class="dialog-copy">Desaparecerá del registro. El tiempo ya lo perdiste igual.</p>
+      <div class="dialog-actions">
+        <button class="button button-secondary" id="confirm-cancel" type="button">Cancelar</button>
+        <button class="button button-danger" id="confirm-delete" type="button">Borrar sesión</button>
       </div>
     </div>
   </dialog>
 
-  <dialog class="sheet" id="about-dialog" aria-labelledby="about-title">
-    <div class="sheet-inner">
-      <div class="sheet-head">
-        <span class="wordmark about-wordmark" id="about-title">nada<span class="exclaim">!</span></span>
-        <button class="footnote" data-close type="button">cerrar</button>
+  <dialog class="dialog dialog-small" id="medals-dialog" aria-labelledby="medals-title">
+    <div class="dialog-inner">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Una recompensa que no sirve para nada</p>
+          <h2 id="medals-title">Medallas de nada</h2>
+        </div>
+        <button class="icon-close" data-close type="button" aria-label="Cerrar medallas">×</button>
       </div>
-      <p class="about-lead">el tiempo que no le debes a nadie.</p>
-      <p class="about-copy">sin cuentas. sin anuncios. sin nube. todo se queda en este navegador.</p>
-      <p class="about-copy">la app de android suma notificación persistente, widget y aviso de meta.</p>
-      <div class="hairline"></div>
-      <p class="about-small">hecho con html, css y javascript, instrument serif y crimson text.</p>
-      <p class="about-small">ernesto flames (dose) · licencia mit.</p>
-      <p class="about-small">la app de android vive en <a href="https://github.com/isDOSe/nada-flutter" target="_blank" rel="noreferrer">github.com/isDOSe/nada-flutter</a>.</p>
+      <div class="medal-dialog-total">
+        <span class="medal-mark is-earned" id="medal-dialog-mark" aria-hidden="true">n!</span>
+        <div>
+          <p class="medal-dialog-count" id="medal-dialog-count">Ninguna</p>
+          <p class="settings-help" id="medal-dialog-week">Esta semana</p>
+        </div>
+      </div>
+      <p class="dialog-copy">Ganas una medalla por cada 45 minutos acumulados. La semana se reinicia el lunes; las medallas históricas se quedan.</p>
+      <p class="medal-progress-copy" id="medal-dialog-progress"></p>
     </div>
   </dialog>
 
-  <div class="sr-only" id="live" aria-live="polite"></div>
-
-  <noscript>
-    <p class="noscript">nada! necesita javascript para contar el tiempo. la app de android funciona sin esto.</p>
-  </noscript>
-
+  <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
+  <noscript><p class="noscript">nada! necesita JavaScript para contar el tiempo. La app de Android funciona sin esto.</p></noscript>
   <script src="script.js"></script>
 </body>
 </html>

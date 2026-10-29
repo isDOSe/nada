@@ -3,6 +3,11 @@
 
   const STORAGE_KEY = 'nada.web.v1';
   const MIN_SESSION_MS = 3000;
+  const CURRENT_VERSION = 2;
+  const MINUTES_PER_MEDAL = 45;
+  const PRESET_NAMES = ['Pomodoro', 'Jornada', 'Maratón'];
+  const OLD_QUICK = [15, 25, 45];
+  const DEFAULT_QUICK = [25, 45, 90];
 
   const MONTHS = [
     'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -13,13 +18,6 @@
     'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo',
   ];
 
-  const DEFAULT_SETTINGS = {
-    quickMinutes: [15, 25, 45],
-    mode: 'free',
-    goalMinutes: 25,
-    soundEnabled: true,
-  };
-
   const el = { views: {} };
   let data;
   let lastFinished = null;
@@ -28,6 +26,7 @@
   let copiedTimer = null;
   let pendingDeleteId = null;
   let currentClock = '';
+  let currentView = 'home';
 
   function two(value) {
     return String(value).padStart(2, '0');
@@ -120,22 +119,28 @@
     return `${count} sesiones`;
   }
 
-  function freshData() {
-    return {
-      version: 1,
-      sessions: [],
-      active: null,
-      settings: {
-        quickMinutes: [...DEFAULT_SETTINGS.quickMinutes],
-        mode: DEFAULT_SETTINGS.mode,
-        goalMinutes: DEFAULT_SETTINGS.goalMinutes,
-        soundEnabled: DEFAULT_SETTINGS.soundEnabled,
-      },
-    };
+  function medalLabel(count) {
+    if (count <= 0) return 'ninguna medalla';
+    if (count === 1) return '1 medalla';
+    return `${count} medallas`;
   }
 
   function isMinute(value) {
     return Number.isInteger(value) && value >= 1 && value <= 999;
+  }
+
+  function freshData() {
+    return {
+      version: CURRENT_VERSION,
+      sessions: [],
+      active: null,
+      settings: {
+        quickMinutes: [...DEFAULT_QUICK],
+        mode: 'free',
+        goalMinutes: 25,
+        soundEnabled: true,
+      },
+    };
   }
 
   function normalizeSession(raw) {
@@ -195,6 +200,16 @@
     return settings;
   }
 
+  function migrateSettings(settings) {
+    const isV1Default = settings.quickMinutes.length === OLD_QUICK.length
+      && settings.quickMinutes.every((minutes, index) => minutes === OLD_QUICK[index]);
+    if (!isV1Default) return;
+
+    const slot = OLD_QUICK.indexOf(settings.goalMinutes);
+    settings.quickMinutes = [...DEFAULT_QUICK];
+    if (slot >= 0) settings.goalMinutes = DEFAULT_QUICK[slot];
+  }
+
   function loadData() {
     const next = freshData();
     try {
@@ -211,6 +226,10 @@
       }
       next.settings = normalizeSettings(parsed.settings);
       next.active = normalizeActive(parsed.active);
+
+      const storedVersion = Number(parsed.version) || 1;
+      if (storedVersion < CURRENT_VERSION) migrateSettings(next.settings);
+      next.version = CURRENT_VERSION;
       return next;
     } catch (_) {
       return next;
@@ -245,8 +264,14 @@
     }
 
     const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6).getTime();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const mondayOffset = (todayStart.getDay() + 6) % 7;
+    const weekStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - mondayOffset,
+    ).getTime();
+    const todayStartMs = todayStart.getTime();
     let total = 0;
     let today = 0;
     let week = 0;
@@ -259,7 +284,7 @@
 
       const date = new Date(session.startedAt);
       const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-      if (startOfDay === todayStart) today += session.durationMs;
+      if (startOfDay === todayStartMs) today += session.durationMs;
       if (startOfDay >= weekStart) week += session.durationMs;
       days.add(dayKey(date));
     }
@@ -269,7 +294,7 @@
       today,
       week,
       sessionCount: sessions.length,
-      streakDays: computeStreak(days, todayStart),
+      streakDays: computeStreak(days, todayStartMs),
       longest,
       average: Math.floor(total / sessions.length),
     };
@@ -289,6 +314,16 @@
     return streak;
   }
 
+  function computeMedals(stats) {
+    const weekMinutes = Math.floor(stats.week / 60000);
+    const totalMinutes = Math.floor(stats.total / 60000);
+    return {
+      week: Math.floor(weekMinutes / MINUTES_PER_MEDAL),
+      total: Math.floor(totalMinutes / MINUTES_PER_MEDAL),
+      toNext: MINUTES_PER_MEDAL - (weekMinutes % MINUTES_PER_MEDAL),
+    };
+  }
+
   function cacheElements() {
     el.aurora = document.getElementById('aurora');
     el.views = {
@@ -297,18 +332,23 @@
       summary: document.getElementById('view-summary'),
       history: document.getElementById('view-history'),
       manifesto: document.getElementById('view-manifesto'),
+      about: document.getElementById('view-about'),
     };
 
     el.dateline = document.getElementById('dateline');
     el.homeTotal = document.getElementById('home-total');
     el.homeMeta = document.getElementById('home-meta');
     el.homeTotalButton = document.getElementById('home-total-button');
+    el.homeMedals = document.getElementById('home-medals');
+    el.homeMedalsCopy = document.getElementById('home-medals-copy');
+    el.homeMedal = document.getElementById('home-medal');
+    el.homeToday = document.getElementById('home-today');
+    el.homeWeek = document.getElementById('home-week');
+    el.navLinks = [...document.querySelectorAll('.nav-link')];
     el.choices = document.getElementById('choices');
     el.durationHint = document.getElementById('duration-hint');
     el.startSession = document.getElementById('start-session');
-    el.homeHistory = document.getElementById('home-history');
-    el.openSettings = document.getElementById('open-settings');
-    el.openManifesto = document.getElementById('open-manifesto');
+    el.editPresets = document.getElementById('edit-presets');
 
     el.sessionView = document.getElementById('view-session');
     el.sessionStatus = document.getElementById('session-status');
@@ -326,7 +366,7 @@
     el.summaryDuration = document.getElementById('summary-duration');
     el.summaryCopy = document.getElementById('summary-copy');
     el.summaryTotal = document.getElementById('summary-total');
-    el.closeSummary = document.getElementById('close-summary');
+    el.summaryMedal = document.getElementById('summary-medal');
     el.summaryHome = document.getElementById('summary-home');
     el.startAgain = document.getElementById('start-again');
 
@@ -334,22 +374,17 @@
     el.historyMeta = document.getElementById('history-meta');
     el.historySince = document.getElementById('history-since');
     el.historyLongest = document.getElementById('history-longest');
-    el.historyActions = document.getElementById('history-actions');
     el.historyRule = document.getElementById('history-rule');
     el.historyEntries = document.getElementById('history-entries');
     el.historyEmpty = document.getElementById('history-empty');
-    el.historyBack = document.getElementById('history-back');
     el.historyStart = document.getElementById('history-start');
     el.copySummary = document.getElementById('copy-summary');
-
-    el.manifestoBack = document.getElementById('manifesto-back');
 
     el.settingsDialog = document.getElementById('settings-dialog');
     el.timeRows = document.getElementById('time-rows');
     el.soundToggle = document.getElementById('sound-toggle');
     el.testSound = document.getElementById('test-sound');
-    el.openManifestoSettings = document.getElementById('open-manifesto-settings');
-    el.openAbout = document.getElementById('open-about');
+    el.openSettings = document.getElementById('open-settings');
 
     el.sessionDialog = document.getElementById('session-dialog');
     el.sessionDialogLabel = document.getElementById('session-dialog-label');
@@ -359,25 +394,32 @@
 
     el.confirmDialog = document.getElementById('confirm-dialog');
     el.confirmCancel = document.getElementById('confirm-cancel');
+    el.confirmCancelX = document.getElementById('confirm-cancel-x');
     el.confirmDelete = document.getElementById('confirm-delete');
 
-    el.aboutDialog = document.getElementById('about-dialog');
+    el.medalsDialog = document.getElementById('medals-dialog');
+    el.medalDialogMark = document.getElementById('medal-dialog-mark');
+    el.medalDialogCount = document.getElementById('medal-dialog-count');
+    el.medalDialogWeek = document.getElementById('medal-dialog-week');
+    el.medalDialogProgress = document.getElementById('medal-dialog-progress');
+
     el.live = document.getElementById('live');
   }
 
   function bindEvents() {
+    for (const button of document.querySelectorAll('[data-nav]')) {
+      button.addEventListener('click', () => showView(button.dataset.nav));
+    }
+
     el.startSession.addEventListener('click', startSession);
     el.homeTotalButton.addEventListener('click', () => showView('history'));
-    el.homeHistory.addEventListener('click', () => showView('history'));
     el.openSettings.addEventListener('click', openSettings);
-    el.openManifesto.addEventListener('click', () => showView('manifesto'));
-    el.historyBack.addEventListener('click', () => showView('home'));
-    el.manifestoBack.addEventListener('click', () => showView('home'));
+    el.editPresets.addEventListener('click', openSettings);
+    document.getElementById('home-medal-open').addEventListener('click', openMedals);
 
     el.togglePause.addEventListener('click', togglePause);
     el.finishSession.addEventListener('click', () => finishSession());
 
-    el.closeSummary.addEventListener('click', dismissSummary);
     el.summaryHome.addEventListener('click', dismissSummary);
     el.startAgain.addEventListener('click', startSession);
 
@@ -393,15 +435,6 @@
       primeAudio();
       playChime();
     });
-    el.openAbout.addEventListener('click', () => {
-      el.settingsDialog.close();
-      el.aboutDialog.showModal();
-      focusDialogClose(el.aboutDialog);
-    });
-    el.openManifestoSettings.addEventListener('click', () => {
-      el.settingsDialog.close();
-      showView('manifesto');
-    });
 
     el.sessionDialog.addEventListener('close', () => {
       pendingDeleteId = null;
@@ -413,6 +446,9 @@
     });
 
     el.confirmCancel.addEventListener('click', () => {
+      el.confirmDialog.close();
+    });
+    el.confirmCancelX.addEventListener('click', () => {
       el.confirmDialog.close();
     });
     el.confirmDelete.addEventListener('click', () => {
@@ -454,6 +490,16 @@
   }
 
   function showView(name) {
+    if (!el.views[name]) return;
+
+    // A running session owns the page. The only way out is to finish it.
+    if (data.active && name !== 'session') return;
+
+    for (const dialog of document.querySelectorAll('dialog[open]')) {
+      dialog.close();
+    }
+
+    currentView = name;
     for (const [key, view] of Object.entries(el.views)) {
       view.classList.toggle('is-active', key === name);
     }
@@ -461,56 +507,79 @@
     const isSession = name === 'session';
     el.aurora.classList.toggle('is-on', isSession);
     if (!isSession) el.aurora.classList.remove('is-paused');
+    document.body.classList.toggle('is-running', Boolean(data.active));
+
+    for (const link of el.navLinks) {
+      const selected = link.dataset.nav === name || (name === 'summary' && link.dataset.nav === 'home');
+      link.classList.toggle('is-current', selected);
+      if (selected) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    }
 
     const titles = {
-      home: 'nada! — el contador de lo que no hiciste',
-      session: 'en curso · nada!',
-      summary: 'sesión guardada · nada!',
-      history: 'registro · nada!',
-      manifesto: 'la filosofía del vacío · nada!',
+      home: 'nada! — Temporizador',
+      session: 'Sesión en curso · nada!',
+      summary: 'Sesión guardada · nada!',
+      history: 'Registro · nada!',
+      manifesto: 'El manifiesto · nada!',
+      about: '¿Qué es nada? · nada!',
     };
     document.title = titles[name] || titles.home;
 
     if (name === 'home') renderHome();
     if (name === 'history') renderHistory();
 
-    const scroller = el.views[name].querySelector(
-      '.home-body, .session-body, .summary-body, .history-body, .prose'
-    );
-    if (scroller) scroller.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   function renderHome() {
     const stats = computeStats(data.sessions);
+    const medals = computeMedals(stats);
+
     el.dateline.textContent = `hoy, ${journalDate(new Date())}`;
     el.homeTotal.textContent = compactDuration(stats.total);
     el.homeMeta.textContent = stats.sessionCount === 0
-      ? 'tu primera sesión empieza cuando quieras.'
+      ? 'tu primera sesión de nada empieza cuando quieras.'
       : `${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}`;
     el.homeTotalButton.setAttribute(
       'aria-label',
-      `ver el registro: ${compactDuration(stats.total)} sin hacer nada, ${sessionCountLabel(stats.sessionCount)}`
+      `Abrir el registro: ${compactDuration(stats.total)} sin hacer nada, ${sessionCountLabel(stats.sessionCount)}`
     );
+
+    el.homeMedals.textContent = medals.week === 0
+      ? 'ninguna esta semana'
+      : `${medalLabel(medals.week)} esta semana`;
+    el.homeMedalsCopy.textContent = medals.week === 0
+      ? (medals.total === 0
+        ? `cada 45 min de nada. te faltan ${medals.toNext}.`
+        : `cada 45 min de nada. te faltan ${medals.toNext} · ${medals.total} en total`)
+      : `${medals.toNext} min para la siguiente · ${medals.total} en total`;
+    el.homeMedal.classList.toggle('is-filled', medals.week > 0);
+    el.homeToday.textContent = compactDuration(stats.today);
+    el.homeWeek.textContent = compactDuration(stats.week);
+
     el.durationHint.textContent = data.settings.mode === 'free'
-      ? 'cuenta hacia arriba. tú decides cuándo parar.'
-      : 'te aviso cuando llegues. después puedes seguir.';
+      ? 'cuenta hacia arriba. tú decides cuándo parar de no hacer nada.'
+      : 'te aviso cuando llegues. luego decides si sigues sin hacer nada.';
     renderChoices();
   }
 
   function renderChoices() {
     const settings = data.settings;
     const goals = [...settings.quickMinutes];
-    if (!goals.includes(settings.goalMinutes)) goals.push(settings.goalMinutes);
+    const extra = goals.includes(settings.goalMinutes) ? null : settings.goalMinutes;
 
     el.choices.replaceChildren();
-    el.choices.append(createChoice('sin límite', settings.mode === 'free', () => {
+    el.choices.append(createChoice('Sin límite', 'Sin meta', settings.mode === 'free', () => {
       settings.mode = 'free';
       save();
       renderHome();
     }));
 
-    for (const minutes of goals) {
+    goals.forEach((minutes, index) => {
+      const name = PRESET_NAMES[index] || `preset ${index + 1}`;
       el.choices.append(createChoice(
+        name,
         `${minutes} min`,
         settings.mode === 'goal' && settings.goalMinutes === minutes,
         () => {
@@ -520,15 +589,38 @@
           renderHome();
         }
       ));
+    });
+
+    if (extra != null) {
+      el.choices.append(createChoice(
+        `${extra} min`,
+        'Personalizado',
+        settings.mode === 'goal' && settings.goalMinutes === extra,
+        () => {
+          settings.mode = 'goal';
+          settings.goalMinutes = extra;
+          save();
+          renderHome();
+        }
+      ));
     }
   }
 
-  function createChoice(label, selected, onSelect) {
+  function createChoice(name, detail, selected, onSelect) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = selected ? 'choice is-selected' : 'choice';
-    button.textContent = label;
     button.setAttribute('aria-pressed', String(selected));
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'choice-name';
+    nameSpan.textContent = name;
+
+    const detailSpan = document.createElement('span');
+    detailSpan.className = 'choice-detail';
+    detailSpan.textContent = detail;
+
+    button.append(nameSpan, detailSpan);
     button.addEventListener('click', onSelect);
     return button;
   }
@@ -548,6 +640,7 @@
     lastFinished = null;
     primeAudio();
     save();
+    document.body.classList.add('is-running');
     showView('session');
     startTicker();
     renderSession();
@@ -658,6 +751,7 @@
     data.active = null;
     lastFinished = session;
     stopTicker();
+    document.body.classList.remove('is-running');
     save();
     el.aurora.classList.remove('is-on', 'is-paused');
 
@@ -684,12 +778,14 @@
 
     renderClock(clock);
     el.clock.setAttribute('aria-label', spokenDuration(elapsed));
-    el.sessionStatus.hidden = running;
+    el.sessionStatus.textContent = running
+      ? 'Sesión en curso'
+      : 'En pausa';
+    el.sessionStatus.classList.toggle('is-paused', !running);
     el.sessionLine.textContent = running
-      ? (elapsed < 2000 ? 'acabas de dejar de hacer algo' : `llevas ${spokenDuration(elapsed)} sin hacer nada`)
-      : 'el vacío se quedó quieto.';
-    el.sessionView.classList.toggle('is-paused', !running);
-    el.togglePause.textContent = running ? 'pausar' : 'continuar';
+      ? (elapsed < 2000 ? 'Acabas de dejar de hacer algo.' : `Llevas ${spokenDuration(elapsed)} sin hacer nada.`)
+      : 'Pausado. El reloj también se aburre.';
+    el.togglePause.textContent = running ? 'Pausar' : 'Continuar';
     el.togglePause.classList.toggle('is-depressed', !running);
     el.aurora.classList.toggle('is-paused', !running);
 
@@ -725,8 +821,12 @@
 
   function renderSummary(session) {
     const stats = computeStats(data.sessions);
+    const medals = computeMedals(stats);
     const completed = session.completed;
     const isFree = session.mode === 'free';
+    const beforeTotal = stats.total - session.durationMs;
+    const beforeMedals = Math.floor(Math.floor(beforeTotal / 60000) / MINUTES_PER_MEDAL);
+    const newMedals = medals.total - beforeMedals;
 
     el.summaryLabel.textContent = completed
       ? `meta cumplida · sesión ${stats.sessionCount}`
@@ -736,8 +836,11 @@
       ? 'llegaste a la meta sin producir absolutamente nada. impecable.'
       : isFree
         ? 'no estaban en tu agenda. ahora están en tu registro.'
-        : 'cortaste antes de la meta. igual cuenta.';
+        : 'cortaste antes de la meta. igual cuenta. aquí no hay jefe.';
     el.summaryTotal.textContent = `en total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}`;
+    el.summaryMedal.textContent = newMedals > 0
+      ? `medalla nueva. ya tienes ${medals.week} esta semana · ${medals.total} en total.`
+      : `te faltan ${medals.toNext} min para tu próxima medalla · ${medals.total} en total.`;
   }
 
   function dismissSummary() {
@@ -754,7 +857,7 @@
     el.historyMeta.textContent = `${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}`;
     el.historySince.hidden = !hasSessions;
     el.historyLongest.hidden = sessions.length < 2;
-    el.historyActions.hidden = !hasSessions;
+    el.copySummary.hidden = !hasSessions;
     el.historyRule.hidden = !hasSessions;
     el.historyEmpty.hidden = hasSessions;
     el.historyEntries.replaceChildren();
@@ -796,10 +899,7 @@
       total.textContent = compactDuration(group.total);
       head.append(day, total);
 
-      const rule = document.createElement('div');
-      rule.className = 'hairline day-rule';
-
-      fragment.append(head, rule);
+      fragment.append(head);
       for (const session of group.sessions) {
         fragment.append(createSessionRow(session));
       }
@@ -849,8 +949,8 @@
     el.sessionDialogCopy.textContent = session.goalMs == null
       ? 'sin límite. contó hacia arriba hasta que decidiste parar.'
       : session.completed
-        ? `meta de ${compactDuration(session.goalMs)}. la cumpliste sin hacer nada.`
-        : `meta de ${compactDuration(session.goalMs)}. la cortaste antes.`;
+        ? `meta de ${compactDuration(session.goalMs)}. la cumpliste sin hacer nada. como debe ser.`
+        : `meta de ${compactDuration(session.goalMs)}. la cortaste antes. tampoco pasa nada.`;
     el.sessionDialog.showModal();
     focusDialogClose(el.sessionDialog);
   }
@@ -861,10 +961,24 @@
   }
 
   function openSettings() {
+    if (data.active) return;
     renderTimeRows();
     updateSoundToggle();
     el.settingsDialog.showModal();
-    el.settingsDialog.addEventListener('close', renderHome, { once: true });
+    focusDialogClose(el.settingsDialog);
+  }
+
+  function openMedals() {
+    const stats = computeStats(data.sessions);
+    const medals = computeMedals(stats);
+    el.medalDialogCount.textContent = medalLabel(medals.week);
+    el.medalDialogWeek.textContent = `${medals.week} esta semana · ${medals.total} en total`;
+    el.medalDialogProgress.textContent = medals.week > 0
+      ? `Te faltan ${medals.toNext} min para la siguiente.`
+      : `Te faltan ${medals.toNext} min para ganar la primera.`;
+    el.medalDialogMark.classList.toggle('is-earned', medals.week > 0);
+    el.medalsDialog.showModal();
+    focusDialogClose(el.medalsDialog);
   }
 
   function renderTimeRows() {
@@ -873,6 +987,13 @@
       const row = document.createElement('div');
       row.className = 'time-row';
 
+      const name = document.createElement('p');
+      name.className = 'time-name';
+      name.textContent = PRESET_NAMES[index] || `preset ${index + 1}`;
+
+      const controls = document.createElement('div');
+      controls.className = 'time-controls';
+
       const input = document.createElement('input');
       input.type = 'number';
       input.min = '1';
@@ -880,7 +1001,7 @@
       input.step = '1';
       input.inputMode = 'numeric';
       input.value = String(minutes);
-      input.setAttribute('aria-label', `Tiempo rápido ${index + 1} en minutos`);
+      input.setAttribute('aria-label', `${name.textContent}: minutos`);
 
       input.addEventListener('input', () => {
         const value = Number.parseInt(input.value, 10);
@@ -926,7 +1047,8 @@
       plus.setAttribute('aria-label', 'Sumar cinco minutos');
       plus.addEventListener('click', () => stepTime(index, 5));
 
-      row.append(input, unit, spacer, minus, plus);
+      controls.append(input, unit, spacer, minus, plus);
+      row.append(name, controls);
       el.timeRows.append(row);
     });
   }
@@ -963,9 +1085,11 @@
   async function copySummary() {
     const stats = computeStats(data.sessions);
     if (stats.sessionCount === 0) return;
+    const medals = computeMedals(stats);
 
     const text = `nada!\n${compactDuration(stats.total)} sin hacer nada\n`
-      + `${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}`;
+      + `${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}\n`
+      + `${medalLabel(medals.total)}`;
 
     let copied = false;
     try {
@@ -980,8 +1104,7 @@
     if (!copied) copied = fallbackCopy(text);
     if (!copied) return;
 
-    el.copySummary.textContent = 'copiado';
-    el.copySummary.classList.add('is-emphasized');
+    el.copySummary.textContent = 'Copiado';
     window.clearTimeout(copiedTimer);
     copiedTimer = window.setTimeout(resetCopyLabel, 2000);
     announce('resumen copiado.');
@@ -1006,8 +1129,7 @@
   }
 
   function resetCopyLabel() {
-    el.copySummary.textContent = 'copiar resumen';
-    el.copySummary.classList.remove('is-emphasized');
+    el.copySummary.textContent = 'Copiar resumen';
   }
 
   function primeAudio() {
@@ -1065,8 +1187,9 @@
   }
 
   function init() {
-    cacheElements();
     data = loadData();
+    save();
+    cacheElements();
     bindEvents();
     renderHome();
 
@@ -1076,6 +1199,7 @@
       return;
     }
 
+    document.body.classList.add('is-running');
     if (active.running && active.goalMs != null && elapsedAt(active, Date.now()) >= active.goalMs) {
       finishSession({ reachedGoal: true, now: Date.now(), playSound: false });
       return;

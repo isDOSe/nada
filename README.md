@@ -1,12 +1,12 @@
 # nada!
 
-> el contador de lo que no hiciste.
+> la app para hacer... nada. o algo. depende.
 
-**nada!** es la versión web de la app de Android. Un botón, un número que crece
-y un registro que se acumula. Sin cuentas, sin nube y sin notificaciones que te
-pidan hacer más.
+**nada!** es un contador para hacer algo productivo o no. Eliges un tiempo,
+inicias y el registro se acumula. Sin cuentas, sin nube y sin nadie mirando.
 
-No mide productividad. Mide presencia sin propósito.
+No es una app de productividad. Es una app de presencia. La productividad es tu
+problema.
 
 **Web:** [nada.isdose.com](https://nada.isdose.com)
 **App de Android:** [github.com/isDOSe/nada-flutter](https://github.com/isDOSe/nada-flutter)
@@ -16,40 +16,49 @@ No mide productividad. Mide presencia sin propósito.
 ## Qué hace
 
 - **Cronómetro libre.** Empieza en cero y cuenta hacia arriba. Tú decides
-  cuándo parar.
-- **Metas de nada.** Tres tiempos rápidos editables, 15, 25 y 45 minutos por
-  defecto. Al llegar, la sesión se cierra sola y queda guardada.
+  cuándo parar de no hacer nada.
+- **Pomodoro, jornada y maratón.** Tres presets con nombre y minutos editables:
+  25, 45 y 90 por defecto. El nombre no cambia; los minutos sí.
 - **Un registro real.** Cada sesión se guarda con duración, hora de inicio,
-  hora de fin y modalidad. El registro vive en tu navegador y sobrevive a un
-  recargado o a cerrar la pestaña.
+  hora de fin y modalidad. Vive en tu navegador y sobrevive a un recargado.
 - **El total de tu vida.** Cuánto tiempo llevas sin hacer nada, cuántas
   sesiones, racha de días y detalle agrupado por día.
+- **Medallas.** Una por cada 45 minutos de nada. La semana empieza el lunes y
+  las que ya ganaste se quedan en tu colección.
 - **Pausa física.** El cronómetro se congela, la luz de fondo se detiene y el
   botón principal se hunde hasta que continúas.
 - **Sonido al terminar.** Un chime corto de dos notas, generado con Web Audio.
   Se puede desactivar en ajustes o probar desde ahí.
-- **La misma voz que la app.** Misma tipografía, mismos colores, mismas
-  palabras y el mismo manifiesto. La app y la web se leen como el mismo
-  producto.
+- **Una interfaz de app, no una página promocional.** El temporizador abre
+  directamente; Registro y Ajustes están siempre a mano.
+- **La misma voz que la app.** Misma paleta, serif editorial y humor seco. La
+  app y la web se leen como el mismo producto.
 
 ## Capturas
 
 Las capturas de la app viven en
 [`nada-flutter/docs/screenshots`](https://github.com/isDOSe/nada-flutter/tree/main/docs/screenshots).
-La web usa la misma dirección visual en el navegador.
+La web mantiene el carácter editorial, con un flujo de temporizador directo y
+un registro fácil de encontrar.
 
 ## Cómo se ve
+
+La web conserva la voz y el negro/hueso de nada!, pero prioriza el uso diario:
+el selector de tiempo y el botón de inicio forman un solo flujo; el total, las
+medallas y los accesos al registro quedan juntos en una columna lateral en
+escritorio y pasan debajo en móvil.
 
 | Decisión | Por qué |
 |---|---|
 | Negro puro `#000000` | El vacío no es gris corporativo. En OLED, el fondo desaparece. |
 | Hueso `#F2EFE6` | Un blanco cálido, de tinta y papel. |
-| **Instrument Serif** | El número es el protagonista. Una serif editorial de alto contraste, con cursiva propia. |
-| **Crimson Text** | Texto de libro, legible desde 16 px, con cursivas que susurran. |
+| **Source Serif 4** | Serif diseñada para lectura en pantalla, usada en controles y texto corrido. Se sirve localmente; la app no llama a Google Fonts. |
+| **Instrument Serif** | La voz editorial de los titulares y el reloj. |
 | Sin radios, sin sombras suaves, sin gradientes de relleno | La jerarquía se construye con tipografía, espacio y líneas de 1 px. |
-| Un solo elemento sólido | El botón principal es la única superficie blanca, con un relieve duro de 4 px. |
-| Acciones secundarias con borde | Registro, volver, ajustes, manifiesto, copiar y borrar son botones cuadrados de 1 px. |
-| Luz en movimiento | Dos haces hueso se mueven muy despacio detrás del reloj durante la sesión y se congelan al pausar. |
+| Un CTA principal | El botón claro inicia; pausar, terminar y volver son acciones secundarias claramente diferenciadas. |
+| Opciones con nombre y minutos | Sin límite, pomodoro, jornada y maratón muestran lo que ocurrirá antes de iniciar. |
+| Navegación persistente | Temporizador, Registro y Ajustes están visibles y no hay que volver a una landing. |
+| Movimiento reducido | La luz de sesión es tenue, se detiene al pausar y respeta `prefers-reduced-motion`. |
 | Cero emojis, cero mayúsculas gritadas | El humor está en el copy, no en un icono. |
 | Cero red | Las fuentes y las imágenes se sirven desde el proyecto; no hay analytics, ni cuentas, ni llamadas a terceros. |
 
@@ -76,7 +85,7 @@ nada/
 ├── index.html        # vistas, diálogos y contenido
 ├── style.css         # el sistema visual completo
 ├── script.js         # estado, cronómetro, registro y persistencia
-├── fonts/            # Instrument Serif + Crimson Text (SIL OFL)
+├── fonts/            # Instrument Serif + Source Serif 4 (SIL OFL)
 ├── images/           # icono, wordmark y Open Graph
 └── README.md
 ```
@@ -90,7 +99,7 @@ Todo vive en `localStorage` bajo la clave `nada.web.v1`:
 
 - `sessions`: lista de sesiones terminadas.
 - `active`: sesión en curso, con `startedAt`, `lastResumedAt` y `accumulatedMs`.
-- `settings`: los tres tiempos rápidos, el modo, la meta y el sonido.
+- `settings`: los tres presets, el modo, la meta y el sonido.
 
 El cronómetro se apoya en marcas de tiempo. Si cierras la pestaña con una
 sesión corriendo, al volver se calcula el tiempo real transcurrido. Si la meta
@@ -107,6 +116,20 @@ de meta en segundo plano. El contador, el registro, los ajustes y la voz son
 los mismos.
 
 ## Changelog
+
+### 2026-10-28
+
+- Reconstrucción de la web como app de uso diario: temporizador al abrir y
+  navegación clara entre Temporizador, Registro y explicación.
+- Flujo de inicio simplificado; reloj, pausa, finalizar y progreso visibles.
+- Historial agrupado, detalles y borrado de sesiones, resumen copiable,
+  medallas, presets editables, sonido y contenido explicativo conservados.
+- Source Serif 4 para lectura de interfaz, empaquetada localmente junto a
+  Instrument Serif. Sin fuentes remotas ni frameworks.
+- Todos los botones usan etiquetas con mayúscula inicial y verbos claros.
+- En móvil, el inicio reúne selector, botón, total y medallas en la primera
+  pantalla; durante la sesión, reloj, progreso y controles caben sin scroll.
+- Diseño responsive, foco de teclado y movimiento reducido respetado.
 
 ### 2026-10-26
 
@@ -125,8 +148,8 @@ los mismos.
 ## Créditos
 
 - Tipografías: [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif)
-  y [Crimson Text](https://fonts.google.com/specimen/Crimson+Text), SIL Open
-  Font License.
+  y [Source Serif 4](https://fonts.google.com/specimen/Source+Serif+4), SIL Open
+  Font License. Licencia incluida en `fonts/`.
 - Hecho con Flutter en Android y con HTML, CSS y JavaScript en la web. Sin
   frameworks, sin analytics, sin prisa.
 - Ernesto Flames (DOSe) · MIT.
