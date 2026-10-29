@@ -86,15 +86,6 @@ productividad, bienestar digital, medallas
 
 https://nada.isdose.com
 
-## Email de contacto
-
-Completar antes de publicar.
-
-## Política de privacidad
-
-Completar con una URL pública antes de publicar. Aunque la app no recopila
-datos, Google Play la exige para la ficha.
-
 ## Notas de la versión 1.0.5
 
 - Presets con nombre: pomodoro 25, jornada 45 y maratón 90. Los minutos siguen

@@ -58,16 +58,7 @@ icono**.
 Las capturas se generaron desde el APK de release y se componen sobre negro
 con un marco de 1 px para que se lean como pantallas de teléfono. Si Play
 Console recorta el marco, se pueden subir las capturas originales de
-`docs/screenshots/` recortadas a 9:16.
-
-Checklist antes de publicar:
-
-1. Reemplazar el icono de la app en Play Console por `icon-play-512.png`.
-2. Subir `feature-graphic-1024x500.png`.
-3. Subir las cinco capturas en el orden `01 → 05`.
-4. Configurar la ficha de `listing.md`.
-5. Añadir una URL de política de privacidad, aunque la app no recopile datos.
-6. Firmar el AAB con un keystore propio (el APK de prueba usa la firma debug).
+`../docs/screenshots/` recortadas a 9:16.
 
 ## Widget 2×2
 
@@ -107,5 +98,5 @@ Ejemplo de metadatos:
 ## Archivos fuente
 
 - `ai/logo-recraft-a.svg` y `.png`: salida original del modelo.
-- `tool/make_store_assets.py`: reconstruye todo el kit desde el logo.
-- `tool/openrouter_image.py`: cliente mínimo de la Images API de OpenRouter.
+- `../tool/make_store_assets.py`: reconstruye todo el kit desde el logo.
+- `../tool/openrouter_image.py`: cliente mínimo de la Images API de OpenRouter.

@@ -1,0 +1,10 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+*.swp
+
+# El proyecto Flutter tiene su propio .gitignore en app/
