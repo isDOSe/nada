@@ -69,7 +69,7 @@ class SessionView extends StatelessWidget {
                               ? (elapsed.inSeconds < 2
                                     ? 'acabas de dejar de hacer algo'
                                     : 'llevas ${spokenDuration(elapsed)} sin hacer nada')
-                              : 'el vacío se quedó quieto.',
+                              : 'pausado. el reloj también se aburre.',
                           style: NadaType.italic.copyWith(fontSize: 21),
                         ),
                         if (goal == null) ...[
@@ -146,19 +146,15 @@ class SessionView extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 18),
-              Center(
-                child: NadaButton(
-                  label: 'terminar',
-                  kind: NadaButtonKind.quiet,
-                  expand: false,
-                  semanticLabel: 'Terminar y guardar esta sesión',
-                  onPressed: () {
-                    HapticFeedback.lightImpact();
-                    controller.finishSession();
-                  },
-                ),
+              NadaButton(
+                label: 'terminar',
+                kind: NadaButtonKind.quiet,
+                semanticLabel: 'Terminar y guardar esta sesión',
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  controller.finishSession();
+                },
               ),
-              const SizedBox(height: 2),
             ],
           ),
         ),

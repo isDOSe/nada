@@ -21,6 +21,12 @@ class SummaryView extends StatelessWidget {
     final completed = session.completed;
     final isFree = session.mode == NadaMode.free;
     final sessionNumber = stats.sessionCount;
+    final before = stats.total - session.duration;
+    final newMedals =
+        stats.medalsTotal - (before.inMinutes ~/ nadaMinutesPerMedal);
+    final medalLine = newMedals > 0
+        ? 'medalla nueva. ya tienes ${stats.medalsThisWeek} esta semana · ${stats.medalsTotal} en total.'
+        : 'te faltan ${stats.minutesToNextMedal} min para tu próxima medalla · ${stats.medalsTotal} en total.';
 
     return NadaScreen(
       child: Column(
@@ -33,58 +39,85 @@ class SummaryView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                NadaSectionLabel(
-                  completed
-                      ? 'meta cumplida · sesión $sessionNumber'
-                      : 'sesión $sessionNumber guardada',
-                  color: NadaColors.ash,
-                ),
-                const SizedBox(height: 18),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    compactDuration(session.duration),
-                    style: NadaType.title.copyWith(
-                      fontSize: 76,
-                      letterSpacing: -2,
-                    ),
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      NadaSectionLabel(
+                        completed
+                            ? 'meta cumplida · sesión $sessionNumber'
+                            : 'sesión $sessionNumber guardada',
+                        color: NadaColors.ash,
+                      ),
+                      const SizedBox(height: 18),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          compactDuration(session.duration),
+                          style: NadaType.title.copyWith(
+                            fontSize: 76,
+                            letterSpacing: -2,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'de nada.',
+                        style: NadaType.italic.copyWith(
+                          fontSize: 28,
+                          color: NadaColors.ash,
+                          height: 1.1,
+                        ),
+                      ),
+                      const SizedBox(height: 36),
+                      Text(
+                        completed
+                            ? 'llegaste a la meta sin producir absolutamente nada. impecable.'
+                            : isFree
+                            ? 'no estaban en tu agenda. ahora están en tu registro.'
+                            : 'cortaste antes de la meta. igual cuenta. aquí no hay jefe.',
+                        style: NadaType.body.copyWith(
+                          fontSize: 20,
+                          color: NadaColors.ash,
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      Text(
+                        'en total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}',
+                        style: NadaType.label.copyWith(
+                          fontSize: 16,
+                          color: NadaColors.ash,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        children: [
+                          NadaMedal(
+                            size: 26,
+                            filled: newMedals > 0,
+                            semanticLabel: medalLine,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              medalLine,
+                              style: NadaType.label.copyWith(
+                                fontSize: 15,
+                                color: NadaColors.ash,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  'de nada.',
-                  style: NadaType.italic.copyWith(
-                    fontSize: 28,
-                    color: NadaColors.ash,
-                    height: 1.1,
-                  ),
-                ),
-                const SizedBox(height: 36),
-                Text(
-                  completed
-                      ? 'llegaste a la meta sin producir absolutamente nada. impecable.'
-                      : isFree
-                      ? 'no estaban en tu agenda. ahora están en tu registro.'
-                      : 'cortaste antes de la meta. igual cuenta.',
-                  style: NadaType.body.copyWith(
-                    fontSize: 20,
-                    color: NadaColors.ash,
-                    height: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  'en total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}',
-                  style: NadaType.label.copyWith(
-                    fontSize: 16,
-                    color: NadaColors.ash,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           NadaButton(
@@ -94,14 +127,11 @@ class SummaryView extends StatelessWidget {
               controller.startSession();
             },
           ),
-          const SizedBox(height: 8),
-          Center(
-            child: NadaButton(
-              label: 'volver al inicio',
-              kind: NadaButtonKind.quiet,
-              expand: false,
-              onPressed: controller.dismissSummary,
-            ),
+          const SizedBox(height: 18),
+          NadaButton(
+            label: 'volver al inicio',
+            kind: NadaButtonKind.quiet,
+            onPressed: controller.dismissSummary,
           ),
         ],
       ),

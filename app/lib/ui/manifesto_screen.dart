@@ -23,39 +23,53 @@ class ManifestoScreen extends StatelessWidget {
           ),
           const SizedBox(height: 44),
           Text(
-            'la filosofía\ndel vacío',
+            'el arte de\nno hacer nada',
             style: NadaType.title.copyWith(fontSize: 56, height: 0.98),
           ),
           const SizedBox(height: 32),
           Text(
-            'No hacer nada no es un error del día.\nEs la parte del día que no le debes a nadie.',
+            'La app para hacer... nada. O algo. Depende.',
             style: NadaType.italic.copyWith(
               fontSize: 23,
               height: 1.45,
               color: NadaColors.bone,
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 18),
+          Text(
+            '*despliega pergamino místico*',
+            style: NadaType.italic.copyWith(
+              fontSize: 17,
+              color: NadaColors.faint,
+            ),
+          ),
+          const SizedBox(height: 26),
           const NadaHairline(),
           const SizedBox(height: 30),
           const _Paragraph(
-            'Nos enseñaron a medir el tiempo por lo que producimos. Cada minuto tiene que justificarse: aprender algo, resolver algo, optimizar algo. Hasta descansar se volvió una tarea pendiente.',
+            'Esto es un contador. Pones un número, presionas iniciar y esperas. No hay ranking, no hay coach gritándote en mayúsculas y no hay una versión premium que te venda la paz interior.',
           ),
           const _Paragraph(
-            'La app propone lo contrario. Un contador que no te pide una meta, ni una racha, ni una identidad. Solo mide el rato en el que no le rendiste cuentas a nadie.',
+            'Pero cuando te sientas a no hacer nada durante 25 minutos, ¿qué estás haciendo en realidad?',
+          ),
+          const _Paragraph(
+            'Estás ignorando 47 notificaciones. Resistiendo las ganas de mirar el teléfono. Sentado. Respirando. Existiendo. Practicando el arte perdido de estar sin justificarte.',
           ),
           const _Quote(
-            'La productividad te mide por lo que produces. Esto te mide por lo que te permites.',
+            '«La tensión más extrema no es hacer algo. Es hacer algo mientras finges que no haces nada.» — alguien, probablemente en LinkedIn',
           ),
           const _Paragraph(
-            'Un minuto sin hacer nada no se recupera. Se gasta. Y está bien. No todo lo que cuenta se puede contar, pero este aparato lo intenta de todos modos.',
+            'Diógenes vivía en un barril. Nadie le dijo que tenía que ser productivo. Y aun así la filosofía lo recuerda. Tú no necesitas un barril: necesitas 25 minutos y la valentía de no llenarlos.',
           ),
           const _Paragraph(
-            'Diógenes vivía en un barril y no por eso dejó de ser recordado. Tú no necesitas un barril. Necesitas veinticinco minutos y la valentía de no llenarlos.',
+            'No hacer nada es hacer algo. Es contradecirte. Es la paradoja del vacío productivo. Es el yin y el yang de existir sin esforzarse.',
+          ),
+          const _Paragraph(
+            'Así que la próxima vez que alguien te pregunte qué haces, míralo a los ojos y di: «Nada. Literalmente nada. Estoy corriendo un temporizador.»',
           ),
           const SizedBox(height: 18),
           Text(
-            'empieza. o no. el contador está aquí para cuando decidas que el vacío también merece un registro.',
+            'Y ahora que has leído todo esto... ¿cuánto tiempo acabas de perder que pudiste haber pasado haciendo absolutamente nada?',
             style: NadaType.body.copyWith(
               fontSize: 21,
               height: 1.55,

@@ -31,7 +31,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final text =
         'nada!\n'
         '${compactDuration(stats.total)} sin hacer nada\n'
-        '${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}';
+        '${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}\n'
+        '${medalLabel(stats.medalsTotal)}';
     await Clipboard.setData(ClipboardData(text: text));
     HapticFeedback.selectionClick();
     if (!mounted) return;
@@ -134,7 +135,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ),
                     const SizedBox(height: 18),
                     Text(
-                      'empieza con un minuto y mira cómo se acumula.',
+                      'empieza con un minuto. o con ninguno. aquí nadie te va a pedir más.',
                       style: NadaType.italic,
                     ),
                     const Spacer(),
@@ -425,8 +426,8 @@ class _SessionSheet extends StatelessWidget {
                     goal == null
                         ? 'sin límite. contó hacia arriba hasta que decidiste parar.'
                         : completed
-                        ? 'meta de ${compactDuration(goal)}. la cumpliste sin hacer nada.'
-                        : 'meta de ${compactDuration(goal)}. la cortaste antes.',
+                        ? 'meta de ${compactDuration(goal)}. la cumpliste sin hacer nada. como debe ser.'
+                        : 'meta de ${compactDuration(goal)}. la cortaste antes. tampoco pasa nada.',
                     style: NadaType.bodyMuted.copyWith(fontSize: 17),
                   ),
                   const SizedBox(height: 24),

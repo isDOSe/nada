@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.5
+
+- Presets con nombre: pomodoro 25, jornada 45 y maratón 90. Los minutos siguen
+  siendo editables; la migración desde 15/25/45 ocurre una sola vez.
+- Medallas de nada: una por cada 45 minutos, con contador semanal (lunes) y
+  colección histórica. 100 minutos = 2 medallas y 10 de avance.
+- Copy nuevo, más seco y satírico. El manifiesto pasa a “el arte de no hacer
+  nada”.
+- El botón secundario de sesión y resumen ocupa el ancho completo, con la misma
+  separación respecto al botón principal.
+- “registro” en la cabecera de inicio es solo texto, sin borde.
+- La web se rediseñó para escritorio, con presets con nombre y medallas.
+- 26 tests, incluidos migración de presets y cálculo de medallas.
+
 ## 1.0.4
 
 - Enlace a la versión web (nada.isdose.com) desde “acerca de nada!”.

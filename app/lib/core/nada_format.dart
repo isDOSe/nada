@@ -111,3 +111,10 @@ String sessionCountLabel(int count) {
   if (count == 1) return '1 sesión';
   return '$count sesiones';
 }
+
+/// `ninguna medalla`, `1 medalla`, `12 medallas`.
+String medalLabel(int count) {
+  if (count <= 0) return 'ninguna medalla';
+  if (count == 1) return '1 medalla';
+  return '$count medallas';
+}

@@ -160,11 +160,15 @@ class NadaChoice extends StatelessWidget {
     required this.label,
     required this.selected,
     required this.onTap,
+    this.detail,
   });
 
   final String label;
   final bool selected;
   final VoidCallback onTap;
+
+  /// Optional second line, e.g. the editable minutes under a preset name.
+  final String? detail;
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +196,17 @@ class NadaChoice extends StatelessWidget {
                   ),
                   child: Text(label),
                 ),
+                if (detail != null) ...[
+                  const SizedBox(height: 1),
+                  Text(
+                    detail!,
+                    style: NadaType.label.copyWith(
+                      fontSize: 14,
+                      height: 1.2,
+                      color: selected ? NadaColors.bone : NadaColors.faint,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 5),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 180),
@@ -367,12 +382,16 @@ class NadaFootnote extends StatefulWidget {
     required this.onTap,
     this.emphasize = false,
     this.expand = false,
+    this.plain = false,
   });
 
   final String label;
   final VoidCallback onTap;
   final bool emphasize;
   final bool expand;
+
+  /// Text only, no box. Used for the "registro" link on the home header.
+  final bool plain;
 
   @override
   State<NadaFootnote> createState() => _NadaFootnoteState();
@@ -389,9 +408,12 @@ class _NadaFootnoteState extends State<NadaFootnote> {
   @override
   Widget build(BuildContext context) {
     final active = widget.emphasize;
-    final borderColor = _pressed
-        ? NadaColors.ash
-        : (active ? NadaColors.bone : NadaColors.edge);
+    final plain = widget.plain;
+    final borderColor = plain
+        ? Colors.transparent
+        : (_pressed
+              ? NadaColors.ash
+              : (active ? NadaColors.bone : NadaColors.edge));
     final textColor = _pressed
         ? NadaColors.bone
         : (active ? NadaColors.bone : NadaColors.ash);
@@ -408,10 +430,14 @@ class _NadaFootnoteState extends State<NadaFootnote> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           width: widget.expand ? double.infinity : null,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: plain
+              ? const EdgeInsets.symmetric(horizontal: 2, vertical: 10)
+              : const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            color: _pressed ? NadaColors.pressed : Colors.transparent,
-            border: Border.all(color: borderColor, width: 1),
+            color: plain
+                ? Colors.transparent
+                : (_pressed ? NadaColors.pressed : Colors.transparent),
+            border: plain ? null : Border.all(color: borderColor, width: 1),
           ),
           child: Text(
             widget.label,
@@ -421,6 +447,52 @@ class _NadaFootnoteState extends State<NadaFootnote> {
               fontSize: 16,
               height: 1.2,
               color: textColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A small stamped "n!" for the weekly medal counter. Square, inverted when
+/// earned, outlined when it is still a promise.
+class NadaMedal extends StatelessWidget {
+  const NadaMedal({
+    super.key,
+    this.size = 38,
+    this.filled = false,
+    this.semanticLabel,
+  });
+
+  final double size;
+  final bool filled;
+  final String? semanticLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: semanticLabel ?? 'medalla de nada',
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: filled ? NadaColors.bone : Colors.transparent,
+          border: Border.all(
+            color: filled ? NadaColors.bone : NadaColors.edge,
+            width: 1,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            'n!',
+            style: TextStyle(
+              fontFamily: NadaFonts.display,
+              fontStyle: FontStyle.italic,
+              fontSize: size * 0.5,
+              height: 1,
+              letterSpacing: -0.5,
+              color: filled ? NadaColors.voidBlack : NadaColors.ash,
             ),
           ),
         ),

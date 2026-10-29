@@ -1,16 +1,18 @@
 # nada!
 
-> el contador de lo que no hiciste.
+> la app para hacer... nada. o algo. depende.
 
-**nada!** es un cronómetro para el tiempo que no le debes a nadie. Un botón, un
-número que crece y un registro que se acumula. Sin cuentas, sin nube, sin
+**nada!** es un contador para hacer algo productivo o no. Un botón, un número
+que crece y un registro que se acumula. Sin cuentas, sin nube, sin
 notificaciones que te pidan hacer más. Negro, serif y en silencio.
 
-No mide productividad. Mide presencia sin propósito.
+No es una app de productividad. Es una app de presencia. La productividad es tu
+problema.
 
 La versión web vive en [nada.isdose.com](https://nada.isdose.com) y comparte
-marca, tipografías, flujo y registro con la app. La app añade la notificación
-persistente, el widget 2×2 y el aviso de meta en segundo plano.
+marca, tipografías, registro y voz con la app. La web tiene su propia
+composición para escritorio; la app añade la notificación persistente, el
+widget 2×2 y el aviso de meta en segundo plano.
 
 <p align="center">
   <img src="docs/screenshots/01-home.png" width="235" alt="nada! — inicio">
@@ -26,10 +28,13 @@ persistente, el widget 2×2 y el aviso de meta en segundo plano.
 
 - **Cronómetro libre.** Empieza en cero y cuenta hacia arriba todo lo que
   aguantes. No hay meta, no hay final, no hay culpa.
-- **Metas de nada.** Tres tiempos rápidos editables, 15, 25 y 45 minutos por
-  defecto. Cámbialos desde ajustes; la app te avisa cuando llegas, pero el
-  tiempo sigue contando si decides quedarte.
-- **Ajustes que ajustan.** Los tres tiempos se editan con teclado o con los
+- **Metas de nada.** Tres presets con nombre y minutos editables: pomodoro 25,
+  jornada 45 y maratón 90. Cámbialos desde ajustes; el nombre no cambia y la
+  app te avisa cuando llegas, pero el tiempo sigue contando si decides quedarte.
+- **Medallas de nada.** Una medalla por cada 45 minutos de nada. Si haces 100
+  minutos, ganas 2 y te quedan 10 de avance. El contador semanal empieza el
+  lunes y se reinicia; la colección histórica se queda. No sirven para nada.
+- **Ajustes que ajustan.** Los tres presets se editan con teclado o con los
   steppers; el cambio se guarda al instante y aparece en la pantalla principal.
 - **Un registro real.** Cada sesión se guarda con su duración, hora de inicio,
   hora de fin y modalidad. Nada se pierde si cierras la app o se muere el
@@ -45,8 +50,9 @@ persistente, el widget 2×2 y el aviso de meta en segundo plano.
   muy despacio detrás del reloj. Se congelan al pausar y respetan “reducir
   movimiento”.
 - **La misma nada en el navegador.** [nada.isdose.com](https://nada.isdose.com)
-  replica el contador, el registro, los ajustes y el manifiesto. La app añade
-  la notificación persistente, el widget y el aviso de meta.
+  replica el contador, el registro, los ajustes y el manifiesto, con una
+  composición propia para escritorio. La app añade la notificación persistente,
+  el widget y el aviso de meta.
 - **Sonido al terminar.** Un chime corto de dos notas cierra la sesión. Se
   puede desactivar en ajustes o probar desde ahí; la notificación de meta usa
   el mismo sonido.
@@ -78,12 +84,14 @@ mercado:
 | **Crimson Text** | Texto de libro, legible desde 16 px, con cursivas que susurran en vez de gritar. |
 | Sin radios, sin sombras, sin gradientes | La jerarquía se construye con tipografía, espacio y líneas de 1 px. |
 | Un solo elemento sólido | El botón principal es la única superficie blanca, con un relieve duro de 4 px para que se sienta pulsable. Todo lo demás es aire. |
-| Acciones secundarias con borde | Registro, volver, ajustes, manifiesto, copiar y borrar son botones cuadrados de 1 px, no enlaces subrayados. |
-| Duración en texto | `sin límite` y los minutos comparten una sola línea, sin cajas ni etiqueta “meta”; el activo se marca con subrayado. Los botones se reservan para las acciones. |
+| Acciones secundarias con borde | Volver, ajustes, manifiesto, copiar y borrar son botones cuadrados de 1 px, no enlaces subrayados. El “registro” de la cabecera es solo texto. |
+| Duración con nombre | `sin límite` y los presets `pomodoro`, `jornada` y `maratón` muestran sus minutos debajo. El activo se marca con subrayado; los botones se reservan para las acciones. |
+| Botones inferiores iguales | En sesión y resumen, el botón secundario ocupa el ancho del principal y la separación entre ambos es la misma. |
+| Medallas tipográficas | Un sello `n!` cuadrado, invertido cuando está ganado. Una medalla por cada 45 minutos; el lunes se reinicia la semana y la colección se queda. |
 | Luz de fondo en sesión | Dos degradados radiales lentos, casi imperceptibles, pintados en una capa aparte del resto de la UI. |
 | Cero emojis, cero mayúsculas gritadas | El humor está en el copy, no en un icono. |
 | El estado vacío dice **nada!**, no `00:00` | La firma de la app: el cero también es una palabra. |
-| La pregunta antes que los botones | “¿Cuánto tiempo?” + las opciones en texto + una línea que explica el modo. |
+| La pregunta antes que los botones | “¿Cuánto tiempo?” + las opciones + una línea que explica el modo. |
 | Acción siempre visible | El CTA vive en una franja fija abajo; el contenido respira y se desplaza solo si hace falta. |
 
 El cronómetro usa ranuras de ancho fijo medidas con `TextPainter`, así que los
@@ -139,7 +147,8 @@ lib/
     ├── summary_view.dart         # el cierre de una sesión
     ├── history_screen.dart       # el registro y el detalle
     ├── settings_sheet.dart       # ajustes mínimos
-    ├── manifesto_screen.dart     # la filosofía del vacío
+    ├── medals_sheet.dart         # la economía de las medallas
+    ├── manifesto_screen.dart     # el arte de no hacer nada
     ├── layout.dart               # marco, header, rutas
     └── widgets/nada_widgets.dart # botón, reloj, toggle, elecciones
 ```
@@ -194,7 +203,7 @@ Requisitos: Flutter 3.38+ (probado en 3.47.7), Android SDK 37 para compilar por
 `flutter_local_notifications` 22.
 
 ```bash
-flutter test          # 20 tests: formato, stats, controlador, presets, widget, aviso
+flutter test          # 26 tests: formato, stats, presets, medallas, controlador, aviso
 flutter analyze       # limpio
 flutter build apk --release
 ```
@@ -264,7 +273,7 @@ Detalles, esquema SQL y política de conflictos en
 | Cronómetro libre + meta | **Sí** | Solo countdown | Solo countdown | Solo countdown |
 | Diseño editorial real | **Sí** | Minimal web | Genérico | Gamificado |
 | Notificación nativa persistente | **Sí** | N/A | A veces | Sí |
-| Sin gamificación ni culpa | **Sí** | Sí | No | No |
+| Gamificación mínima y sin culpa | **Sí** | Sí | No | No |
 | Costo de infraestructura | **0** | 0 | — | — |
 
 El foso no es una función: es la combinación de una identidad visual que se
@@ -285,6 +294,22 @@ uso casi nula. La retención viene del total, no de una racha que te castiga.
 Este README es la bitácora del producto: cada cambio u opción nueva se anota
 aquí al implementarla. [`CHANGELOG.md`](CHANGELOG.md) repite el resumen en el
 momento de publicar la versión. Lo más reciente va arriba.
+
+### 1.0.5
+
+- Presets con nombre: **pomodoro 25**, **jornada 45** y **maratón 90**. Los
+  minutos siguen siendo editables; la migración desde 15/25/45 ocurre una vez.
+- **Medallas de nada:** una por cada 45 minutos, con contador semanal que
+  empieza el lunes y colección histórica. 100 minutos = 2 medallas y 10 de
+  avance.
+- Copy nuevo, más seco y satírico: “la app para hacer... nada. o algo.
+  depende.” El manifiesto pasa a llamarse “el arte de no hacer nada”.
+- El botón secundario de sesión y resumen ocupa el ancho completo, con la misma
+  separación respecto al botón principal en ambas pantallas.
+- “registro” en la cabecera de inicio es solo texto, sin borde.
+- La web se rediseñó para escritorio: composición editorial, CTA visible,
+  presets con nombre, medallas y el mismo registro.
+- 26 tests, incluidos migración de presets y cálculo de medallas.
 
 ### 1.0.4
 

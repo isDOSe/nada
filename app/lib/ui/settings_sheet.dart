@@ -97,55 +97,68 @@ class _SettingsSheetState extends State<_SettingsSheet> {
   }
 
   Widget _timeRow(int index) {
-    return Row(
+    final name = index < nadaPresetNames.length
+        ? nadaPresetNames[index]
+        : 'preset ${index + 1}';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 78,
-          child: TextField(
-            controller: _timeControllers[index],
-            keyboardType: TextInputType.number,
-            keyboardAppearance: Brightness.dark,
-            textAlign: TextAlign.center,
-            style: NadaType.number.copyWith(fontSize: 24),
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(3),
-            ],
-            onChanged: (value) => _onTimeChanged(index, value),
-            onSubmitted: (_) => _normalizeTime(index),
-            onTapOutside: (_) => _normalizeTime(index),
-            decoration: const InputDecoration(
-              isDense: true,
-              counterText: '',
-              contentPadding: EdgeInsets.symmetric(vertical: 9, horizontal: 6),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: NadaColors.edge),
-                borderRadius: BorderRadius.zero,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: NadaColors.bone),
-                borderRadius: BorderRadius.zero,
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: NadaColors.edge),
-                borderRadius: BorderRadius.zero,
+        Text(name, style: NadaType.body.copyWith(fontSize: 18)),
+        const SizedBox(height: 6),
+        Row(
+          children: [
+            SizedBox(
+              width: 78,
+              child: TextField(
+                controller: _timeControllers[index],
+                keyboardType: TextInputType.number,
+                keyboardAppearance: Brightness.dark,
+                textAlign: TextAlign.center,
+                style: NadaType.number.copyWith(fontSize: 24),
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(3),
+                ],
+                onChanged: (value) => _onTimeChanged(index, value),
+                onSubmitted: (_) => _normalizeTime(index),
+                onTapOutside: (_) => _normalizeTime(index),
+                decoration: const InputDecoration(
+                  isDense: true,
+                  counterText: '',
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 9,
+                    horizontal: 6,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: NadaColors.edge),
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: NadaColors.bone),
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: NadaColors.edge),
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text('min', style: NadaType.label.copyWith(color: NadaColors.ash)),
-        const Spacer(),
-        _StepButton(
-          label: '−',
-          semantic: 'Restar cinco minutos',
-          onTap: () => _stepTime(index, -5),
-        ),
-        const SizedBox(width: 8),
-        _StepButton(
-          label: '+',
-          semantic: 'Sumar cinco minutos',
-          onTap: () => _stepTime(index, 5),
+            const SizedBox(width: 8),
+            Text('min', style: NadaType.label.copyWith(color: NadaColors.ash)),
+            const Spacer(),
+            _StepButton(
+              label: '−',
+              semantic: 'Restar cinco minutos',
+              onTap: () => _stepTime(index, -5),
+            ),
+            const SizedBox(width: 8),
+            _StepButton(
+              label: '+',
+              semantic: 'Sumar cinco minutos',
+              onTap: () => _stepTime(index, 5),
+            ),
+          ],
         ),
       ],
     );
@@ -196,7 +209,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     const NadaSectionLabel('tiempos rápidos'),
                     const SizedBox(height: 8),
                     Text(
-                      'los tres tiempos de la pantalla principal. edítalos a tu gusto.',
+                      'pomodoro, jornada y maratón. cámbialos cuando quieras; el nombre se queda.',
                       style: NadaType.label.copyWith(
                         fontSize: 16,
                         color: NadaColors.ash,
@@ -205,7 +218,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     const SizedBox(height: 18),
                     for (var index = 0; index < _times.length; index++) ...[
                       _timeRow(index),
-                      if (index < _times.length - 1) const SizedBox(height: 10),
+                      if (index < _times.length - 1) const SizedBox(height: 18),
                     ],
                     const SizedBox(height: 28),
                     const NadaHairline(),
@@ -223,7 +236,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'el tiempo en curso, siempre visible.',
+                                'el tiempo en curso, siempre a la vista. para que no olvides que no estás haciendo nada.',
                                 style: NadaType.label.copyWith(fontSize: 16),
                               ),
                             ],
@@ -287,7 +300,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
-                                  'un tono corto cuando se guarda la sesión.',
+                                  'un tono corto cuando se guarda la sesión. el vacío con banda sonora.',
                                   style: NadaType.label.copyWith(fontSize: 16),
                                 ),
                               ],
@@ -321,7 +334,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        '2×2 en tu pantalla de inicio. muestra tu nada acumulada.',
+                        '2×2 en tu pantalla. tu nada acumulada, en grande.',
                         style: NadaType.label.copyWith(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
@@ -376,7 +389,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     const NadaHairline(),
                     const SizedBox(height: 8),
                     NadaFootnote(
-                      label: 'la filosofía del vacío',
+                      label: 'el arte de no hacer nada',
                       expand: true,
                       onTap: () {
                         final navigator = Navigator.of(
@@ -461,12 +474,17 @@ Future<void> showAboutNada(BuildContext context) {
                   const NadaWordmark(fontSize: 30),
                   const SizedBox(height: 14),
                   Text(
-                    'el tiempo que no le debes a nadie.',
+                    'el tiempo que no le debes a nadie. literalmente.',
                     style: NadaType.italic.copyWith(fontSize: 21),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'sin cuentas. sin anuncios. sin nube. todo se queda en este teléfono.',
+                    'es un contador. pones un tiempo, le das iniciar y esperas. oficialmente no estás haciendo nada.',
+                    style: NadaType.bodyMuted.copyWith(fontSize: 18),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    'sin cuentas. sin anuncios. sin nube. todo se queda en este teléfono. y no, no queremos tus datos.',
                     style: NadaType.bodyMuted.copyWith(fontSize: 18),
                   ),
                   const SizedBox(height: 18),

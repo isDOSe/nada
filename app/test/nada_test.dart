@@ -138,12 +138,12 @@ void main() {
       );
       await controller.init();
       controller.updateSettings(
-        const NadaSettings(mode: NadaMode.goal, goalMinutes: 15),
+        const NadaSettings(mode: NadaMode.goal, goalMinutes: 25),
       );
 
       controller.updateQuickMinute(0, 20);
 
-      expect(controller.settings.quickMinutes, [20, 25, 45]);
+      expect(controller.settings.quickMinutes, [20, 45, 90]);
       expect(controller.settings.goalMinutes, 20);
       controller.dispose();
     });
@@ -157,13 +157,13 @@ void main() {
       );
       await controller.init();
       controller.updateSettings(
-        const NadaSettings(mode: NadaMode.goal, goalMinutes: 25),
+        const NadaSettings(mode: NadaMode.goal, goalMinutes: 45),
       );
 
       controller.updateQuickMinute(0, 20);
 
-      expect(controller.settings.quickMinutes, [20, 25, 45]);
-      expect(controller.settings.goalMinutes, 25);
+      expect(controller.settings.quickMinutes, [20, 45, 90]);
+      expect(controller.settings.goalMinutes, 45);
       controller.dispose();
     });
 
@@ -179,7 +179,7 @@ void main() {
       controller.updateQuickMinute(0, 0);
       controller.updateQuickMinute(1, 1000);
 
-      expect(controller.settings.quickMinutes, [15, 25, 45]);
+      expect(controller.settings.quickMinutes, [25, 45, 90]);
       controller.dispose();
     });
 
@@ -221,6 +221,45 @@ void main() {
       expect(controller.stats.sessionCount, 0);
       expect(controller.stats.total, Duration.zero);
       controller.dispose();
+    });
+  });
+
+  group('settings', () {
+    test('a v1 install migrates its presets once', () {
+      final migrated = NadaStoreData.fromJson({
+        'version': 1,
+        'sessions': <Object?>[],
+        'settings': {
+          'quickMinutes': [15, 25, 45],
+          'goalMinutes': 25,
+          'mode': 'goal',
+        },
+      });
+
+      expect(migrated.version, NadaStoreData.currentVersion);
+      expect(migrated.settings.quickMinutes, [25, 45, 90]);
+      expect(migrated.settings.goalMinutes, 45);
+    });
+
+    test('a v2 install keeps the old values if it chose them', () {
+      final untouched = NadaStoreData.fromJson({
+        'version': 2,
+        'sessions': <Object?>[],
+        'settings': {
+          'quickMinutes': [15, 25, 45],
+          'goalMinutes': 15,
+          'mode': 'goal',
+        },
+      });
+
+      expect(untouched.settings.quickMinutes, [15, 25, 45]);
+      expect(untouched.settings.goalMinutes, 15);
+    });
+
+    test('the default presets are named pomodoro, jornada and maratón', () {
+      const settings = NadaSettings();
+      expect(settings.quickMinutes, [25, 45, 90]);
+      expect(nadaPresetNames, ['pomodoro', 'jornada', 'maratón']);
     });
   });
 
@@ -271,6 +310,45 @@ void main() {
       ];
       expect(NadaStats.fromSessions(sessions, now: now).streakDays, 0);
     });
+
+    test('medals count 45-minute blocks, weekly and all-time', () {
+      final now = DateTime(2026, 10, 23, 12);
+      final sessions = [
+        sessionAt(
+          DateTime(2026, 10, 23, 9),
+          duration: const Duration(minutes: 100),
+        ),
+        sessionAt(
+          DateTime(2026, 10, 19, 9),
+          duration: const Duration(minutes: 20),
+        ),
+        sessionAt(
+          DateTime(2026, 10, 18, 9),
+          duration: const Duration(minutes: 90),
+        ),
+      ];
+      final stats = NadaStats.fromSessions(sessions, now: now);
+
+      expect(stats.week, const Duration(minutes: 120));
+      expect(stats.medalsThisWeek, 2);
+      expect(stats.medalsTotal, 4);
+      expect(stats.minutesToNextMedal, 15);
+    });
+
+    test('the medal week starts on Monday', () {
+      final now = DateTime(2026, 10, 19, 9); // Monday
+      final sessions = [
+        sessionAt(
+          DateTime(2026, 10, 18, 23),
+          duration: const Duration(minutes: 60),
+        ),
+      ];
+      final stats = NadaStats.fromSessions(sessions, now: now);
+
+      expect(stats.week, Duration.zero);
+      expect(stats.medalsThisWeek, 0);
+      expect(stats.medalsTotal, 1);
+    });
   });
 
   testWidgets('idle screen starts a session of nothing', (tester) async {
@@ -292,6 +370,10 @@ void main() {
 
     expect(find.text('empezar a no hacer nada'), findsOneWidget);
     expect(find.text('nada!'), findsWidgets);
+    expect(find.text('pomodoro'), findsOneWidget);
+    expect(find.text('jornada'), findsOneWidget);
+    expect(find.text('maratón'), findsOneWidget);
+    expect(find.text('ninguna esta semana'), findsOneWidget);
 
     await tester.tap(find.text('empezar a no hacer nada'));
     await tester.pump();

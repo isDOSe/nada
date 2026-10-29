@@ -1,5 +1,14 @@
 import 'dart:math';
 
+/// The three quick presets keep their names even when their minutes change.
+const List<String> nadaPresetNames = ['pomodoro', 'jornada', 'maratón'];
+
+/// pomodoro 25, jornada 45, maratón 90. Everything else is editable.
+const List<int> nadaDefaultQuickMinutes = [25, 45, 90];
+
+/// One medal for every 45 minutes of nothing. That is the whole economy.
+const int nadaMinutesPerMedal = 45;
+
 /// How a session of nothing is measured.
 enum NadaMode {
   /// Counts up forever. The purest form.
@@ -169,7 +178,7 @@ class NadaSettings {
   const NadaSettings({
     this.mode = NadaMode.free,
     this.goalMinutes = 25,
-    this.quickMinutes = const [15, 25, 45],
+    this.quickMinutes = nadaDefaultQuickMinutes,
     this.notifications = true,
     this.soundEnabled = true,
     this.widgetTheme = NadaWidgetTheme.dark,
@@ -178,7 +187,8 @@ class NadaSettings {
   final NadaMode mode;
   final int goalMinutes;
 
-  /// The three editable durations shown on the home screen.
+  /// The three editable durations shown on the home screen. Their names live
+  /// in [nadaPresetNames] and never change.
   final List<int> quickMinutes;
   final bool notifications;
 
@@ -232,7 +242,7 @@ class NadaSettings {
     return NadaSettings(
       mode: NadaMode.fromName(json['mode'] as String?),
       goalMinutes: (json['goalMinutes'] as num?)?.toInt() ?? 25,
-      quickMinutes: quick.length == 3 ? quick : const [15, 25, 45],
+      quickMinutes: quick.length == 3 ? quick : nadaDefaultQuickMinutes,
       notifications: json['notifications'] as bool? ?? true,
       soundEnabled: json['soundEnabled'] as bool? ?? true,
       widgetTheme: NadaWidgetTheme.fromName(json['widgetTheme'] as String?),
@@ -246,8 +256,13 @@ class NadaStoreData {
     this.sessions = const [],
     this.active,
     this.settings = const NadaSettings(),
-    this.version = 1,
+    this.version = currentVersion,
   });
+
+  /// Version 2 moved the quick presets from 15/25/45 to 25/45/90 and gave
+  /// them names. Older installs are migrated once, on load.
+  static const int currentVersion = 2;
+  static const List<int> _v1QuickMinutes = [15, 25, 45];
 
   final List<NadaSession> sessions;
   final ActiveSession? active;
@@ -286,15 +301,42 @@ class NadaStoreData {
     sessions.sort((a, b) => b.startedAt.compareTo(a.startedAt));
 
     final rawActive = json['active'];
+    final storedVersion = (json['version'] as num?)?.toInt() ?? 1;
+    var settings = NadaSettings.fromJson(
+      (json['settings'] as Map?)?.cast<String, Object?>(),
+    );
+    if (storedVersion < currentVersion) {
+      settings = _migrateSettings(settings);
+    }
     return NadaStoreData(
-      version: (json['version'] as num?)?.toInt() ?? 1,
+      version: currentVersion,
       sessions: sessions,
       active: rawActive is Map
           ? ActiveSession.fromJson(rawActive.cast<String, Object?>())
           : null,
-      settings: NadaSettings.fromJson(
-        (json['settings'] as Map?)?.cast<String, Object?>(),
-      ),
+      settings: settings,
+    );
+  }
+
+  /// A v1 install always had 15/25/45. If that is still the list, move it to
+  /// the named defaults and keep the selected preset in the same slot.
+  static NadaSettings _migrateSettings(NadaSettings settings) {
+    final quick = settings.quickMinutes;
+    final isV1Default =
+        quick.length == _v1QuickMinutes.length &&
+        List.generate(
+          quick.length,
+          (index) => quick[index] == _v1QuickMinutes[index],
+        ).every((matches) => matches);
+    if (!isV1Default) return settings;
+
+    final slot = _v1QuickMinutes.indexOf(settings.goalMinutes);
+    final goal = slot >= 0
+        ? nadaDefaultQuickMinutes[slot]
+        : settings.goalMinutes;
+    return settings.copyWith(
+      quickMinutes: nadaDefaultQuickMinutes,
+      goalMinutes: goal,
     );
   }
 }
@@ -319,6 +361,13 @@ class NadaStats {
   final Duration longest;
   final Duration average;
 
+  /// Medals are just a human-friendly division of the ledger: one for every
+  /// 45 minutes of nothing, all-time and since Monday.
+  int get medalsThisWeek => week.inMinutes ~/ nadaMinutesPerMedal;
+  int get medalsTotal => total.inMinutes ~/ nadaMinutesPerMedal;
+  int get minutesToNextMedal =>
+      nadaMinutesPerMedal - (week.inMinutes % nadaMinutesPerMedal);
+
   static const empty = NadaStats(
     total: Duration.zero,
     today: Duration.zero,
@@ -333,7 +382,11 @@ class NadaStats {
     if (sessions.isEmpty) return empty;
     final current = now ?? DateTime.now();
     final todayStart = DateTime(current.year, current.month, current.day);
-    final weekStart = todayStart.subtract(const Duration(days: 6));
+    // Medals reset on Monday. The ledger week is Monday to Sunday, not the
+    // rolling last-seven-days window the first version used.
+    final weekStart = todayStart.subtract(
+      Duration(days: todayStart.weekday - DateTime.monday),
+    );
 
     var total = Duration.zero;
     var today = Duration.zero;

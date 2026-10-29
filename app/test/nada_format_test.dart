@@ -59,5 +59,11 @@ void main() {
       expect(sessionCountLabel(1), '1 sesión');
       expect(sessionCountLabel(14), '14 sesiones');
     });
+
+    test('medal label', () {
+      expect(medalLabel(0), 'ninguna medalla');
+      expect(medalLabel(1), '1 medalla');
+      expect(medalLabel(8), '8 medallas');
+    });
   });
 }
