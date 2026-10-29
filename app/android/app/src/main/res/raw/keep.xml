@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The notification icon is resolved at runtime by name, so the resource
+  optimizer cannot see the reference. Keep it (and the launcher icon) alive.
+-->
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_nada,@mipmap/ic_launcher,@mipmap/ic_launcher_foreground,@raw/nada_chime" />
