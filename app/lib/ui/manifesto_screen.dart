@@ -16,7 +16,7 @@ class ManifestoScreen extends StatelessWidget {
         children: [
           NadaHeader(
             leading: NadaFootnote(
-              label: 'volver',
+              label: 'Volver',
               onTap: () => Navigator.of(context).pop(),
             ),
             trailing: const NadaWordmark(),

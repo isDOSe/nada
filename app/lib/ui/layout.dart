@@ -42,7 +42,20 @@ class NadaHeader extends StatelessWidget {
     return SizedBox(
       height: 48,
       child: Row(
-        children: [leading ?? const NadaWordmark(), const Spacer(), ?trailing],
+        children: [
+          leading ?? const NadaWordmark(),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              // Two text buttons on a narrow screen (or with large text) must
+              // shrink instead of overflowing the header.
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: trailing ?? const SizedBox.shrink(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

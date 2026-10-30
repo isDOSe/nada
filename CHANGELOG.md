@@ -4,6 +4,19 @@ Desde 1.0.5 la app y la web comparten número de versión. Lo más reciente va
 arriba. El resumen del día a día vive también en el `## Changelog` del
 [`README.md`](README.md).
 
+## 1.0.6 — 2026-10-30
+
+### app
+
+- El inicio queda más limpio: fuera el texto de ayuda del selector y las
+  medallas.
+- El selector de tiempo ocupa el hueco que dejaron, justo debajo del total.
+- Las medallas pasan a una pantalla propia —cuántas esta semana, cuántas en
+  total y cuándo llega la siguiente—, abierta desde el botón **Medallas** de la
+  cabecera, junto a **Registro**.
+- Botones, pestañas y títulos en mayúscula inicial: *Ajustes*, *Manifiesto*,
+  *Medallas*, *Registro*, *Volver*.
+
 ## 1.0.5 — 2026-10-28
 
 ### app

@@ -373,7 +373,22 @@ void main() {
     expect(find.text('pomodoro'), findsOneWidget);
     expect(find.text('jornada'), findsOneWidget);
     expect(find.text('maratón'), findsOneWidget);
-    expect(find.text('ninguna esta semana'), findsOneWidget);
+    expect(find.text('Ajustes'), findsOneWidget);
+    expect(find.text('Medallas'), findsOneWidget);
+    expect(find.text('ninguna esta semana'), findsNothing);
+    expect(find.textContaining('te aviso cuando llegues'), findsNothing);
+
+    await tester.tap(find.text('Medallas'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('ninguna medalla'), findsOneWidget);
+    expect(find.text('esta semana'), findsOneWidget);
+    expect(find.text('0 en total'), findsOneWidget);
+
+    await tester.tap(find.text('Volver'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await tester.tap(find.text('empezar a no hacer nada'));
     await tester.pump();

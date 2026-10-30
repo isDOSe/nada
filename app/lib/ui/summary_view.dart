@@ -34,7 +34,7 @@ class SummaryView extends StatelessWidget {
         children: [
           NadaHeader(
             trailing: NadaFootnote(
-              label: 'cerrar',
+              label: 'Cerrar',
               onTap: controller.dismissSummary,
             ),
           ),

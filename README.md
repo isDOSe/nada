@@ -217,6 +217,14 @@ Nada sale de tu dispositivo.
 Cada cambio u opción nueva se anota aquí al implementarla; el historial completo
 está en [`CHANGELOG.md`](CHANGELOG.md). Lo más reciente va arriba.
 
+### 1.0.6
+
+- El inicio queda más limpio: el selector de tiempo baja al hueco que dejaron
+  el texto de ayuda y las medallas.
+- Las medallas tienen pantalla propia, con el contador semanal, el total y la
+  siguiente. Se abre desde **Medallas**, en la cabecera, junto a **Registro**.
+- Botones y títulos en mayúscula inicial: *Ajustes*, *Manifiesto*, *Volver*.
+
 ### 1.0.5
 
 - Presets con nombre: **pomodoro 25**, **jornada 45** y **maratón 90**, con

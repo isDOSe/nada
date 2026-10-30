@@ -8,7 +8,7 @@ import '../state/nada_scope.dart';
 import 'history_screen.dart';
 import 'layout.dart';
 import 'manifesto_screen.dart';
-import 'medals_sheet.dart';
+import 'medals_screen.dart';
 import 'settings_sheet.dart';
 import 'widgets/nada_widgets.dart';
 
@@ -78,17 +78,30 @@ class HomeView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             NadaHeader(
-                              trailing: NadaFootnote(
-                                label: 'registro',
-                                plain: true,
-                                onTap: () => Navigator.of(
-                                  context,
-                                ).push(nadaRoute(const HistoryScreen())),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  NadaFootnote(
+                                    label: 'Medallas',
+                                    plain: true,
+                                    onTap: () => Navigator.of(context).push(
+                                      nadaRoute(const MedalsScreen()),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  NadaFootnote(
+                                    label: 'Registro',
+                                    plain: true,
+                                    onTap: () => Navigator.of(context).push(
+                                      nadaRoute(const HistoryScreen()),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             const SizedBox(height: 14),
                             Text(
-                              'hoy, ${journalDate(DateTime.now())}',
+                              'Hoy, ${journalDate(DateTime.now())}',
                               style: NadaType.label.copyWith(
                                 fontSize: 16,
                                 color: NadaColors.ash,
@@ -123,7 +136,7 @@ class HomeView extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const NadaSectionLabel('en total'),
+                                  const NadaSectionLabel('En total'),
                                   const SizedBox(height: 6),
                                   Text(
                                     compactDuration(stats.total),
@@ -145,11 +158,9 @@ class HomeView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 18),
-                            _HomeMedals(stats: stats),
-                            const SizedBox(height: 22),
+                            const SizedBox(height: 34),
                             const NadaSectionLabel(
-                              '¿cuánto tiempo?',
+                              '¿Cuánto tiempo?',
                               color: NadaColors.bone,
                             ),
                             const SizedBox(height: 2),
@@ -159,17 +170,6 @@ class HomeView extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [freeChoice, ...goalChoices],
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              settings.mode == NadaMode.free
-                                  ? 'cuenta hacia arriba. tú decides cuándo parar de no hacer nada.'
-                                  : 'te aviso cuando llegues. luego decides si sigues sin hacer nada.',
-                              style: NadaType.bodyMuted.copyWith(
-                                fontSize: 16,
-                                color: NadaColors.ash,
-                                height: 1.45,
                               ),
                             ),
                           ],
@@ -199,11 +199,11 @@ class HomeView extends StatelessWidget {
                 const SizedBox(height: 4),
                 NadaFooterRow(
                   left: NadaFootnote(
-                    label: 'ajustes',
+                    label: 'Ajustes',
                     onTap: () => showNadaSettings(context),
                   ),
                   right: NadaFootnote(
-                    label: 'manifiesto',
+                    label: 'Manifiesto',
                     onTap: () => Navigator.of(
                       context,
                     ).push(nadaRoute(const ManifestoScreen())),
@@ -213,72 +213,6 @@ class HomeView extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _HomeMedals extends StatelessWidget {
-  const _HomeMedals({required this.stats});
-
-  final NadaStats stats;
-
-  @override
-  Widget build(BuildContext context) {
-    final earned = stats.medalsThisWeek;
-    final caption = earned == 0
-        ? stats.medalsTotal == 0
-              ? 'cada 45 min de nada. te faltan ${stats.minutesToNextMedal}.'
-              : 'cada 45 min de nada. te faltan ${stats.minutesToNextMedal} · ${stats.medalsTotal} en total'
-        : '${stats.minutesToNextMedal} min para la siguiente · ${stats.medalsTotal} en total';
-
-    return Semantics(
-      button: true,
-      label: 'Ver las medallas: $earned esta semana',
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => showNadaMedals(context),
-        child: Row(
-          children: [
-            NadaMedal(
-              filled: earned > 0,
-              semanticLabel: earned == 0
-                  ? 'sin medallas todavía'
-                  : '$earned medallas esta semana',
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    earned == 0
-                        ? 'ninguna esta semana'
-                        : '${medalLabel(earned)} esta semana',
-                    style: NadaType.body.copyWith(fontSize: 17, height: 1.2),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    caption,
-                    style: NadaType.label.copyWith(
-                      fontSize: 14,
-                      height: 1.35,
-                      color: NadaColors.ash,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              'ver',
-              style: NadaType.label.copyWith(
-                fontSize: 14,
-                color: NadaColors.faint,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

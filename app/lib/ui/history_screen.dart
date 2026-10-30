@@ -64,13 +64,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 children: [
                   NadaHeader(
                     leading: NadaFootnote(
-                      label: 'volver',
+                      label: 'Volver',
                       onTap: () => Navigator.of(context).pop(),
                     ),
                     trailing: const NadaWordmark(),
                   ),
                   const SizedBox(height: 38),
-                  const NadaSectionLabel('registro'),
+                  const NadaSectionLabel('Registro'),
                   const SizedBox(height: 10),
                   Text(
                     compactDuration(stats.total, zeroAsDash: true),
@@ -107,7 +107,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   const SizedBox(height: 14),
                   if (sessions.isNotEmpty)
                     NadaFootnote(
-                      label: _copied ? 'copiado' : 'copiar resumen',
+                      label: _copied ? 'Copiado' : 'Copiar resumen',
                       emphasize: _copied,
                       onTap: () => _copySummary(stats),
                     ),
@@ -349,7 +349,7 @@ class _SessionSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'borrar esta sesión',
+                'Borrar esta sesión',
                 style: NadaType.title.copyWith(fontSize: 32),
               ),
               const SizedBox(height: 12),
@@ -361,14 +361,14 @@ class _SessionSheet extends StatelessWidget {
               Row(
                 children: [
                   NadaButton(
-                    label: 'cancelar',
+                    label: 'Cancelar',
                     kind: NadaButtonKind.quiet,
                     expand: false,
                     onPressed: () => Navigator.of(dialogContext).pop(false),
                   ),
                   const Spacer(),
                   NadaButton(
-                    label: 'borrar',
+                    label: 'Borrar',
                     kind: NadaButtonKind.quiet,
                     expand: false,
                     onPressed: () => Navigator.of(dialogContext).pop(true),
@@ -432,14 +432,14 @@ class _SessionSheet extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   NadaFootnote(
-                    label: 'borrar sesión',
+                    label: 'Borrar sesión',
                     onTap: () => _confirmDelete(context),
                   ),
                   const SizedBox(height: 4),
                   Align(
                     alignment: Alignment.centerRight,
                     child: NadaFootnote(
-                      label: 'cerrar',
+                      label: 'Cerrar',
                       onTap: () => Navigator.of(context).pop(),
                     ),
                   ),

@@ -192,12 +192,12 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     Row(
                       children: [
                         Text(
-                          'ajustes',
+                          'Ajustes',
                           style: NadaType.title.copyWith(fontSize: 36),
                         ),
                         const Spacer(),
                         NadaFootnote(
-                          label: 'listo',
+                          label: 'Listo',
                           onTap: () {
                             FocusScope.of(context).unfocus();
                             Navigator.of(context).pop();
@@ -206,7 +206,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    const NadaSectionLabel('tiempos rápidos'),
+                    const NadaSectionLabel('Tiempos rápidos'),
                     const SizedBox(height: 8),
                     Text(
                       'pomodoro, jornada y maratón. cámbialos cuando quieras; el nombre se queda.',
@@ -231,7 +231,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'notificación permanente',
+                                'Notificación permanente',
                                 style: NadaType.body.copyWith(fontSize: 18),
                               ),
                               const SizedBox(height: 6),
@@ -260,8 +260,8 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       if (!controller.notificationsGranted)
                         NadaFootnote(
                           label: _asking
-                              ? 'pidiendo permiso...'
-                              : 'permitir notificaciones',
+                              ? 'Pidiendo permiso...'
+                              : 'Permitir notificaciones',
                           onTap: _asking
                               ? () {}
                               : () async {
@@ -295,7 +295,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'sonido al terminar',
+                                  'Sonido al terminar',
                                   style: NadaType.body.copyWith(fontSize: 18),
                                 ),
                                 const SizedBox(height: 6),
@@ -320,7 +320,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                         ],
                       ),
                       NadaFootnote(
-                        label: 'probar sonido',
+                        label: 'Probar sonido',
                         onTap: () {
                           controller.previewEndSound();
                         },
@@ -329,7 +329,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       const NadaHairline(),
                       const SizedBox(height: 20),
                       Text(
-                        'widget de inicio',
+                        'Widget de inicio',
                         style: NadaType.body.copyWith(fontSize: 18),
                       ),
                       const SizedBox(height: 6),
@@ -341,7 +341,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       Wrap(
                         children: [
                           NadaChoice(
-                            label: 'negro',
+                            label: 'Negro',
                             selected:
                                 settings.widgetTheme == NadaWidgetTheme.dark,
                             onTap: () => controller.updateSettings(
@@ -351,7 +351,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                             ),
                           ),
                           NadaChoice(
-                            label: 'blanco',
+                            label: 'Blanco',
                             selected:
                                 settings.widgetTheme == NadaWidgetTheme.light,
                             onTap: () => controller.updateSettings(
@@ -363,7 +363,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                         ],
                       ),
                       NadaFootnote(
-                        label: 'añadir widget',
+                        label: 'Añadir widget',
                         onTap: () async {
                           final pinned = await controller.requestWidgetPin();
                           if (!mounted) return;
@@ -389,7 +389,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     const NadaHairline(),
                     const SizedBox(height: 8),
                     NadaFootnote(
-                      label: 'el arte de no hacer nada',
+                      label: 'El arte de no hacer nada',
                       expand: true,
                       onTap: () {
                         final navigator = Navigator.of(
@@ -408,7 +408,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     ),
                     const SizedBox(height: 8),
                     NadaFootnote(
-                      label: 'acerca de nada!',
+                      label: 'Acerca de nada!',
                       expand: true,
                       onTap: () {
                         final navigator = Navigator.of(
@@ -498,14 +498,14 @@ Future<void> showAboutNada(BuildContext context) {
                   ),
                   const SizedBox(height: 18),
                   NadaFootnote(
-                    label: 'abrir nada.isdose.com',
+                    label: 'Abrir nada.isdose.com',
                     onTap: () => unawaited(NadaSite.open()),
                   ),
                   const SizedBox(height: 24),
                   Align(
                     alignment: Alignment.centerRight,
                     child: NadaFootnote(
-                      label: 'cerrar',
+                      label: 'Cerrar',
                       onTap: () => Navigator.of(sheetContext).pop(),
                     ),
                   ),
