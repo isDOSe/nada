@@ -77,12 +77,12 @@ escritorio.
 | Negro puro `#000000` | El vacío no es gris corporativo. En OLED, el fondo desaparece. |
 | Hueso `#F2EFE6` | Un blanco cálido, de tinta y papel. |
 | **Instrument Serif** | El número es el protagonista. Serif editorial de alto contraste. |
-| **Crimson Text** (app) y **Source Serif 4** (web) | Texto de libro, legible desde 16 px. |
+| **Crimson Text** (app) y **Spectral** (web) | Texto de libro, ligero y legible desde 16 px. |
 | Sin radios, sin sombras suaves, sin gradientes de relleno | La jerarquía se construye con tipografía, espacio y líneas de 1 px. |
 | Un solo elemento sólido | El botón principal es la única superficie clara, con relieve duro de 4 px. |
 | Acciones secundarias con borde | Botones cuadrados de 1 px, no enlaces subrayados. |
-| Presets con nombre y minutos | `sin límite`, `pomodoro`, `jornada` y `maratón` dicen lo que ocurrirá antes de iniciar. |
-| Medallas tipográficas | Un sello `n!` cuadrado, invertido cuando está ganado. |
+| Presets con nombre y minutos | `Sin límite`, `Pomodoro`, `Jornada` y `Maratón` dicen lo que ocurrirá antes de iniciar. |
+| Medallas de pixel art | Una moneda `n!` dibujada en píxeles: gris mientras falta, hueso cuando la ganas. |
 | El estado vacío dice **nada!**, no `00:00` | La firma del producto: el cero también es una palabra. |
 | Movimiento reducido | La luz de sesión es tenue, se detiene al pausar y respeta `prefers-reduced-motion`. |
 | Cero emojis, cero mayúsculas gritadas | El humor está en el copy, no en un icono. |
@@ -116,8 +116,10 @@ nada/
 │   ├── index.html              # vistas, diálogos y contenido
 │   ├── style.css               # el sistema visual completo
 │   ├── script.js               # estado, cronómetro, registro y persistencia
-│   ├── fonts/                  # Instrument Serif + Source Serif 4 (SIL OFL)
-│   └── images/                 # icono, wordmark y Open Graph
+│   ├── favicon.svg             # la marca `n!` vectorial, con `favicon.ico` al lado
+│   ├── fonts/                  # Instrument Serif + Spectral en woff2 (SIL OFL)
+│   ├── images/                 # icono táctil, wordmark y Open Graph
+│   └── tool/                   # generador del favicon e imágenes
 ├── CHANGELOG.md
 ├── LICENSE
 └── README.md
@@ -152,6 +154,20 @@ flutter analyze       # limpio
 flutter build apk --release
 ```
 
+### Instalar en un teléfono
+
+`app/tool/install.ps1` es un atajo local que no se versiona: compila el APK de
+release, lo instala conservando los datos y abre la app en el primer teléfono
+conectado (USB o depuración inalámbrica ya emparejada).
+
+```powershell
+powershell -ExecutionPolicy Bypass -File app\tool\install.ps1
+```
+
+Acepta `-Debug`, `-SkipBuild`, `-Apk <ruta>`, `-Serial <serial>`,
+`-Connect <ip>:<puerto>`, `-Uninstall` (borra los datos del teléfono),
+`-NoLaunch` y `-Any` (usa el emulador si no hay teléfono).
+
 ### Versión y build
 
 Cada release sube el último número de la versión (`1.0.1`, `1.0.2`…) y el build
@@ -168,6 +184,36 @@ Descargas, con su SHA-256. Para un cambio de minor o major:
 ```powershell
 powershell -ExecutionPolicy Bypass -File app\tool\release.ps1 -Part minor
 ```
+
+### Instalar en el teléfono
+
+Para probar en el teléfono real sin dejar de usar el emulador para el día a día:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File app\tool\install.ps1
+```
+
+Compila el release, busca el teléfono (ignora el emulador), reinstala conservando
+los datos en el teléfono y abre la app. Si el teléfono tiene una versión más
+nueva, reintenta permitiendo la baja de versión.
+
+Configuración, una sola vez: **Opciones de desarrollador → Depuración USB** con
+el cable, o **Depuración inalámbrica** (Android 11+, mismo Wi-Fi que la PC).
+Después de emparejarlo una vez, adb lo reconecta solo y el comando funciona sin
+cable.
+
+| Flag | Qué hace |
+|---|---|
+| `-SkipBuild` | Instala el último APK generado, sin compilar. |
+| `-Debug` | Compila e instala el APK de debug. |
+| `-Connect 192.168.1.50:43210` | Conecta antes por Wi-Fi (puerto de *Depuración inalámbrica*). |
+| `-Serial <serial>` | Elige el dispositivo si hay varios. |
+| `-Uninstall` | Desinstala primero; borra los datos guardados. |
+| `-NoLaunch` | No abre la app al terminar. |
+
+El release está firmado con la keystore de debug, así que reemplaza sin problema
+las instalaciones hechas desde esta PC; no así una versión publicada en Play
+Store, que exige desinstalar antes.
 
 ## Cómo se guarda
 
@@ -223,7 +269,13 @@ está en [`CHANGELOG.md`](CHANGELOG.md). Lo más reciente va arriba.
   el texto de ayuda y las medallas.
 - Las medallas tienen pantalla propia, con el contador semanal, el total y la
   siguiente. Se abre desde **Medallas**, en la cabecera, junto a **Registro**.
-- Botones y títulos en mayúscula inicial: *Ajustes*, *Manifiesto*, *Volver*.
+- Botones, selector de tiempo y títulos en mayúscula inicial: *Ajustes*,
+  *Manifiesto*, *Volver*, *Pomodoro*, *Jornada*, *Maratón*.
+- **Web:** el texto pasa a **Spectral**, una serif más estilizada y ligera que
+  Source Serif 4, servida en woff2 desde el proyecto. Los botones bajan de peso
+  para no competir con el titular.
+- **Web:** favicon propio (`n!`) en SVG, ICO y versión táctil, generado con
+  `web/tool/make_favicon.py`.
 
 ### 1.0.5
 
@@ -267,8 +319,8 @@ está en [`CHANGELOG.md`](CHANGELOG.md). Lo más reciente va arriba.
 
 - Tipografías: [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif),
   [Crimson Text](https://fonts.google.com/specimen/Crimson+Text) y
-  [Source Serif 4](https://fonts.google.com/specimen/Source+Serif+4), SIL Open
-  Font License. Licencias incluidas en `app/assets/fonts/` y `web/fonts/`.
+  [Spectral](https://fonts.google.com/specimen/Spectral), SIL Open Font
+  License. Licencias incluidas en `app/assets/fonts/` y `web/fonts/`.
 - Hecho con Flutter en Android y con HTML, CSS y JavaScript en la web. Sin
   frameworks de estado, sin analytics, sin prisa.
 - Ernesto Flames (DOSe) — MIT.

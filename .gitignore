@@ -8,3 +8,10 @@ desktop.ini
 *.swp
 
 # El proyecto Flutter tiene su propio .gitignore en app/
+
+# Instalación local en un teléfono real (puede llevar datos del dispositivo)
+/app/tool/install.ps1
+
+# Caché de Python de los scripts de herramientas
+__pycache__/
+*.pyc

@@ -15,26 +15,26 @@
 }
 
 @font-face {
-  font-family: "Source Serif 4";
-  src: url("fonts/SourceSerif4-Regular.ttf") format("truetype");
+  font-family: "Spectral";
+  src: url("fonts/Spectral-Regular.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Source Serif 4";
-  src: url("fonts/SourceSerif4-Medium.ttf") format("truetype");
+  font-family: "Spectral";
+  src: url("fonts/Spectral-Medium.woff2") format("woff2");
   font-style: normal;
   font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Source Serif 4";
-  src: url("fonts/SourceSerif4-SemiBold.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 600;
+  font-family: "Spectral";
+  src: url("fonts/Spectral-Italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -49,7 +49,7 @@
   --line-strong: #514b40;
   --pressed: #171512;
   --display: "Instrument Serif", Georgia, serif;
-  --text: "Source Serif 4", Georgia, serif;
+  --text: "Spectral", Georgia, serif;
   --content: 1120px;
   --gutter: clamp(20px, 4vw, 48px);
 }
@@ -287,7 +287,7 @@ body.is-running .settings-trigger {
   padding: 13px 22px;
   border: 1px solid transparent;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.25;
   text-align: center;
   transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease,
@@ -446,7 +446,7 @@ body.is-running .settings-trigger {
 
 .choice-name {
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
 }
 
@@ -576,7 +576,7 @@ body.is-running .settings-trigger {
 
 .medal-title {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--bone);
 }
 
@@ -891,7 +891,7 @@ body.is-running .settings-trigger {
 
 .day {
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .day-total {
@@ -1127,7 +1127,7 @@ body.is-running .settings-trigger {
   margin: 0;
   font-family: var(--text);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .settings-help {

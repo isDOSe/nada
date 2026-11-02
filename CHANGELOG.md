@@ -14,8 +14,24 @@ arriba. El resumen del día a día vive también en el `## Changelog` del
 - Las medallas pasan a una pantalla propia —cuántas esta semana, cuántas en
   total y cuándo llega la siguiente—, abierta desde el botón **Medallas** de la
   cabecera, junto a **Registro**.
-- Botones, pestañas y títulos en mayúscula inicial: *Ajustes*, *Manifiesto*,
-  *Medallas*, *Registro*, *Volver*.
+- Botones, selector de tiempo, pestañas y títulos en mayúscula inicial:
+  *Ajustes*, *Manifiesto*, *Medallas*, *Registro*, *Volver*, *Pomodoro*,
+  *Jornada*, *Maratón*. Todo el copy visible empieza en mayúscula.
+- La medalla es una moneda de pixel art (rejilla 24×24, canto acuñado y `n!`
+  dibujado en píxeles): gris mientras falta y hueso cuando se gana.
+
+### repositorio
+
+- `app/tool/install.ps1`: instala el APK en un teléfono real por USB o Wi-Fi,
+  conservando los datos. Es un script local y queda fuera del repositorio.
+
+### web
+
+- La tipografía de texto pasa de Source Serif 4 a **Spectral**: más estilizada
+  y ligera, legible a 16 px, servida en woff2 desde `web/fonts/`.
+- Botones y títulos secundarios bajan a peso medio para que el titular mande.
+- Favicon propio con la marca `n!` en SVG e ICO, más un icono táctil de 180 px.
+  Se regenera con `python web/tool/make_favicon.py`.
 
 ## 1.0.5 — 2026-10-28
 
