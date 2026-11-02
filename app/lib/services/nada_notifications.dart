@@ -58,9 +58,9 @@ String ongoingNotificationBody({
     final left = goal - elapsed;
     final remaining = left.isNegative ? Duration.zero : left;
     final endAt = now.add(remaining);
-    return 'meta de ${compactDuration(goal)} · hasta las ${clockTime(endAt)}';
+    return 'Meta de ${compactDuration(goal)} · hasta las ${clockTime(endAt)}';
   }
-  return 'sin hacer nada desde las ${clockTime(startedAt)}';
+  return 'Sin hacer nada desde las ${clockTime(startedAt)}';
 }
 
 /// The persistent notification is deliberately native: Android renders the
@@ -109,7 +109,7 @@ class NadaNotifications implements SessionNotifications {
       await android?.createNotificationChannel(
         const AndroidNotificationChannel(
           _ongoingChannel,
-          'sesión de nada',
+          'Sesión de nada',
           description: 'El tiempo que no le debes a nadie.',
           importance: Importance.low,
           playSound: false,
@@ -119,7 +119,7 @@ class NadaNotifications implements SessionNotifications {
       await android?.createNotificationChannel(
         const AndroidNotificationChannel(
           _alertsChannel,
-          'avisos de nada',
+          'Avisos de nada',
           description: 'Cuando una meta de nada se cumple.',
           importance: Importance.defaultImportance,
           playSound: true,
@@ -130,7 +130,7 @@ class NadaNotifications implements SessionNotifications {
       await android?.createNotificationChannel(
         const AndroidNotificationChannel(
           _silentAlertsChannel,
-          'avisos de nada (silencio)',
+          'Avisos de nada (silencio)',
           description: 'Cuando una meta de nada se cumple, sin sonido.',
           importance: Importance.low,
           playSound: false,
@@ -223,7 +223,7 @@ class NadaNotifications implements SessionNotifications {
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             _ongoingChannel,
-            'sesión de nada',
+            'Sesión de nada',
             channelDescription: 'El tiempo que no le debes a nadie.',
             importance: Importance.low,
             priority: Priority.low,
@@ -259,7 +259,7 @@ class NadaNotifications implements SessionNotifications {
     if (!isSupported || !notificationsEnabled) return;
     if (!_ready) await init();
     if (!_ready) return;
-    final body = '${compactDuration(goal)} de nada. ya está.';
+    final body = '${compactDuration(goal)} de nada. Ya está.';
     final channel = soundEnabled ? _alertsChannel : _silentAlertsChannel;
     try {
       await _plugin.zonedSchedule(
@@ -270,7 +270,7 @@ class NadaNotifications implements SessionNotifications {
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             channel,
-            soundEnabled ? 'avisos de nada' : 'avisos de nada (silencio)',
+            soundEnabled ? 'Avisos de nada' : 'Avisos de nada (silencio)',
             channelDescription: 'Cuando una meta de nada se cumple.',
             importance: soundEnabled
                 ? Importance.defaultImportance

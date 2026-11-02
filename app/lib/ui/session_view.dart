@@ -30,7 +30,7 @@ class SessionView extends StatelessWidget {
                 trailing: running
                     ? null
                     : Text(
-                        'en pausa',
+                        'En pausa',
                         style: NadaType.label.copyWith(
                           fontSize: 16,
                           color: NadaColors.ash,
@@ -67,15 +67,15 @@ class SessionView extends StatelessWidget {
                         Text(
                           running
                               ? (elapsed.inSeconds < 2
-                                    ? 'acabas de dejar de hacer algo'
-                                    : 'llevas ${spokenDuration(elapsed)} sin hacer nada')
-                              : 'pausado. el reloj también se aburre.',
+                                    ? 'Acabas de dejar de hacer algo'
+                                    : 'Llevas ${spokenDuration(elapsed)} sin hacer nada')
+                              : 'Pausado. El reloj también se aburre.',
                           style: NadaType.italic.copyWith(fontSize: 21),
                         ),
                         if (goal == null) ...[
                           const SizedBox(height: 12),
                           Text(
-                            'sin límite · desde las ${clockTime(startedAt)}',
+                            'Sin límite · desde las ${clockTime(startedAt)}',
                             style: NadaType.label.copyWith(
                               fontSize: 16,
                               color: NadaColors.ash,
@@ -87,12 +87,12 @@ class SessionView extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                'meta de ${compactDuration(goal)}',
+                                'Meta de ${compactDuration(goal)}',
                                 style: NadaType.label.copyWith(fontSize: 16),
                               ),
                               const Spacer(),
                               Text(
-                                'quedan ${stopwatch(remaining)}',
+                                'Quedan ${stopwatch(remaining)}',
                                 style: NadaType.label.copyWith(
                                   fontSize: 16,
                                   color: running
@@ -131,7 +131,7 @@ class SessionView extends StatelessWidget {
               ),
               const SizedBox(height: 14),
               NadaButton(
-                label: running ? 'pausar' : 'continuar',
+                label: running ? 'Pausar' : 'Continuar',
                 depressed: !running,
                 semanticLabel: running
                     ? 'Pausar esta sesión de nada'
@@ -147,7 +147,7 @@ class SessionView extends StatelessWidget {
               ),
               const SizedBox(height: 18),
               NadaButton(
-                label: 'terminar',
+                label: 'Terminar',
                 kind: NadaButtonKind.quiet,
                 semanticLabel: 'Terminar y guardar esta sesión',
                 onPressed: () {

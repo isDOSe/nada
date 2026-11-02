@@ -1,7 +1,7 @@
 import 'dart:math';
 
 /// The three quick presets keep their names even when their minutes change.
-const List<String> nadaPresetNames = ['pomodoro', 'jornada', 'maratón'];
+const List<String> nadaPresetNames = ['Pomodoro', 'Jornada', 'Maratón'];
 
 /// pomodoro 25, jornada 45, maratón 90. Everything else is editable.
 const List<int> nadaDefaultQuickMinutes = [25, 45, 90];

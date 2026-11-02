@@ -61,7 +61,7 @@ void main() {
     });
 
     test('medal label', () {
-      expect(medalLabel(0), 'ninguna medalla');
+      expect(medalLabel(0), 'Ninguna medalla');
       expect(medalLabel(1), '1 medalla');
       expect(medalLabel(8), '8 medallas');
     });

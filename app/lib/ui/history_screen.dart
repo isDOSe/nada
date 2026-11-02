@@ -87,7 +87,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   if (sessions.isNotEmpty) ...[
                     const SizedBox(height: 6),
                     Text(
-                      'desde el ${longDate(sessions.last.startedAt)}',
+                      'Desde el ${longDate(sessions.last.startedAt)}',
                       style: NadaType.label.copyWith(
                         fontSize: 16,
                         color: NadaColors.ash,
@@ -96,7 +96,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     if (sessions.length > 1) ...[
                       const SizedBox(height: 4),
                       Text(
-                        'la más larga ${compactDuration(stats.longest)} · promedio ${compactDuration(stats.average)}',
+                        'La más larga ${compactDuration(stats.longest)} · promedio ${compactDuration(stats.average)}',
                         style: NadaType.label.copyWith(
                           fontSize: 16,
                           color: NadaColors.ash,
@@ -127,7 +127,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   children: [
                     const SizedBox(height: 12),
                     Text(
-                      'aquí todavía\nno hay nada.',
+                      'Aquí todavía\nno hay nada.',
                       style: NadaType.title.copyWith(
                         fontSize: 46,
                         height: 1.08,
@@ -135,12 +135,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ),
                     const SizedBox(height: 18),
                     Text(
-                      'empieza con un minuto. o con ninguno. aquí nadie te va a pedir más.',
+                      'Empieza con un minuto. O con ninguno. Aquí nadie te va a pedir más.',
                       style: NadaType.italic,
                     ),
                     const Spacer(),
                     NadaButton(
-                      label: 'empezar a no hacer nada',
+                      label: 'Empezar a no hacer nada',
                       onPressed: () {
                         controller.startSession();
                         Navigator.of(context).pop();
@@ -241,7 +241,7 @@ class _DayHeader extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                relativeDay(entry.day),
+                capitalizeFirst(relativeDay(entry.day)),
                 style: const TextStyle(
                   fontFamily: NadaFonts.text,
                   fontSize: 19,
@@ -274,11 +274,11 @@ class _SessionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final modeLabel = switch (session.mode) {
-      NadaMode.free => 'sin límite',
+      NadaMode.free => 'Sin límite',
       NadaMode.goal =>
         session.completed
-            ? 'meta cumplida'
-            : 'meta ${compactDuration(session.goal ?? Duration.zero)}',
+            ? 'Meta cumplida'
+            : 'Meta ${compactDuration(session.goal ?? Duration.zero)}',
     };
 
     return Semantics(
@@ -354,7 +354,7 @@ class _SessionSheet extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'desaparecerá del registro. el tiempo ya lo perdiste igual.',
+                'Desaparecerá del registro. El tiempo ya lo perdiste igual.',
                 style: NadaType.bodyMuted,
               ),
               const SizedBox(height: 22),
@@ -418,16 +418,16 @@ class _SessionSheet extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'de nada.',
+                    'De nada.',
                     style: NadaType.italic.copyWith(fontSize: 27, height: 1.1),
                   ),
                   const SizedBox(height: 22),
                   Text(
                     goal == null
-                        ? 'sin límite. contó hacia arriba hasta que decidiste parar.'
+                        ? 'Sin límite. Contó hacia arriba hasta que decidiste parar.'
                         : completed
-                        ? 'meta de ${compactDuration(goal)}. la cumpliste sin hacer nada. como debe ser.'
-                        : 'meta de ${compactDuration(goal)}. la cortaste antes. tampoco pasa nada.',
+                        ? 'Meta de ${compactDuration(goal)}. La cumpliste sin hacer nada. Como debe ser.'
+                        : 'Meta de ${compactDuration(goal)}. La cortaste antes. Tampoco pasa nada.',
                     style: NadaType.bodyMuted.copyWith(fontSize: 17),
                   ),
                   const SizedBox(height: 24),

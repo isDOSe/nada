@@ -23,7 +23,7 @@ class ManifestoScreen extends StatelessWidget {
           ),
           const SizedBox(height: 44),
           Text(
-            'el arte de\nno hacer nada',
+            'El arte de\nno hacer nada',
             style: NadaType.title.copyWith(fontSize: 56, height: 0.98),
           ),
           const SizedBox(height: 32),

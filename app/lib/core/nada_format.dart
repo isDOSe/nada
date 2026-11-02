@@ -112,9 +112,15 @@ String sessionCountLabel(int count) {
   return '$count sesiones';
 }
 
-/// `ninguna medalla`, `1 medalla`, `12 medallas`.
+/// Uppercases the first letter, leaving the rest of the text untouched.
+String capitalizeFirst(String text) {
+  if (text.isEmpty) return text;
+  return '${text[0].toUpperCase()}${text.substring(1)}';
+}
+
+/// `Ninguna medalla`, `1 medalla`, `12 medallas`.
 String medalLabel(int count) {
-  if (count <= 0) return 'ninguna medalla';
+  if (count <= 0) return 'Ninguna medalla';
   if (count == 1) return '1 medalla';
   return '$count medallas';
 }

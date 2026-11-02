@@ -256,10 +256,10 @@ void main() {
       expect(untouched.settings.goalMinutes, 15);
     });
 
-    test('the default presets are named pomodoro, jornada and maratón', () {
+    test('the default presets are named Pomodoro, Jornada and Maratón', () {
       const settings = NadaSettings();
       expect(settings.quickMinutes, [25, 45, 90]);
-      expect(nadaPresetNames, ['pomodoro', 'jornada', 'maratón']);
+      expect(nadaPresetNames, ['Pomodoro', 'Jornada', 'Maratón']);
     });
   });
 
@@ -368,34 +368,35 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('empezar a no hacer nada'), findsOneWidget);
+    expect(find.text('Empezar a no hacer nada'), findsOneWidget);
     expect(find.text('nada!'), findsWidgets);
-    expect(find.text('pomodoro'), findsOneWidget);
-    expect(find.text('jornada'), findsOneWidget);
-    expect(find.text('maratón'), findsOneWidget);
+    expect(find.text('Pomodoro'), findsOneWidget);
+    expect(find.text('Jornada'), findsOneWidget);
+    expect(find.text('Maratón'), findsOneWidget);
     expect(find.text('Ajustes'), findsOneWidget);
     expect(find.text('Medallas'), findsOneWidget);
     expect(find.text('ninguna esta semana'), findsNothing);
+    expect(find.text('Sin límite'), findsOneWidget);
     expect(find.textContaining('te aviso cuando llegues'), findsNothing);
 
     await tester.tap(find.text('Medallas'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('ninguna medalla'), findsOneWidget);
-    expect(find.text('esta semana'), findsOneWidget);
+    expect(find.text('Ninguna medalla'), findsOneWidget);
+    expect(find.text('Esta semana'), findsOneWidget);
     expect(find.text('0 en total'), findsOneWidget);
 
     await tester.tap(find.text('Volver'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    await tester.tap(find.text('empezar a no hacer nada'));
+    await tester.tap(find.text('Empezar a no hacer nada'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('en curso'), findsNothing);
-    expect(find.text('pausar'), findsOneWidget);
+    expect(find.text('Pausar'), findsOneWidget);
 
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();

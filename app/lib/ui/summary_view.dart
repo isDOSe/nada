@@ -25,8 +25,8 @@ class SummaryView extends StatelessWidget {
     final newMedals =
         stats.medalsTotal - (before.inMinutes ~/ nadaMinutesPerMedal);
     final medalLine = newMedals > 0
-        ? 'medalla nueva. ya tienes ${stats.medalsThisWeek} esta semana · ${stats.medalsTotal} en total.'
-        : 'te faltan ${stats.minutesToNextMedal} min para tu próxima medalla · ${stats.medalsTotal} en total.';
+        ? 'Medalla nueva. Ya tienes ${stats.medalsThisWeek} esta semana · ${stats.medalsTotal} en total.'
+        : 'Te faltan ${stats.minutesToNextMedal} min para tu próxima medalla · ${stats.medalsTotal} en total.';
 
     return NadaScreen(
       child: Column(
@@ -49,8 +49,8 @@ class SummaryView extends StatelessWidget {
                     children: [
                       NadaSectionLabel(
                         completed
-                            ? 'meta cumplida · sesión $sessionNumber'
-                            : 'sesión $sessionNumber guardada',
+                            ? 'Meta cumplida · sesión $sessionNumber'
+                            : 'Sesión $sessionNumber guardada',
                         color: NadaColors.ash,
                       ),
                       const SizedBox(height: 18),
@@ -66,7 +66,7 @@ class SummaryView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'de nada.',
+                        'De nada.',
                         style: NadaType.italic.copyWith(
                           fontSize: 28,
                           color: NadaColors.ash,
@@ -76,10 +76,10 @@ class SummaryView extends StatelessWidget {
                       const SizedBox(height: 36),
                       Text(
                         completed
-                            ? 'llegaste a la meta sin producir absolutamente nada. impecable.'
+                            ? 'Llegaste a la meta sin producir absolutamente nada. Impecable.'
                             : isFree
-                            ? 'no estaban en tu agenda. ahora están en tu registro.'
-                            : 'cortaste antes de la meta. igual cuenta. aquí no hay jefe.',
+                            ? 'No estaban en tu agenda. Ahora están en tu registro.'
+                            : 'Cortaste antes de la meta. Igual cuenta. Aquí no hay jefe.',
                         style: NadaType.body.copyWith(
                           fontSize: 20,
                           color: NadaColors.ash,
@@ -88,7 +88,7 @@ class SummaryView extends StatelessWidget {
                       ),
                       const SizedBox(height: 18),
                       Text(
-                        'en total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}',
+                        'En total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}',
                         style: NadaType.label.copyWith(
                           fontSize: 16,
                           color: NadaColors.ash,
@@ -121,7 +121,7 @@ class SummaryView extends StatelessWidget {
             ),
           ),
           NadaButton(
-            label: 'seguir sin hacer nada',
+            label: 'Seguir sin hacer nada',
             onPressed: () {
               HapticFeedback.mediumImpact();
               controller.startSession();
@@ -129,7 +129,7 @@ class SummaryView extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           NadaButton(
-            label: 'volver al inicio',
+            label: 'Volver al inicio',
             kind: NadaButtonKind.quiet,
             onPressed: controller.dismissSummary,
           ),

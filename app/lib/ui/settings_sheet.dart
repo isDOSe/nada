@@ -99,7 +99,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
   Widget _timeRow(int index) {
     final name = index < nadaPresetNames.length
         ? nadaPresetNames[index]
-        : 'preset ${index + 1}';
+        : 'Preset ${index + 1}';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -209,7 +209,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     const NadaSectionLabel('Tiempos rápidos'),
                     const SizedBox(height: 8),
                     Text(
-                      'pomodoro, jornada y maratón. cámbialos cuando quieras; el nombre se queda.',
+                      'Pomodoro, Jornada y Maratón. Cámbialos cuando quieras; el nombre se queda.',
                       style: NadaType.label.copyWith(
                         fontSize: 16,
                         color: NadaColors.ash,
@@ -236,7 +236,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'el tiempo en curso, siempre a la vista. para que no olvides que no estás haciendo nada.',
+                                'El tiempo en curso, siempre a la vista. Para que no olvides que no estás haciendo nada.',
                                 style: NadaType.label.copyWith(fontSize: 16),
                               ),
                             ],
@@ -276,7 +276,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                         )
                       else
                         Text(
-                          'permiso concedido.',
+                          'Permiso concedido.',
                           style: NadaType.label.copyWith(
                             fontSize: 16,
                             color: NadaColors.ash,
@@ -300,7 +300,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
-                                  'un tono corto cuando se guarda la sesión. el vacío con banda sonora.',
+                                  'Un tono corto cuando se guarda la sesión. El vacío con banda sonora.',
                                   style: NadaType.label.copyWith(fontSize: 16),
                                 ),
                               ],
@@ -334,7 +334,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        '2×2 en tu pantalla. tu nada acumulada, en grande.',
+                        '2×2 en tu pantalla. Tu nada acumulada, en grande.',
                         style: NadaType.label.copyWith(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
@@ -370,7 +370,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                           setState(() {
                             _widgetMessage = pinned
                                 ? null
-                                : 'tu launcher no permite añadirlo desde aquí. búscalo en el menú de widgets.';
+                                : 'Tu launcher no permite añadirlo desde aquí. Búscalo en el menú de widgets.';
                           });
                         },
                       ),
@@ -427,7 +427,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     const NadaHairline(),
                     const SizedBox(height: 14),
                     Text(
-                      'todo se queda aquí. nada viaja a ningún lado.',
+                      'Todo se queda aquí. Nada viaja a ningún lado.',
                       style: NadaType.label.copyWith(
                         fontSize: 16,
                         color: NadaColors.ash,
@@ -435,7 +435,7 @@ class _SettingsSheetState extends State<_SettingsSheet> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'versión $nadaVersion · sin cuentas, sin nube, sin prisa',
+                      'Versión $nadaVersion · sin cuentas, sin nube, sin prisa',
                       style: NadaType.label.copyWith(
                         fontSize: 15,
                         color: NadaColors.faint,
@@ -474,26 +474,26 @@ Future<void> showAboutNada(BuildContext context) {
                   const NadaWordmark(fontSize: 30),
                   const SizedBox(height: 14),
                   Text(
-                    'el tiempo que no le debes a nadie. literalmente.',
+                    'El tiempo que no le debes a nadie. Literalmente.',
                     style: NadaType.italic.copyWith(fontSize: 21),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'es un contador. pones un tiempo, le das iniciar y esperas. oficialmente no estás haciendo nada.',
+                    'Es un contador. Pones un tiempo, le das iniciar y esperas. Oficialmente no estás haciendo nada.',
                     style: NadaType.bodyMuted.copyWith(fontSize: 18),
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'sin cuentas. sin anuncios. sin nube. todo se queda en este teléfono. y no, no queremos tus datos.',
+                    'Sin cuentas. Sin anuncios. Sin nube. Todo se queda en este teléfono. Y no, no queremos tus datos.',
                     style: NadaType.bodyMuted.copyWith(fontSize: 18),
                   ),
                   const SizedBox(height: 18),
                   Text(
-                    'hecho con flutter, instrument serif y crimson text.',
+                    'Hecho con Flutter, Instrument Serif y Crimson Text.',
                     style: NadaType.label,
                   ),
                   Text(
-                    'ernesto flames (dose) · licencia mit',
+                    'Ernesto Flames (DOSe) · Licencia MIT',
                     style: NadaType.label,
                   ),
                   const SizedBox(height: 18),

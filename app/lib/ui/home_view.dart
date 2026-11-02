@@ -26,8 +26,8 @@ class HomeView extends StatelessWidget {
         ? null
         : settings.goalMinutes;
     final freeChoice = NadaChoice(
-      label: 'sin límite',
-      detail: 'sin meta',
+      label: 'Sin límite',
+      detail: 'Sin meta',
       selected: settings.mode == NadaMode.free,
       onTap: () =>
           controller.updateSettings(settings.copyWith(mode: NadaMode.free)),
@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
       if (extraGoal != null)
         NadaChoice(
           label: '$extraGoal min',
-          detail: 'personalizado',
+          detail: 'Personalizado',
           selected:
               settings.mode == NadaMode.goal &&
               settings.goalMinutes == extraGoal,
@@ -124,7 +124,7 @@ class HomeView extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'la app para hacer nada. o algo. depende.',
+                              'La app para hacer nada. O algo. Depende.',
                               style: NadaType.italic.copyWith(fontSize: 19),
                             ),
                             const SizedBox(height: 34),
@@ -148,7 +148,7 @@ class HomeView extends StatelessWidget {
                                   const SizedBox(height: 8),
                                   Text(
                                     stats.sessionCount == 0
-                                        ? 'tu primera sesión de nada empieza cuando quieras.'
+                                        ? 'Tu primera sesión de nada empieza cuando quieras.'
                                         : '${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}',
                                     style: NadaType.label.copyWith(
                                       fontSize: 16,
@@ -187,7 +187,7 @@ class HomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 NadaButton(
-                  label: 'empezar a no hacer nada',
+                  label: 'Empezar a no hacer nada',
                   semanticLabel: 'Empezar una sesión de nada',
                   onPressed: () {
                     HapticFeedback.mediumImpact();

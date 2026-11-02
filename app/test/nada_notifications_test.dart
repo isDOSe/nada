@@ -20,7 +20,7 @@ void main() {
     test('goal mode never freezes the remaining seconds', () {
       // 14 s into a one-minute goal there are 46 s left. That number used to be
       // baked into the body and stayed there for the rest of the session.
-      expect(goalBodyAt(at14s), 'meta de 1 min · hasta las 14:06');
+      expect(goalBodyAt(at14s), 'Meta de 1 min · hasta las 14:06');
       expect(goalBodyAt(at50s), goalBodyAt(at14s));
     });
 
@@ -32,7 +32,7 @@ void main() {
           startedAt: startedAt,
           now: at14s,
         ),
-        'sin hacer nada desde las 14:05',
+        'Sin hacer nada desde las 14:05',
       );
     });
   });

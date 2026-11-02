@@ -455,8 +455,10 @@ class _NadaFootnoteState extends State<NadaFootnote> {
   }
 }
 
-/// A small stamped "n!" for the weekly medal counter. Square, inverted when
-/// earned, outlined when it is still a promise.
+/// A pixel-art medal for the weekly counter: a solid coin, grey while it is
+/// still a promise and bone once it is earned. The `n!` lives in the same
+/// pixel grid, so the piece speaks one language and can grow into other
+/// medals later.
 class NadaMedal extends StatelessWidget {
   const NadaMedal({
     super.key,
@@ -473,30 +475,73 @@ class NadaMedal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       label: semanticLabel ?? 'medalla de nada',
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
-        decoration: BoxDecoration(
-          color: filled ? NadaColors.bone : Colors.transparent,
-          border: Border.all(
-            color: filled ? NadaColors.bone : NadaColors.edge,
-            width: 1,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            'n!',
-            style: TextStyle(
-              fontFamily: NadaFonts.display,
-              fontStyle: FontStyle.italic,
-              fontSize: size * 0.5,
-              height: 1,
-              letterSpacing: -0.5,
-              color: filled ? NadaColors.voidBlack : NadaColors.ash,
-            ),
-          ),
-        ),
+        child: CustomPaint(painter: _MedalPainter(filled: filled)),
       ),
     );
   }
+}
+
+class _MedalPainter extends CustomPainter {
+  const _MedalPainter({required this.filled});
+
+  final bool filled;
+
+  static const int _grid = 24;
+  static const double _center = _grid / 2;
+  static const double _radius = 11.6;
+
+  /// The `n!` in a 8×9 pixel font, already positioned inside the coin.
+  static const List<String> _glyph = [
+    '##....##',
+    '#.#...##',
+    '#..#..##',
+    '#..#..##',
+    '#..#..##',
+    '#..#..##',
+    '#..#....',
+    '#..#..##',
+    '#..#..##',
+  ];
+  static const int _glyphX = 8;
+  static const int _glyphY = 8;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cell = size.shortestSide / _grid;
+    final paint = Paint()..isAntiAlias = false;
+
+    void pixel(int x, int y, Color color) {
+      paint.color = color;
+      canvas.drawRect(Rect.fromLTWH(x * cell, y * cell, cell, cell), paint);
+    }
+
+    final metal = filled ? NadaColors.bone : NadaColors.edge;
+    final ink = filled ? NadaColors.voidBlack : NadaColors.ash;
+
+    for (var y = 0; y < _grid; y++) {
+      for (var x = 0; x < _grid; x++) {
+        final dx = x + 0.5 - _center;
+        final dy = y + 0.5 - _center;
+        final distance = dx * dx + dy * dy;
+        if (distance > _radius * _radius) continue;
+        // A minted rim, one pixel thick, just inside the edge.
+        final rim = distance > 9.8 * 9.8 && distance <= 10.9 * 10.9;
+        pixel(x, y, rim ? ink : metal);
+      }
+    }
+
+    for (var row = 0; row < _glyph.length; row++) {
+      for (var column = 0; column < _glyph[row].length; column++) {
+        if (_glyph[row][column] != '#') continue;
+        pixel(_glyphX + column, _glyphY + row, ink);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_MedalPainter oldDelegate) =>
+      oldDelegate.filled != filled;
 }

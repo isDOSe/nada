@@ -55,7 +55,7 @@ class MedalsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'esta semana',
+                      'Esta semana',
                       style: NadaType.label.copyWith(
                         fontSize: 16,
                         color: NadaColors.ash,
@@ -75,8 +75,8 @@ class MedalsScreen extends StatelessWidget {
           const NadaHairline(),
           const SizedBox(height: 22),
           Text(
-            'una medalla por cada $nadaMinutesPerMedal minutos de nada. '
-            'la semana empieza el lunes y el contador vuelve a cero, '
+            'Una medalla por cada $nadaMinutesPerMedal minutos de nada. '
+            'La semana empieza el lunes y el contador vuelve a cero, '
             'pero las que ya ganaste se quedan en tu colección.',
             style: NadaType.bodyMuted.copyWith(fontSize: 18),
           ),
@@ -89,7 +89,7 @@ class MedalsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'no sirven para nada. ese es el punto.',
+            'No sirven para nada. Ese es el punto.',
             style: NadaType.italic.copyWith(
               fontSize: 18,
               color: NadaColors.faint,
