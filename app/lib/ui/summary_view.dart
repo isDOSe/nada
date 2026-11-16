@@ -78,7 +78,7 @@ class SummaryView extends StatelessWidget {
                         completed
                             ? 'Llegaste a la meta sin producir absolutamente nada. Impecable.'
                             : isFree
-                            ? 'No estaban en tu agenda. Ahora están en tu registro.'
+                            ? 'No estaban en tu agenda. Ahora están en tu historial.'
                             : 'Cortaste antes de la meta. Igual cuenta. Aquí no hay jefe.',
                         style: NadaType.body.copyWith(
                           fontSize: 20,

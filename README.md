@@ -15,7 +15,7 @@ marca, copy, reglas de tiempo y estructura de datos:
 - **`web/`** — la versión web de escritorio, HTML, CSS y JavaScript sin
   frameworks.
 
-**Web:** [nada.isdose.com](https://nada.isdose.com)
+**Web:** [isdose.com/lab/nada](https://isdose.com/lab/nada/)
 
 <p align="center">
   <img src="app/docs/screenshots/01-home.png" width="235" alt="nada! — inicio">
@@ -55,7 +55,7 @@ segundo plano.
 | | `app/` (Android) | `web/` |
 |---|---|---|
 | Cronómetro, presets y medallas | Sí | Sí |
-| Registro, racha y total acumulado | Sí | Sí |
+| Historial, racha y total acumulado | Sí | Sí |
 | Notificación persistente | Sí | No |
 | Widget 2×2 | Sí | No |
 | Aviso de meta en segundo plano | Sí | No |
@@ -135,6 +135,11 @@ python -m http.server 8080 --directory web
 
 Luego visita `http://localhost:8080`. El servidor local es recomendable para
 que el portapapeles funcione en todos los navegadores.
+
+La versión publicada vive dentro de isdose.com, en
+<https://isdose.com/lab/nada/>. La carpeta `web/` es la fuente de verdad: el
+sitio la copia con `npm run labs:sync` (ver `docs/labs.md` en el repo de
+isdose). No hay un despliegue aparte para esta landing.
 
 ## Correr la app
 
@@ -263,17 +268,24 @@ Nada sale de tu dispositivo.
 Cada cambio u opción nueva se anota aquí al implementarla; el historial completo
 está en [`CHANGELOG.md`](CHANGELOG.md). Lo más reciente va arriba.
 
+### Sin publicar
+
+- El **Registro** pasa a llamarse **Historial** en la app y en la web: cabecera,
+  título de la pantalla, enlace del inicio y textos que lo mencionaban.
+
 ### 1.0.6
 
 - El inicio queda más limpio: el selector de tiempo baja al hueco que dejaron
   el texto de ayuda y las medallas.
 - Las medallas tienen pantalla propia, con el contador semanal, el total y la
-  siguiente. Se abre desde **Medallas**, en la cabecera, junto a **Registro**.
+  siguiente. Se abre desde **Medallas**, en la cabecera, junto a **Historial**.
 - Botones, selector de tiempo y títulos en mayúscula inicial: *Ajustes*,
   *Manifiesto*, *Volver*, *Pomodoro*, *Jornada*, *Maratón*.
 - **Web:** el texto pasa a **Spectral**, una serif más estilizada y ligera que
   Source Serif 4, servida en woff2 desde el proyecto. Los botones bajan de peso
   para no competir con el titular.
+- **Web:** los textos visibles son los de la app, con **Empezar a no hacer
+  nada** en el botón grande y mayúscula inicial en todo el copy.
 - **Web:** favicon propio (`n!`) en SVG, ICO y versión táctil, generado con
   `web/tool/make_favicon.py`.
 

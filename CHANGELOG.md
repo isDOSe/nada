@@ -27,6 +27,9 @@ arriba. El resumen del día a día vive también en el `## Changelog` del
 
 ### web
 
+- La web usa los mismos textos que la app: **Empezar a no hacer nada** en el
+  botón grande, mayúscula inicial en todo el copy y los mismos mensajes de
+  sesión, resumen, registro, medallas y ajustes.
 - La tipografía de texto pasa de Source Serif 4 a **Spectral**: más estilizada
   y ligera, legible a 16 px, servida en woff2 desde `web/fonts/`.
 - Botones y títulos secundarios bajan a peso medio para que el titular mande.

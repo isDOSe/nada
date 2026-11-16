@@ -90,7 +90,7 @@ class HomeView extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 12),
                                   NadaFootnote(
-                                    label: 'Registro',
+                                    label: 'Historial',
                                     plain: true,
                                     onTap: () => Navigator.of(context).push(
                                       nadaRoute(const HistoryScreen()),

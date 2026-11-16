@@ -96,7 +96,7 @@ https://nada.isdose.com
 - Manifiesto nuevo: “el arte de no hacer nada”.
 - El botón secundario de sesión y resumen ahora ocupa el ancho completo, con la
   misma separación en todas las pantallas.
-- “registro” en la pantalla principal es solo texto, sin borde.
+- “historial” en la pantalla principal es solo texto, sin borde.
 - La versión web se rediseñó para escritorio, con el mismo registro y la misma
   voz.
 - Sin cuentas, sin nube y sin anuncios.
@@ -105,7 +105,7 @@ https://nada.isdose.com
 
 1. `screenshots/phone-01-home.png` — la pantalla principal.
 2. `screenshots/phone-02-session.png` — una sesión en curso.
-3. `screenshots/phone-03-history.png` — el registro acumulado.
+3. `screenshots/phone-03-history.png` — el historial acumulado.
 4. `screenshots/phone-04-settings.png` — tiempos editables.
 5. `screenshots/phone-05-widget.png` — el widget 2×2 en negro y blanco.
 

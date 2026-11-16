@@ -70,7 +70,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     trailing: const NadaWordmark(),
                   ),
                   const SizedBox(height: 38),
-                  const NadaSectionLabel('Registro'),
+                  const NadaSectionLabel('Historial'),
                   const SizedBox(height: 10),
                   Text(
                     compactDuration(stats.total, zeroAsDash: true),
@@ -354,7 +354,7 @@ class _SessionSheet extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Desaparecerá del registro. El tiempo ya lo perdiste igual.',
+                'Desaparecerá del historial. El tiempo ya lo perdiste igual.',
                 style: NadaType.bodyMuted,
               ),
               const SizedBox(height: 22),

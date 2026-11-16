@@ -45,7 +45,7 @@
       <button class="wordmark" type="button" data-nav="home" aria-label="Nada!, Inicio">nada<span>!</span></button>
       <nav class="nav" aria-label="Navegación principal">
         <button class="nav-link is-current" id="nav-timer" type="button" data-nav="home">Temporizador</button>
-        <button class="nav-link" id="nav-history" type="button" data-nav="history">Registro</button>
+        <button class="nav-link" id="nav-history" type="button" data-nav="history">Historial</button>
         <button class="nav-link" id="nav-about" type="button" data-nav="about">¿Qué es esto?</button>
         <button class="settings-trigger" id="open-settings" type="button" aria-label="Abrir ajustes">Ajustes</button>
       </nav>
@@ -57,7 +57,7 @@
       <div class="home-layout">
         <div class="home-main">
           <p class="today-line" id="dateline"></p>
-          <p class="eyebrow">La app para hacer... nada. O algo. Depende.</p>
+          <p class="eyebrow">La app para hacer nada. O algo. Depende.</p>
           <h1 id="home-title">Un rato<br>para ti.</h1>
           <p class="home-intro">El reloj corre. La productividad puede esperar.</p>
 
@@ -70,8 +70,8 @@
             <p class="choice-hint" id="duration-hint" aria-live="polite"></p>
           </section>
 
-          <button class="button button-primary start-button" id="start-session" type="button">Iniciar sesión</button>
-          <p class="privacy-note">Sin cuenta. Sin anuncios. Tu registro se queda aquí.</p>
+          <button class="button button-primary start-button" id="start-session" type="button">Empezar a no hacer nada</button>
+          <p class="privacy-note">Sin cuentas. Sin anuncios. Sin nube. Todo se queda en este navegador. Y no, no queremos tus datos.</p>
         </div>
 
         <aside class="ledger" aria-label="Tu actividad">
@@ -80,18 +80,18 @@
             <span class="ledger-date">Desde el primer minuto</span>
           </div>
 
-          <button class="total-button" id="home-total-button" type="button" aria-label="Abrir el registro">
+          <button class="total-button" id="home-total-button" type="button" aria-label="Abrir el historial">
             <span class="small-label">En total</span>
             <span class="total-value" id="home-total">0 min</span>
           </button>
-          <p class="ledger-meta" id="home-meta">Tu primera sesión empieza cuando quieras.</p>
+          <p class="ledger-meta" id="home-meta">Tu primera sesión de nada empieza cuando quieras.</p>
 
           <div class="ledger-rule"></div>
 
           <button class="medal-summary" id="home-medal-open" type="button" aria-haspopup="dialog">
             <span class="medal-mark" id="home-medal" aria-hidden="true">n!</span>
             <span class="medal-copy">
-              <span class="medal-title" id="home-medals">Ninguna esta semana</span>
+              <span class="medal-title" id="home-medals">Ninguna medalla esta semana</span>
               <span class="medal-detail" id="home-medals-copy">Cada 45 min de nada. Te faltan 45.</span>
             </span>
             <span class="medal-open" aria-hidden="true">Ver</span>
@@ -107,13 +107,13 @@
             <span>Esta semana</span>
             <span id="home-week">0 min</span>
           </div>
-          <button class="inline-link ledger-link" type="button" data-nav="history">Ver todo el registro</button>
+          <button class="inline-link ledger-link" type="button" data-nav="history">Ver todo el historial</button>
         </aside>
       </div>
 
       <footer class="app-footer">
         <span>nada! · Sin prisa.</span>
-        <button class="inline-link" type="button" data-nav="manifesto">El manifiesto</button>
+        <button class="inline-link" type="button" data-nav="manifesto">Manifiesto</button>
       </footer>
     </section>
 
@@ -126,7 +126,7 @@
 
         <div class="timer-face">
           <div class="clock" id="clock" role="timer" aria-live="off">00:00</div>
-          <p class="session-line" id="session-line">Acabas de dejar de hacer algo.</p>
+          <p class="session-line" id="session-line">Acabas de dejar de hacer algo</p>
           <p class="session-sub" id="session-sub" hidden></p>
         </div>
 
@@ -140,7 +140,7 @@
 
         <div class="session-controls">
           <button class="button button-primary" id="toggle-pause" type="button">Pausar</button>
-          <button class="button button-secondary" id="finish-session" type="button">Terminar y guardar</button>
+          <button class="button button-secondary" id="finish-session" type="button">Terminar</button>
         </div>
         <p class="session-footnote">Puedes pausar cuando quieras. El tiempo no se ofende.</p>
       </div>
@@ -150,14 +150,14 @@
       <div class="summary-layout">
         <p class="summary-kicker" id="summary-label"></p>
         <p class="summary-duration" id="summary-duration"></p>
-        <p class="summary-unit">de nada.</p>
+        <p class="summary-unit">De nada.</p>
         <p class="summary-copy" id="summary-copy"></p>
         <div class="summary-stats">
           <p class="summary-total" id="summary-total"></p>
           <p class="summary-medal" id="summary-medal"></p>
         </div>
         <div class="summary-actions">
-          <button class="button button-primary" id="start-again" type="button">Empezar otra</button>
+          <button class="button button-primary" id="start-again" type="button">Seguir sin hacer nada</button>
           <button class="button button-secondary" id="summary-home" type="button">Volver al inicio</button>
         </div>
       </div>
@@ -166,7 +166,7 @@
     <section class="view history-view" id="view-history" data-view="history" aria-labelledby="history-title">
       <div class="page-heading">
         <p class="eyebrow">Lo que sí hiciste: parar un rato.</p>
-        <h1 id="history-title">Tu registro.</h1>
+        <h1 id="history-title">Tu historial.</h1>
         <p class="page-intro">Cada sesión cuenta. Aunque no hayas hecho nada.</p>
       </div>
 
@@ -188,9 +188,9 @@
 
       <div class="empty-state" id="history-empty">
         <span class="empty-mark" aria-hidden="true">n!</span>
-        <h2>Todavía no hay nada.</h2>
-        <p>Lo cual, por ahora, es bastante coherente.</p>
-        <button class="button button-primary" id="history-start" type="button">Iniciar primera sesión</button>
+        <h2>Aquí todavía no hay nada.</h2>
+        <p>Empieza con un minuto. O con ninguno. Aquí nadie te va a pedir más.</p>
+        <button class="button button-primary" id="history-start" type="button">Empezar a no hacer nada</button>
       </div>
     </section>
 
@@ -201,13 +201,13 @@
         <p class="page-intro">La app para hacer... nada. O algo. Depende.</p>
       </div>
       <article class="reading-copy">
-        <p>Esto es un contador. Pones un número, presionas iniciar y esperas. No hay ranking, coach gritándote en mayúsculas ni una versión premium que te venda paz interior.</p>
+        <p>Esto es un contador. Pones un número, presionas iniciar y esperas. No hay ranking, no hay coach gritándote en mayúsculas y no hay una versión premium que te venda la paz interior.</p>
         <p>Pero cuando te sientas a no hacer nada durante 25 minutos, ¿qué estás haciendo en realidad?</p>
         <p>Estás ignorando 47 notificaciones. Resistiendo las ganas de mirar el teléfono. Sentado. Respirando. Existiendo. Practicando el arte perdido de estar sin justificarte.</p>
         <blockquote>«La tensión más extrema no es hacer algo. Es hacer algo mientras finges que no haces nada.»<cite>— alguien, probablemente en LinkedIn</cite></blockquote>
         <p>Diógenes vivía en un barril. Nadie le dijo que tenía que ser productivo. Y aun así la filosofía lo recuerda. Tú no necesitas un barril: necesitas 25 minutos y la valentía de no llenarlos.</p>
         <p>No hacer nada es hacer algo. Es contradecirte. Es la paradoja del vacío productivo. Es el yin y el yang de existir sin esforzarse.</p>
-        <p>La próxima vez que alguien te pregunte qué haces, míralo a los ojos y di: «Nada. Literalmente nada. Estoy corriendo un temporizador.»</p>
+        <p>Así que la próxima vez que alguien te pregunte qué haces, míralo a los ojos y di: «Nada. Literalmente nada. Estoy corriendo un temporizador.»</p>
         <p class="reading-last">Y ahora que has leído todo esto... ¿cuánto tiempo acabas de perder que pudiste haber pasado haciendo absolutamente nada?</p>
       </article>
       <p class="signature">— nada!</p>
@@ -220,13 +220,13 @@
       </div>
       <div class="about-layout">
         <div class="about-lead-block">
-          <p class="about-lead">Es un contador. Así de simple.</p>
-          <p>Sirve para estudiar, trabajar, hacer un pomodoro, meditar o simular que estás ocupado sin hacer nada. Oficialmente, el registro no hace preguntas.</p>
-          <button class="button button-primary" type="button" data-nav="home">Iniciar sesión</button>
+          <p class="about-lead">El tiempo que no le debes a nadie. Literalmente.</p>
+          <p>Es un contador. Pones un tiempo, le das iniciar y esperas. Oficialmente no estás haciendo nada. Sirve para estudiar, trabajar, hacer un pomodoro, meditar o simular que estás ocupado sin hacer nada.</p>
+          <button class="button button-primary" type="button" data-nav="home">Empezar a no hacer nada</button>
         </div>
         <div class="about-details">
           <h2>Todo se queda en este navegador.</h2>
-          <p>Sin cuentas, sin anuncios, sin nube y sin analytics. Si borras los datos del navegador, también borras tu nada.</p>
+          <p>Sin cuentas. Sin anuncios. Sin nube. Sin analytics. Si borras los datos del navegador, también borras tu nada.</p>
           <p>La app de Android añade una notificación persistente, un widget y un aviso al llegar a la meta. Aquí nos conformamos con contar bien.</p>
         </div>
       </div>
@@ -245,24 +245,24 @@
 
       <section class="settings-section" aria-labelledby="presets-title">
         <h3 id="presets-title">Tiempos rápidos</h3>
-        <p class="settings-help">Cambia los minutos. Los nombres son de toda la vida y se quedan.</p>
+        <p class="settings-help">Pomodoro, Jornada y Maratón. Cámbialos cuando quieras; el nombre se queda.</p>
         <div class="time-rows" id="time-rows"></div>
       </section>
 
       <section class="settings-section sound-setting">
         <div>
           <h3>Sonido al terminar</h3>
-          <p class="settings-help">Un tono corto cuando guardas la sesión.</p>
+          <p class="settings-help">Un tono corto cuando se guarda la sesión. El vacío con banda sonora.</p>
         </div>
         <button class="switch" id="sound-toggle" type="button" role="switch" aria-checked="true" aria-label="Sonido al terminar"><span></span></button>
         <button class="inline-link test-sound" id="test-sound" type="button">Probar sonido</button>
       </section>
 
       <section class="settings-section settings-links">
-        <button class="inline-link" type="button" data-nav="manifesto">Leer el manifiesto</button>
-        <button class="inline-link" type="button" data-nav="about">¿Qué es nada?</button>
+        <button class="inline-link" type="button" data-nav="manifesto">El arte de no hacer nada</button>
+        <button class="inline-link" type="button" data-nav="about">Acerca de nada!</button>
       </section>
-      <p class="settings-footnote">Tus sesiones se guardan solo en este navegador.</p>
+      <p class="settings-footnote">Todo se queda aquí. Nada viaja a ningún lado.</p>
     </div>
   </dialog>
 
@@ -273,7 +273,7 @@
         <button class="icon-close" data-close type="button" aria-label="Cerrar detalle">×</button>
       </div>
       <p class="dialog-duration" id="session-dialog-duration"></p>
-      <p class="summary-unit">de nada.</p>
+      <p class="summary-unit">De nada.</p>
       <p class="dialog-copy" id="session-dialog-copy"></p>
       <button class="button button-danger" id="delete-session" type="button">Borrar sesión</button>
     </div>
@@ -284,14 +284,14 @@
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">Esto no se puede deshacer</p>
-          <h2 id="confirm-title">¿Borrar esta sesión?</h2>
+          <h2 id="confirm-title">Borrar esta sesión</h2>
         </div>
         <button class="icon-close" id="confirm-cancel-x" type="button" aria-label="Cancelar">×</button>
       </div>
-      <p class="dialog-copy">Desaparecerá del registro. El tiempo ya lo perdiste igual.</p>
+      <p class="dialog-copy">Desaparecerá del historial. El tiempo ya lo perdiste igual.</p>
       <div class="dialog-actions">
         <button class="button button-secondary" id="confirm-cancel" type="button">Cancelar</button>
-        <button class="button button-danger" id="confirm-delete" type="button">Borrar sesión</button>
+        <button class="button button-danger" id="confirm-delete" type="button">Borrar</button>
       </div>
     </div>
   </dialog>
@@ -300,19 +300,19 @@
     <div class="dialog-inner">
       <div class="dialog-heading">
         <div>
-          <p class="eyebrow">Una recompensa que no sirve para nada</p>
-          <h2 id="medals-title">Medallas de nada</h2>
+          <p class="eyebrow">No sirven para nada. Ese es el punto.</p>
+          <h2 id="medals-title">Medallas</h2>
         </div>
         <button class="icon-close" data-close type="button" aria-label="Cerrar medallas">×</button>
       </div>
       <div class="medal-dialog-total">
         <span class="medal-mark is-earned" id="medal-dialog-mark" aria-hidden="true">n!</span>
         <div>
-          <p class="medal-dialog-count" id="medal-dialog-count">Ninguna</p>
+          <p class="medal-dialog-count" id="medal-dialog-count">Ninguna medalla</p>
           <p class="settings-help" id="medal-dialog-week">Esta semana</p>
         </div>
       </div>
-      <p class="dialog-copy">Ganas una medalla por cada 45 minutos acumulados. La semana se reinicia el lunes; las medallas históricas se quedan.</p>
+      <p class="dialog-copy">Una medalla por cada 45 minutos de nada. La semana empieza el lunes y el contador vuelve a cero, pero las que ya ganaste se quedan en tu colección.</p>
       <p class="medal-progress-copy" id="medal-dialog-progress"></p>
     </div>
   </dialog>

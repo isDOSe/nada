@@ -120,9 +120,13 @@
   }
 
   function medalLabel(count) {
-    if (count <= 0) return 'ninguna medalla';
+    if (count <= 0) return 'Ninguna medalla';
     if (count === 1) return '1 medalla';
     return `${count} medallas`;
+  }
+
+  function capitalizeFirst(text) {
+    return text ? text[0].toUpperCase() + text.slice(1) : text;
   }
 
   function isMinute(value) {
@@ -462,7 +466,7 @@
       if (el.sessionDialog.open) el.sessionDialog.close();
       renderHistory();
       renderHome();
-      announce('sesión borrada.');
+      announce('Sesión borrada.');
     });
 
     for (const dialog of document.querySelectorAll('dialog')) {
@@ -520,7 +524,7 @@
       home: 'nada! — Temporizador',
       session: 'Sesión en curso · nada!',
       summary: 'Sesión guardada · nada!',
-      history: 'Registro · nada!',
+      history: 'Historial · nada!',
       manifesto: 'El manifiesto · nada!',
       about: '¿Qué es nada? · nada!',
     };
@@ -536,31 +540,27 @@
     const stats = computeStats(data.sessions);
     const medals = computeMedals(stats);
 
-    el.dateline.textContent = `hoy, ${journalDate(new Date())}`;
+    el.dateline.textContent = `Hoy, ${journalDate(new Date())}`;
     el.homeTotal.textContent = compactDuration(stats.total);
     el.homeMeta.textContent = stats.sessionCount === 0
-      ? 'tu primera sesión de nada empieza cuando quieras.'
+      ? 'Tu primera sesión de nada empieza cuando quieras.'
       : `${sessionCountLabel(stats.sessionCount)} · ${streakLabel(stats.streakDays)}`;
     el.homeTotalButton.setAttribute(
       'aria-label',
-      `Abrir el registro: ${compactDuration(stats.total)} sin hacer nada, ${sessionCountLabel(stats.sessionCount)}`
+      `Abrir el historial: ${compactDuration(stats.total)} sin hacer nada, ${sessionCountLabel(stats.sessionCount)}`
     );
 
-    el.homeMedals.textContent = medals.week === 0
-      ? 'ninguna esta semana'
-      : `${medalLabel(medals.week)} esta semana`;
-    el.homeMedalsCopy.textContent = medals.week === 0
-      ? (medals.total === 0
-        ? `cada 45 min de nada. te faltan ${medals.toNext}.`
-        : `cada 45 min de nada. te faltan ${medals.toNext} · ${medals.total} en total`)
-      : `${medals.toNext} min para la siguiente · ${medals.total} en total`;
+    el.homeMedals.textContent = `${medalLabel(medals.week)} esta semana`;
+    el.homeMedalsCopy.textContent = medals.week === 0 && medals.total === 0
+      ? `Cada 45 min de nada. Te faltan ${medals.toNext}.`
+      : `Te faltan ${medals.toNext} min para la siguiente · ${medals.total} en total`;
     el.homeMedal.classList.toggle('is-filled', medals.week > 0);
     el.homeToday.textContent = compactDuration(stats.today);
     el.homeWeek.textContent = compactDuration(stats.week);
 
     el.durationHint.textContent = data.settings.mode === 'free'
-      ? 'cuenta hacia arriba. tú decides cuándo parar de no hacer nada.'
-      : 'te aviso cuando llegues. luego decides si sigues sin hacer nada.';
+      ? 'Cuenta hacia arriba. Tú decides cuándo parar de no hacer nada.'
+      : 'Te aviso cuando llegues. Luego decides si sigues sin hacer nada.';
     renderChoices();
   }
 
@@ -577,7 +577,7 @@
     }));
 
     goals.forEach((minutes, index) => {
-      const name = PRESET_NAMES[index] || `preset ${index + 1}`;
+      const name = PRESET_NAMES[index] || `Preset ${index + 1}`;
       el.choices.append(createChoice(
         name,
         `${minutes} min`,
@@ -644,7 +644,7 @@
     showView('session');
     startTicker();
     renderSession();
-    announce('sesión de nada en curso.');
+    announce('Sesión de nada en curso.');
   }
 
   function startTicker() {
@@ -700,7 +700,7 @@
       stopTicker();
       save();
       renderSession();
-      announce('sesión en pausa.');
+      announce('Sesión en pausa.');
       return;
     }
 
@@ -714,7 +714,7 @@
     save();
     startTicker();
     renderSession();
-    announce('sesión en curso.');
+    announce('Sesión en curso.');
   }
 
   function finishSession({ reachedGoal = false, now = Date.now(), playSound = true } = {}) {
@@ -759,12 +759,12 @@
       if (playSound && data.settings.soundEnabled) playChime();
       renderSummary(session);
       showView('summary');
-      announce(completed ? 'meta cumplida. sesión guardada.' : 'sesión guardada.');
+      announce(completed ? 'Meta cumplida. Sesión guardada.' : 'Sesión guardada.');
       return;
     }
 
     showView('home');
-    announce('la sesión fue demasiado corta. no se guardó.');
+    announce('La sesión fue demasiado corta. No se guardó.');
   }
 
   function renderSession() {
@@ -783,7 +783,7 @@
       : 'En pausa';
     el.sessionStatus.classList.toggle('is-paused', !running);
     el.sessionLine.textContent = running
-      ? (elapsed < 2000 ? 'Acabas de dejar de hacer algo.' : `Llevas ${spokenDuration(elapsed)} sin hacer nada.`)
+      ? (elapsed < 2000 ? 'Acabas de dejar de hacer algo' : `Llevas ${spokenDuration(elapsed)} sin hacer nada`)
       : 'Pausado. El reloj también se aburre.';
     el.togglePause.textContent = running ? 'Pausar' : 'Continuar';
     el.togglePause.classList.toggle('is-depressed', !running);
@@ -791,19 +791,19 @@
 
     if (active.goalMs == null) {
       el.sessionSub.hidden = false;
-      el.sessionSub.textContent = `sin límite · desde las ${clockTime(active.startedAt)}`;
+      el.sessionSub.textContent = `Sin límite · desde las ${clockTime(active.startedAt)}`;
       el.goalBlock.hidden = true;
     } else {
       el.sessionSub.hidden = true;
       el.goalBlock.hidden = false;
       const remaining = Math.max(0, active.goalMs - elapsed);
-      el.goalLabel.textContent = `meta de ${compactDuration(active.goalMs)}`;
-      el.goalRemaining.textContent = `quedan ${stopwatch(remaining)}`;
+      el.goalLabel.textContent = `Meta de ${compactDuration(active.goalMs)}`;
+      el.goalRemaining.textContent = `Quedan ${stopwatch(remaining)}`;
       const progress = Math.max(0, Math.min(1, elapsed / active.goalMs));
       el.progressFill.style.transform = `scaleX(${progress})`;
     }
 
-    document.title = running ? `${clock} · nada!` : 'en pausa · nada!';
+    document.title = running ? `${clock} · nada!` : 'En pausa · nada!';
   }
 
   function renderClock(text) {
@@ -829,18 +829,18 @@
     const newMedals = medals.total - beforeMedals;
 
     el.summaryLabel.textContent = completed
-      ? `meta cumplida · sesión ${stats.sessionCount}`
-      : `sesión ${stats.sessionCount} guardada`;
+      ? `Meta cumplida · sesión ${stats.sessionCount}`
+      : `Sesión ${stats.sessionCount} guardada`;
     el.summaryDuration.textContent = compactDuration(session.durationMs);
     el.summaryCopy.textContent = completed
-      ? 'llegaste a la meta sin producir absolutamente nada. impecable.'
+      ? 'Llegaste a la meta sin producir absolutamente nada. Impecable.'
       : isFree
-        ? 'no estaban en tu agenda. ahora están en tu registro.'
-        : 'cortaste antes de la meta. igual cuenta. aquí no hay jefe.';
-    el.summaryTotal.textContent = `en total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}`;
+        ? 'No estaban en tu agenda. Ahora están en tu historial.'
+        : 'Cortaste antes de la meta. Igual cuenta. Aquí no hay jefe.';
+    el.summaryTotal.textContent = `En total ${compactDuration(stats.total)} · ${sessionCountLabel(stats.sessionCount)}`;
     el.summaryMedal.textContent = newMedals > 0
-      ? `medalla nueva. ya tienes ${medals.week} esta semana · ${medals.total} en total.`
-      : `te faltan ${medals.toNext} min para tu próxima medalla · ${medals.total} en total.`;
+      ? `Medalla nueva. Ya tienes ${medals.week} esta semana · ${medals.total} en total.`
+      : `Te faltan ${medals.toNext} min para tu próxima medalla · ${medals.total} en total.`;
   }
 
   function dismissSummary() {
@@ -863,10 +863,10 @@
     el.historyEntries.replaceChildren();
 
     if (hasSessions) {
-      el.historySince.textContent = `desde el ${longDate(sessions[sessions.length - 1].startedAt)}`;
+      el.historySince.textContent = `Desde el ${longDate(sessions[sessions.length - 1].startedAt)}`;
       if (sessions.length > 1) {
         el.historyLongest.textContent =
-          `la más larga ${compactDuration(stats.longest)} · promedio ${compactDuration(stats.average)}`;
+          `La más larga ${compactDuration(stats.longest)} · promedio ${compactDuration(stats.average)}`;
       }
       renderHistoryEntries(sessions);
     }
@@ -893,7 +893,7 @@
       head.className = 'day-head';
       const day = document.createElement('span');
       day.className = 'day';
-      day.textContent = relativeDay(group.day.getTime());
+      day.textContent = capitalizeFirst(relativeDay(group.day.getTime()));
       const total = document.createElement('span');
       total.className = 'day-total';
       total.textContent = compactDuration(group.total);
@@ -936,9 +936,9 @@
   }
 
   function sessionModeLabel(session) {
-    if (session.mode === 'free') return 'sin límite';
-    if (session.completed) return 'meta cumplida';
-    return `meta ${compactDuration(session.goalMs || 0)}`;
+    if (session.mode === 'free') return 'Sin límite';
+    if (session.completed) return 'Meta cumplida';
+    return `Meta ${compactDuration(session.goalMs || 0)}`;
   }
 
   function openSessionDetail(session) {
@@ -947,10 +947,10 @@
       `${relativeDay(session.startedAt)} · ${clockTime(session.startedAt)} — ${clockTime(session.endedAt)}`;
     el.sessionDialogDuration.textContent = compactDuration(session.durationMs);
     el.sessionDialogCopy.textContent = session.goalMs == null
-      ? 'sin límite. contó hacia arriba hasta que decidiste parar.'
+      ? 'Sin límite. Contó hacia arriba hasta que decidiste parar.'
       : session.completed
-        ? `meta de ${compactDuration(session.goalMs)}. la cumpliste sin hacer nada. como debe ser.`
-        : `meta de ${compactDuration(session.goalMs)}. la cortaste antes. tampoco pasa nada.`;
+        ? `Meta de ${compactDuration(session.goalMs)}. La cumpliste sin hacer nada. Como debe ser.`
+        : `Meta de ${compactDuration(session.goalMs)}. La cortaste antes. Tampoco pasa nada.`;
     el.sessionDialog.showModal();
     focusDialogClose(el.sessionDialog);
   }
@@ -972,10 +972,8 @@
     const stats = computeStats(data.sessions);
     const medals = computeMedals(stats);
     el.medalDialogCount.textContent = medalLabel(medals.week);
-    el.medalDialogWeek.textContent = `${medals.week} esta semana · ${medals.total} en total`;
-    el.medalDialogProgress.textContent = medals.week > 0
-      ? `Te faltan ${medals.toNext} min para la siguiente.`
-      : `Te faltan ${medals.toNext} min para ganar la primera.`;
+    el.medalDialogWeek.textContent = `Esta semana · ${medals.total} en total`;
+    el.medalDialogProgress.textContent = `Te faltan ${medals.toNext} min para la siguiente.`;
     el.medalDialogMark.classList.toggle('is-earned', medals.week > 0);
     el.medalsDialog.showModal();
     focusDialogClose(el.medalsDialog);
@@ -1107,7 +1105,7 @@
     el.copySummary.textContent = 'Copiado';
     window.clearTimeout(copiedTimer);
     copiedTimer = window.setTimeout(resetCopyLabel, 2000);
-    announce('resumen copiado.');
+    announce('Resumen copiado.');
   }
 
   function fallbackCopy(text) {
