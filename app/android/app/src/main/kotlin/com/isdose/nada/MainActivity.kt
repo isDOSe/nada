@@ -78,7 +78,7 @@ class MainActivity : FlutterActivity() {
                         try {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("https://nada.isdose.com")
+                                Uri.parse("https://isdose.com/lab/nada/")
                             )
                             startActivity(intent)
                             result.success(true)

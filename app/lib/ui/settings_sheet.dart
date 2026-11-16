@@ -498,7 +498,7 @@ Future<void> showAboutNada(BuildContext context) {
                   ),
                   const SizedBox(height: 18),
                   NadaFootnote(
-                    label: 'Abrir nada.isdose.com',
+                    label: 'Abrir isdose.com/lab/nada',
                     onTap: () => unawaited(NadaSite.open()),
                   ),
                   const SizedBox(height: 24),

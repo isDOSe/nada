@@ -272,6 +272,10 @@ está en [`CHANGELOG.md`](CHANGELOG.md). Lo más reciente va arriba.
 
 - El **Registro** pasa a llamarse **Historial** en la app y en la web: cabecera,
   título de la pantalla, enlace del inicio y textos que lo mencionaban.
+- Los enlaces a la web apuntan a `isdose.com/lab/nada/`: el enlace del «acerca
+  de» de la app, la ficha de la tienda y el `canonical`, `og:url` y JSON-LD de
+  la web. El subdominio `nada.isdose.com` sigue existiendo pero sirve una versión
+  vieja, así que ya no se enlaza.
 
 ### 1.0.6
 

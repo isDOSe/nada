@@ -90,7 +90,7 @@ Ejemplo de metadatos:
 ```html
 <meta property="og:title" content="nada! — el contador de lo que no hiciste">
 <meta property="og:description" content="El contador del tiempo que no le debes a nadie.">
-<meta property="og:image" content="https://nada.isdose.com/og-1200x630.png">
+<meta property="og:image" content="https://isdose.com/lab/nada/images/og.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 ```

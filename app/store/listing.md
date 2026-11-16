@@ -84,7 +84,7 @@ productividad, bienestar digital, medallas
 
 ## Sitio web
 
-https://nada.isdose.com
+https://isdose.com/lab/nada/
 
 ## Notas de la versión 1.0.5
 
