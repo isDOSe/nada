@@ -27,8 +27,9 @@ flutter test
 ## Web
 
 - Sin build. Servir `web/` con `python -m http.server` para probar.
-- El despliegue es **manual**: no hay CI, se sube el contenido de `web/` al
-  hosting a mano.
+- El despliegue no es aparte: el sitio de isdose copia `web/` con
+  `npm run labs:sync` (ver `docs/labs.md` en el repo de isdose). `web/` es la
+  fuente de verdad.
 
 ## Versión y changelog
 
